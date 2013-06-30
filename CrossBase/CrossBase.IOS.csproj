@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{17B4D28A-A077-4905-8E19-B6BF5D0F7D6B}</ProjectGuid>
+    <ProjectTypeGuids>{6BC8ED88-2882-458C-8E55-DFD12B67127B};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>CrossBase</RootNamespace>
+    <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+    <AssemblyName>CrossBase.IOS</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+    <MtouchDebug>true</MtouchDebug>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchLink>None</MtouchLink>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\iPhone\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <MtouchDebug>true</MtouchDebug>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\iPhone\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Developer</CodesignKey>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\Ad-Hoc</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+    <BuildIpa>True</BuildIpa>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'AppStore|iPhone' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\iPhone\AppStore</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+    <CodesignKey>iPhone Distribution</CodesignKey>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Dispatch\DispatcherId.cs" />
+    <Compile Include="Dispatch\DispatcherManager.cs" />
+    <Compile Include="Dispatch\IDispatcher.cs" />
+    <Compile Include="Dispatch\IDispatcherManager.cs" />
+    <Compile Include="Dispatch\MainLoopDispatcher.cs" />
+    <Compile Include="Dispatch\ManualDispatcher.cs" />
+    <Compile Include="Dispatch\NoneDispatcher.cs" />
+    <Compile Include="FileSystem\IFileSystemManager.cs" />
+    <Compile Include="Log\DefaultLogManager.cs" />
+    <Compile Include="Log\DefaultLogger.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\ILogManager.cs" />
+    <Compile Include="Platform.IOS\Dispatcher.cs" />
+    <Compile Include="Platform.Shared\BinarySerializer.cs" />
+    <Compile Include="Platform.Shared\FileSystemManager.cs" />
+    <Compile Include="Platform.Shared\ISystemServicesConstructor.cs" />
+    <Compile Include="Platform.Shared\SystemServicesesConstructor.cs" />
+    <Compile Include="Platform.Shared\ThreadManager.cs" />
+    <Compile Include="Properties\AssemblyInfoIOS.cs" />
+    <Compile Include="Random\DefaultRandomManager.cs" />
+    <Compile Include="Random\IRandomManager.cs" />
+    <Compile Include="Random\SimulateRandomMode.cs" />
+    <Compile Include="Serialization\CloneExtension.cs" />
+    <Compile Include="Serialization\IObjectSerializer.cs" />
+    <Compile Include="SystemServices.cs" />
+    <Compile Include="Threading\IThreadManager.cs" />
+    <Compile Include="Timers\ITimer.cs" />
+    <Compile Include="Timers\ITimerManager.cs" />
+    <Compile Include="Timers\DefaultTimerManager.cs" />
+    <Compile Include="Timers\MultiShotTimer.cs" />
+    <Compile Include="Timers\OneShotTimer.cs" />
+    <Compile Include="Timers\TimerBase.cs" />
+    <Compile Include="Time\ITimeManager.cs" />
+    <Compile Include="Time\SimulateTimeMode.cs" />
+    <Compile Include="Time\TimeManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="monotouch" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.MonoTouch.CSharp.targets" />
+</Project>

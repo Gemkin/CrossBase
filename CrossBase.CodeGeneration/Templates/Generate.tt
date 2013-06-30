@@ -1,0 +1,27 @@
+﻿<#@ template debug="false" language="C#" #>
+<#@ assembly name="$(TargetPath)" #>
+<#@ import namespace="CrossBase.CodeGeneration.Parsers" #>
+<#@ import namespace="CrossBase.CodeGeneration.Templates" #>
+<#@ output extension=".result.txt" #>
+
+<#@ Assembly Name="EnvDTE" #> 
+<#@ Assembly Name="Microsoft.VisualStudio.TextTemplating.11.0" #>
+<#
+	const bool debugging = false;
+	//Debugging is possible but VS locks dll sometimes, anyway got it to work using the way:
+	//(1) Make assembly include from $(TargetPath) to absolute path like "C:\......\CrossBase\bin\Debug\CrossBase.dll"
+	//(2) Set debugging to true 
+	//(3) Might need to restart VS when debugger keeps look on dll
+
+	var	parser = new CSharpSolutionParser(debugging);
+	parser.ParseSolution();
+
+    var et = new EventPropertyTemplate{Parser = parser};
+	et.Render();
+	
+    var dt = new DispatchProxyTemplate{Parser = parser};
+	dt.Render();
+ 
+    var st = new SerializedTemplate{Parser = parser};
+	st.Render();
+#>

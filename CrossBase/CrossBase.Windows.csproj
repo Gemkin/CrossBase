@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{14FEDC1B-EB44-40A1-BB92-48D924BD97D7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CrossBase</RootNamespace>
+    <AssemblyName>CrossBase.Windows</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="C5">
+      <HintPath>..\packages\C5.1.0.2.0\lib\net40\C5.dll</HintPath>
+    </Reference>
+    <Reference Include="Plossum CommandLine">
+      <HintPath>..\packages\Plossum.CommandLine.0.3.0.14\lib\net40\Plossum CommandLine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Dispatch\DispatcherId.cs" />
+    <Compile Include="Dispatch\DispatcherManager.cs" />
+    <Compile Include="Dispatch\IDispatcher.cs" />
+    <Compile Include="Dispatch\IDispatcherManager.cs" />
+    <Compile Include="Dispatch\MainLoopDispatcher.cs" />
+    <Compile Include="Dispatch\ManualDispatcher.cs" />
+    <Compile Include="Dispatch\NoneDispatcher.cs" />
+    <Compile Include="FileSystem\IFileSystemManager.cs" />
+    <Compile Include="Log\DefaultLogger.cs" />
+    <Compile Include="Log\DefaultLogManager.cs" />
+    <Compile Include="Log\ILogger.cs" />
+    <Compile Include="Log\ILogManager.cs" />
+    <Compile Include="Platform.Shared\BinarySerializer.cs" />
+    <Compile Include="Platform.Shared\FileSystemManager.cs" />
+    <Compile Include="Platform.Shared\ISystemServicesConstructor.cs" />
+    <Compile Include="Platform.Shared\SystemServicesesConstructor.cs" />
+    <Compile Include="Platform.Shared\ThreadManager.cs" />
+    <Compile Include="Properties\AssemblyInfoWindows.cs" />
+    <Compile Include="Random\DefaultRandomManager.cs" />
+    <Compile Include="Random\IRandomManager.cs" />
+    <Compile Include="Random\SimulateRandomMode.cs" />
+    <Compile Include="Serialization\CloneExtension.cs" />
+    <Compile Include="Serialization\IObjectSerializer.cs" />
+    <Compile Include="SystemServices.cs" />
+    <Compile Include="Threading\IThreadManager.cs" />
+    <Compile Include="Timers\DefaultTimerManager.cs" />
+    <Compile Include="Timers\ITimer.cs" />
+    <Compile Include="Timers\ITimerManager.cs" />
+    <Compile Include="Timers\MultiShotTimer.cs" />
+    <Compile Include="Timers\OneShotTimer.cs" />
+    <Compile Include="Timers\TimerBase.cs" />
+    <Compile Include="Time\ITimeManager.cs" />
+    <Compile Include="Time\SimulateTimeMode.cs" />
+    <Compile Include="Time\TimeManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Platform.Windows\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

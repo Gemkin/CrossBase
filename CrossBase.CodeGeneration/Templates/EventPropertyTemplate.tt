@@ -1,0 +1,315 @@
+﻿<#@ template debug="true" hostspecific="false" language="C#" inherits="CrossBase.CodeGeneration.Templates.TemplateBase"  #>
+<#@ import namespace="CodeGeneration.Attributes" #>
+<#@ import namespace="CrossBase.CodeGeneration.Attributes" #>
+<#@ import namespace="CrossBase.CodeGeneration.Language" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="CodeGeneration.Language" #>
+
+<#+
+	public override void Render()
+	{
+	    Name = "EventProperty Generator";
+		debugOutput = string.Empty;
+		var classes = Parser.GetAllClassesThatContainPrivateFieldWithAnAttribute("EventProperty");
+		
+		foreach(var @class in classes)
+		{
+			GenerateClass(@class);
+		}
+
+	    base.Render();
+	}
+
+	private void GenerateClass(Class @class)
+    {
+		var fields = new List<Field>();
+		foreach(var field in @class.Fields)
+		{
+			if (field.Access == Access.Private)
+			{
+				foreach (var attribute in field.Attributes)
+				{
+					if (attribute.Name == "EventProperty")
+					{
+						fields.Add(field);
+					}
+				}
+			}
+		}
+		
+		GenerateNotifyChanged(@class, fields);
+		GenerateNotifyChangedInterface(@class, fields);
+
+		foreach (var field in fields)
+		{
+			GenerateField(@class, field);
+		}
+    }
+
+	private bool GenerateForEventProperty(string mode)
+    {
+		return mode == EventPropertyAttribute.NotifyPropertyAndEventProperty || 
+			   mode == EventPropertyAttribute.EventPropertyOnly;
+    }
+
+	private bool GenerateForNotifyProperty(string mode)
+    {
+		return mode == EventPropertyAttribute.NotifyPropertyAndEventProperty || 
+			   mode == EventPropertyAttribute.NotifyPropertyOnly;
+    }
+
+	private bool GetBoolArgumentFromAttribute(CrossBase.CodeGeneration.Language.Attribute attribute, string name)
+    {
+		var argument = attribute.Arguments.Find(a=>a.Name == name);
+		return argument != null && argument.Value == "true";
+    }
+
+	private string GetStringArgumentFromAttribute(CrossBase.CodeGeneration.Language.Attribute attribute, string name, string defaultValue)
+    {
+		var argument = attribute.Arguments.Find(a=>a.Name == name);
+		return argument == null ? defaultValue : argument.Value;
+    }
+
+	private void GenerateField(Class @class, Field field)
+    {
+		var propertyName = field.GetDefaultPublicPropertyName();
+		var propertyType = field.Type;
+		var fieldName = field.Name;
+		var changingEventArgs =  @class.Name + propertyName + "ChangingEventArgs";
+		var changedEventArgs =   @class.Name + propertyName + "ChangedEventArgs";
+		var attribute = field.Attributes.Find(a=>a.Name == "EventProperty");
+		var generateAlwaysUpdate = GetBoolArgumentFromAttribute(attribute, "GenerateAlwaysUpdate");
+		var generateSetters = GetBoolArgumentFromAttribute(attribute, "GenerateSetters");
+		var generationMode = GetStringArgumentFromAttribute(attribute, "GenerationMode", EventPropertyAttribute.NotifyPropertyAndEventProperty);
+
+		var fileName = attribute.FileName;
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", "." + propertyName + "EventProperty.g.cs");
+		GenerateHeader();
+		GenerateUsings(@class, new List<string> { "System", @class.Namespace.Name});
+#>
+namespace <#= @class.Namespace.Name #>	
+{
+    public partial class <#= @class.Name  #>
+    {
+		//private <#= propertyType #> <#= fieldName #> in <#= fileName #> (<#= generationMode #>)
+<#+         
+		if (GenerateForEventProperty(generationMode))
+		{#>        
+		public event EventHandler<<#=changingEventArgs#>> <#=propertyName#>Changing;
+		private void Invoke<#=propertyName#>Changing(<#=changingEventArgs#> e)
+        {
+            var handler = <#=propertyName#>Changing;
+            if (handler != null) handler(this, e);
+        }
+
+    	public event EventHandler<<#=changedEventArgs#>> <#=propertyName#>Changed;
+	    private void Invoke<#=propertyName#>Changed(<#=changedEventArgs#> e)
+	    {
+	        var handler = <#=propertyName#>Changed;
+	        if (handler != null) handler(this, e);
+	    }
+
+<#+
+		}#>
+		public <#= propertyType #> <#=propertyName#>
+        {
+            get { return <#=fieldName#>; }
+            set
+            {
+                var old = <#=fieldName#>;
+<#+ 
+		if (!generateAlwaysUpdate)
+		{
+#>				if (old == value)
+                    return;
+<#+		}#> 
+
+<#+ 
+		if (GenerateForEventProperty(generationMode))
+		{
+#>				var changingEventArgs = new <#=changingEventArgs #> { Old<#=propertyName #> = old, New<#=propertyName #> = value };
+				
+				On<#=propertyName #>Changing(changingEventArgs);
+                if (changingEventArgs.Cancel)
+                    return;
+					
+				Invoke<#=propertyName #>Changing(changingEventArgs);
+                if (changingEventArgs.Cancel)
+                    return;
+				value = changingEventArgs.New<#=propertyName#>;
+<#+
+		}
+ #>
+				<#=fieldName#> = value;
+				
+<#+ 
+		if (GenerateForEventProperty(generationMode))
+		{
+#>
+                var changedEventArgs = new <#=changedEventArgs#> { Old<#=propertyName#> = old, New<#=propertyName#> = value };
+				On<#=propertyName#>Changed(changedEventArgs);
+                Invoke<#=propertyName#>Changed(changedEventArgs);
+<#+ 
+        }
+		if (GenerateForNotifyProperty(generationMode))
+		{
+#>
+				NotifyPropertyChanged("<#=propertyName#>");
+<#+		} 
+
+#>			}
+        }
+	
+<#+ 
+		if (GenerateForEventProperty(generationMode))
+		{
+#>		partial void On<#=propertyName#>Changing(<#=changingEventArgs#> e);
+		partial void On<#=propertyName#>Changed(<#=changedEventArgs#> e);
+<#+ 
+        }
+		if (generateSetters)
+		{
+#>
+		public void Set<#=propertyName#>(<#= propertyType #> new<#=propertyName#>)
+		{
+			<#=propertyName#> = new<#=propertyName#>;
+		}
+
+		public void Set<#=propertyName#>Silently(<#= propertyType #> new<#=propertyName#>)
+		{
+			 <#=fieldName#> = new<#=propertyName#>;
+		}
+<#+
+		}
+#>	}
+<#+ 
+		if (GenerateForEventProperty(generationMode))
+		{
+	
+#>
+    
+	public class <#=changingEventArgs#> : <#=changedEventArgs#>
+    {
+        public bool Cancel { get; set; }
+    }
+
+    public class <#=changedEventArgs#>: EventArgs
+    {
+        public <#= propertyType #> New<#=propertyName#> { get; set; }
+        public <#= propertyType #> Old<#=propertyName#> { get; set; }
+	}
+<#+
+        }#>
+}
+<#+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+    }
+
+	private string GetGenerationModeForClass(List<Field> fields)
+    {
+		var generationMode = string.Empty;
+		foreach(var field in fields)
+        {
+			var attribute = field.Attributes.Find(a=>a.Name == "EventProperty");
+			var newGenerationMode = GetStringArgumentFromAttribute(attribute, "GenerationMode", EventPropertyAttribute.NotifyPropertyAndEventProperty);
+
+			if (generationMode == string.Empty)
+            {
+				generationMode = newGenerationMode;
+            }
+			else if (generationMode != newGenerationMode)
+            {
+				generationMode = EventPropertyAttribute.NotifyPropertyAndEventProperty;
+            }
+
+			if (generationMode == EventPropertyAttribute.NotifyPropertyAndEventProperty)
+				break;
+        }
+
+		return generationMode;
+    }
+
+	public void GenerateNotifyChangedInterface(Class @class, List<Field> fields)
+    {
+		var generationMode = GetGenerationModeForClass(fields);
+		if (!GenerateForNotifyProperty(generationMode))
+			return;
+		
+		var fileName = @class.FileWithShortestName();
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", ".EventPropertyInterface.g.cs");
+		
+		GenerateHeader();
+		GenerateUsings(@class, new List<string> { "System", "System.ComponentModel", @class.Namespace.Name});
+#>
+
+namespace <#= @class.Namespace.Name #>	
+{
+    public interface I<#= @class.Name  #>EventProperties
+    {
+		event PropertyChangedEventHandler PropertyChanged;
+<#+
+	    foreach (var field in fields)
+	    {
+	        var propertyName = field.GetDefaultPublicPropertyName();
+			var propertyType = field.Type;
+#>
+			<#= propertyType #> <#=propertyName#> { get;set; }
+
+<#+
+
+		
+	    }
+#>
+
+	}
+}
+
+<#+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+	}
+
+	public void GenerateNotifyChanged(Class @class, List<Field> fields)
+    {
+		var generationMode = GetGenerationModeForClass(fields);
+		if (!GenerateForNotifyProperty(generationMode))
+			return;
+		
+		var fileName = @class.FileWithShortestName();
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", ".PropertyEvents.g.cs");
+		
+		GenerateHeader();
+		GenerateUsings(@class, new List<string> { "System", "System.ComponentModel", @class.Namespace.Name});
+#>
+
+namespace <#= @class.Namespace.Name #>	
+{
+    public partial class <#= @class.Name  #>
+    {
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		private void NotifyPropertyChanged(String info)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(info));
+			}
+		}
+	}
+}
+
+<#+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+	}
+#>

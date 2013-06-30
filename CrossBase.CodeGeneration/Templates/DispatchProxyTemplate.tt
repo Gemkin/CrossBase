@@ -1,0 +1,280 @@
+<#@ template debug="true" hostspecific="false" language="C#" inherits="CodeGeneration.Templates.TemplateBase"  #>
+<#@ import namespace="CodeGeneration.Attributes" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="CodeGeneration.Language" #>
+
+<#+
+    public string ClassName;
+	public string ProxyName;
+	public string InterfaceName;
+	public string ProxyNamespace;
+	public List<string> CustomDefaultNamespaces;
+
+	public override void Render()
+	{
+		debugOutput = string.Empty;
+		var classes = Parser.GetAllClassesThatHaveAnAttribute("DispatchProxy");
+
+		foreach (var @class in classes)
+		{
+			foreach(var attribute in @class.Attributes)
+			{
+				if (attribute.Name != "DispatchProxy")
+					continue;
+						
+				ProxyName = @class.Name;
+				ProxyNamespace = @class.Namespace.Name;
+				InterfaceName = attribute.GetArgument("InterfaceName");
+				ClassName = attribute.GetArgument("ClassName");
+				
+				var fileName = attribute.FileName;
+				var projectItem = Parser.GetProjectItem(fileName);
+				var outputFileName = fileName.Replace(".cs", "." + InterfaceName + ".DispatchProxy.g.cs");
+
+				if (string.IsNullOrEmpty(InterfaceName))
+				{
+					debugOutput += string.Format("InterfaceName not set on DispatchProxy attribute on class {0}\r\n", @class.Name);		
+					continue;
+				}
+
+				var @interface = Parser.Interfaces.Find(f=> f.Name == InterfaceName);
+				if (@interface == null)
+				{
+					debugOutput += string.Format("Interface {1} not found DispatchProxy attribute on class {0}\r\n", @class.Name, InterfaceName);		
+					continue;
+				}
+
+			    var useDefaultRule = false;
+				if (string.IsNullOrEmpty(ClassName))
+				{
+					debugOutput += string.Format("ClassName to proxy not set on DispatchProxy attribute on class {0}, using default name derived from interface name\r\n", @class.Name);
+				    useDefaultRule = true;
+				}
+
+
+				var fieldName =  useDefaultRule ? @interface.GetDefaultPrivateFieldName() : ClassName.ChangeFirstChar(ChangeCase.ToLower);
+				var propertyName = useDefaultRule? @interface.GetDefaultPropertyName() : ClassName;
+
+
+			    var containsNotifyPropertyChanged = @interface.Events.Exists((s) => s.Name == "PropertyChanged");
+
+				GenerateHeader();
+			    var usings = new List<string>
+			        {
+			            "System",
+			            "CrossBase.Common",
+			            "CrossBase.Reflection",
+			            "CrossBase.Common.Dispatch",
+			            @class.Namespace.Name
+			        };
+				if (containsNotifyPropertyChanged)
+					usings.Add("System.ComponentModel");
+				GenerateUsings(@class, usings);
+#>
+using <#=  @interface.Namespace.Name #>;
+
+namespace <#= ProxyNamespace #>	
+{
+	public interface I<#= ProxyName #>Ex
+	{
+<#+
+		foreach (var evnt in @interface.Events)
+		{#>
+		event <#= evnt.Type #> <#= evnt.Name #>;
+<#+
+		}
+		foreach (var function in @interface.Functions)
+		{#>
+		<#= function.InterfaceSignature("") #>;
+		event EventHandler<EventArgs> <#= function.Name #>Started;
+		event EventHandler<EventArgs> <#= function.Name #>Finished;
+<#+ 
+		}#>
+	}
+	
+	public partial class <#= ProxyName  #>: I<#= ProxyName #>Ex<#+ if (containsNotifyPropertyChanged){#>, INotifyPropertyChanged<#+}#>
+
+	{
+		public IDispatcher UpDispatcher { get; set; }
+        public IDispatcher DownDispatcher { get; set; }
+        
+<#+			foreach (var evnt in @interface.Events)
+				{#>
+		public event <#= evnt.Type #> <#= evnt.Name #>;
+<#+
+				}
+#>
+<#+
+				if (containsNotifyPropertyChanged)
+				{
+				    foreach (var prop in @interface.Properties)
+				    { #>
+		private <#= prop.Type #> <#= prop.GetDefaultPrivateFieldName() #>;
+		public <#= prop.Type #> <#= prop.Name #> 
+		{
+			get
+			{
+				return <#= prop.GetDefaultPrivateFieldName() #>;
+			}
+			set
+			{
+				var clone = value.DeepClone();
+				DownDispatcher.BeginInvoke(() => 
+				{
+					if (clone == <#= fieldName #>.<#= prop.Name #>)
+						return;
+					<#= fieldName #>.<#= prop.Name #> = value; 
+				});
+
+			}
+		}
+<#+
+				    }
+				}
+				foreach (var function in @interface.Functions)
+				{#>
+		public event EventHandler<EventArgs> <#= function.Name #>Started;
+		public event EventHandler<EventArgs> <#= function.Name #>Finished;
+		
+		private void Invoke<#= function.Name #>Started(EventArgs e)
+	    {
+	       	var handler = <#= function.Name #>Started;
+	       	if (handler != null) handler(this, e);
+	    }
+			
+		private void Invoke<#= function.Name #>Finished(EventArgs e)
+	    {
+	       	var handler = <#= function.Name #>Finished;
+	       	if (handler != null) handler(this, e);
+	    }	
+		<#+
+				}
+				#>
+		private  <#= @interface.Name #> <#= fieldName #>;
+			
+		public <#=  @interface.Name #> <#= propertyName #>
+		{
+			get
+			{
+				return <#= fieldName #>;
+			}
+			set
+			{			
+				if (<#= fieldName #> != null) 
+					UnsubscribeTo<#= propertyName #>();
+
+				<#= fieldName #> = value;
+				SubscribeTo<#= propertyName #>();
+			}
+		}
+<#+
+				foreach (var evnt in @interface.Events)
+				{
+					if (evnt.Name == "PropertyChanged")
+					{
+#>
+		private void On<#= evnt.Name #>Handler(object sender, PropertyChangedEventArgs e)
+		{
+			switch (e.PropertyName)
+			{
+<#+
+						foreach (var property in @interface.Properties)
+						{
+#>
+				case "<#= property.Name #>":
+					{
+						var propClone = <#= fieldName #>.<#= property.Name #>.DeepClone();
+						SystemServices.Dispatchers[DispatcherId.Ui].BeginInvoke(() =>
+							{
+								<#= property.GetDefaultPrivateFieldName() #> = propClone;
+								var handler = PropertyChanged;
+								if (handler != null) handler(this, new PropertyChangedEventArgs(e.PropertyName));
+							});
+
+						break;
+					}
+<#+
+						}
+#>
+					
+			}
+		}
+
+<#+
+						
+					}
+					else
+					{
+#>
+		private void On<#= evnt.Name #>Handler(object sender, <#= evnt.GenericEventHandlerType #> e)
+		{
+			var clone = e.DeepClone();
+			UpDispatcher.BeginInvoke(() =>
+				{
+					var handler = <#= evnt.Name #>;
+					if (handler != null) handler(this, clone);
+				});
+		}
+<#+
+					}
+				}
+#>
+		public void UnsubscribeTo<#= propertyName #>()
+		{
+			if (<#= fieldName #> == null)
+				return;
+<#+
+				foreach (var evnt in @interface.Events)
+				{
+#>
+			<#= fieldName #>.<#= evnt.Name #> -= On<#= evnt.Name #>Handler;
+<#+
+				}
+		#>
+		}		
+
+		private void SubscribeTo<#= propertyName #>()
+		{
+<#+
+				foreach (var evnt in @interface.Events)
+				{
+#>
+			<#= fieldName #>.<#= evnt.Name #> += On<#= evnt.Name #>Handler;
+<#+
+				}
+		#>
+		}
+
+<#+
+				foreach (var function in @interface.Functions)
+				{#>
+		<#= function.Signature("") #>
+		{
+			DownDispatcher.BeginInvoke(() => 
+				{
+					UpDispatcher.BeginInvoke(() => Invoke<#= function.Name #>Started(EventArgs.Empty));
+					try
+					{
+						<#= fieldName #>.<#= function.CallSignature("") #>;
+					}
+					finally
+					{
+						UpDispatcher.BeginInvoke(() => Invoke<#= function.Name #>Finished(EventArgs.Empty));
+					}
+				});
+		}
+<#+				}#>
+	}
+}
+
+<#+
+				GenerateFooter();
+				debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+				Delete(projectItem, outputFileName);
+				Save(projectItem, outputFileName);
+			}
+		}
+		base.Render();
+	}
+
+#>

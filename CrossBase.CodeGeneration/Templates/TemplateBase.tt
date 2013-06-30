@@ -1,0 +1,83 @@
+﻿<#@ template language="C#" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="EnvDTE" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="CodeGeneration.Language" #>
+<#@ import namespace="CodeGeneration.Parsers" #>
+
+<#+
+    protected string debugOutput;
+    public string Name { get; set; }
+    public CSharpSolutionParser Parser { get; set; } 
+
+	
+
+	protected void Save(ProjectItem projectItem, string outputFileName)
+	{
+		File.WriteAllText(outputFileName, GenerationEnvironment.ToString());
+		GenerationEnvironment = new StringBuilder();  
+		projectItem.ProjectItems.AddFromFile(outputFileName);  
+	}
+
+	
+	protected void Delete(ProjectItem projectItem, string outputFileName)
+	{
+		foreach (ProjectItem childProjectItem in projectItem.ProjectItems)
+      	{
+			if (childProjectItem.Name == outputFileName)
+				childProjectItem.Delete();
+      	}
+	}
+
+	public virtual void Render()
+	{
+		debugOutput = "Generator: " + Name + Environment.NewLine;
+#>
+------------------------------------------------------------
+<#= debugOutput #>
+------------------------------------------------------------
+
+<#+		
+	}
+
+
+	protected void GenerateHeader()
+    {#>
+/**************************************************************************
+AUTOMATIC GENERATED FILE! DO NOT CHANGE MANUALLY 		
+CrossBase.CodeGeneration
+Wies Hubbers
+**************************************************************************/
+// ReSharper disable PartialMethodWithSinglePart
+// ReSharper disable RedundantNameQualifier
+// ReSharper disable RedundantUsingDirective
+<#+
+    }
+	protected void GenerateFooter()
+    {#>
+// ReSharper restore PartialMethodWithSinglePart
+// ReSharper restore RedundantNameQualifier
+// ReSharper restore RedundantUsingDirective
+<#+
+    }
+
+	protected void GenerateUsings(Class @class, List<string> namespacesDefaultIncluded)
+    {
+		foreach (var @using in namespacesDefaultIncluded)
+		{
+#>
+using <#=  @using #>;
+<#+
+		}
+
+		foreach (string @using in @class.Usings.ToList())
+		{
+			if (namespacesDefaultIncluded.Contains(@using))
+				continue;
+#>
+using <#=  @using #>;
+<#+
+		}
+    }
+#>
