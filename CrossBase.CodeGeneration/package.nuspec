@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>CrossBase.Platform.CodeGeneration</id>
+    <version>0.0.1</version>
+    <title>CrossBase.CodeGeneration</title>
+    <authors>Wies Hubbers</authors>
+    <owners>Wies Hubbers</owners>
+    <projectUrl>https://github.com/wwizz/CrossBase</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>CrossBase is a platform independent framework</description>
+    <releaseNotes>Base version</releaseNotes>
+    <copyright>Copyright (C) 2013 Wies Hubbers</copyright>
+    <tags></tags>
+    <dependencies>
+      
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+    </frameworkAssemblies>
+  </metadata>
+</package>
