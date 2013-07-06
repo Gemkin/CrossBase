@@ -11,7 +11,7 @@
     <description>CrossBase is a platform independent framework</description>
     <releaseNotes>Base version</releaseNotes>
     <copyright>Copyright (C) 2013 Wies Hubbers</copyright>
-	<iconUrl>https://raw.github.com/wwizz/CrossBase/master/icon32.png</iconUrl>
+	<iconUrl>https://raw.github.com/wwizz/CrossBase/master/icon32.png</iconUrl> 
     <tags></tags>
 	<dependencies>
     </dependencies>
