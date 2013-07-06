@@ -12,7 +12,8 @@
     <releaseNotes>Base version</releaseNotes>
     <copyright>Copyright (C) 2013 Wies Hubbers</copyright>
     <tags></tags>
-    <dependencies>
+    <icon>https://github.com/wwizz/CrossBase/blob/master/icon32.png</icon>
+	<dependencies>
       
     </dependencies>
     <frameworkAssemblies>
