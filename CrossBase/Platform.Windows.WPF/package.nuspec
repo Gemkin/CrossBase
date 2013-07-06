@@ -16,6 +16,7 @@
 	<dependencies>
     </dependencies>
     <frameworkAssemblies>
+		<frameworkAssembly assemblyName="WindowsBase" />
     </frameworkAssemblies>
   </metadata>
 </package>
