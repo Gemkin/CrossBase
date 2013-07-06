@@ -95,9 +95,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Generate.result.txt</LastGenOutput>
     </None>
-    <None Include="Package\CrossBase.CodeGeneration.nuspec">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Templates\DispatchProxyTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>DispatchProxyTemplate.cs</LastGenOutput>

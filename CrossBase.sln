@@ -15,6 +15,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.CrossBase.IOS", "Test.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBase.CodeGeneration", "CrossBase.CodeGeneration\CrossBase.CodeGeneration.csproj", "{2F246FE3-E3F0-4977-9431-A2250E9F227E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5651ABA2-16D9-4588-8039-D41D28278F37}"
+	ProjectSection(SolutionItems) = preProject
+		icon.jpg = icon.jpg
+		CrossBase\package.nuspec = CrossBase\package.nuspec
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

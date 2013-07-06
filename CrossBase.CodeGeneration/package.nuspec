@@ -12,7 +12,8 @@
     <releaseNotes>Base version</releaseNotes>
     <copyright>Copyright (C) 2013 Wies Hubbers</copyright>
     <tags></tags>
-	<dependencies>
+	  <dependencies>
+      <dependency id="CrossBase" version="0.0.1" />
     </dependencies>
     <frameworkAssemblies>
     </frameworkAssemblies>
