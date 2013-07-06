@@ -12,7 +12,7 @@
     <releaseNotes>Base version</releaseNotes>
     <copyright>Copyright (C) 2013 Wies Hubbers</copyright>
     <tags></tags>
-	<icon>https://github.com/wwizz/CrossBase/blob/master/icon32.png</icon>
+	<iconUrl>https://github.com/wwizz/CrossBase/blob/master/icon32.png</iconUrl>
     <dependencies>
       
     </dependencies>
