@@ -91,6 +91,7 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
+    <None Include="package.nuspec" />
     <None Include="Templates\Generate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Generate.result.txt</LastGenOutput>

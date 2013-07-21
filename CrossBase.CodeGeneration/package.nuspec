@@ -14,7 +14,7 @@
 	<iconUrl>https://raw.github.com/wwizz/CrossBase/master/icon32.png</iconUrl>
     <tags></tags>
 	  <dependencies>
-      <dependency id="CrossBase" version="0.0.1" />
+     
     </dependencies>
     <frameworkAssemblies>
     </frameworkAssemblies>
