@@ -11,12 +11,15 @@
     <description>CrossBase is a platform independent framework</description>
     <releaseNotes>Base version</releaseNotes>
     <copyright>Copyright (C) 2013 Wies Hubbers</copyright>
-	<iconUrl>https://raw.github.com/wwizz/CrossBase/master/icon32.png</iconUrl> 
     <tags></tags>
-	<dependencies>
+	<iconUrl>https://raw.github.com/wwizz/CrossBase/master/icon32.png</iconUrl>
+    <dependencies>
+      
     </dependencies>
     <frameworkAssemblies>
-		<frameworkAssembly assemblyName="WindowsBase" />
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
     </frameworkAssemblies>
   </metadata>
 </package>
