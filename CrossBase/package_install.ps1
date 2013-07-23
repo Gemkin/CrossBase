@@ -3,9 +3,9 @@ param($installPath, $toolsPath, $package, $project)
 
 $project = Get-Project;
 
-if ($project.ProjectName -ne "CrossBase.CodeGeneration") 
+if ($project.ProjectName -ne "CrossBase") 
 { 
-	[Windows.Forms.MessageBox]::Show("Error, please install this package only to a project named: 'CrossBase.CodeGeneration'");
+	[Windows.Forms.MessageBox]::Show("Error, please install this package only to a project named: 'CrossBase'");
 	throw [system.Exception];
 }
 
