@@ -62,9 +62,8 @@
 			    var usings = new List<string>
 			        {
 			            "System",
-			            "CrossBase.Common",
-			            "CrossBase.Reflection",
-			            "CrossBase.Common.Dispatch",
+			            "CrossBase.Dispatch",
+			            "CrossBase.Serialization",
 			            @class.Namespace.Name
 			        };
 				if (containsNotifyPropertyChanged)
