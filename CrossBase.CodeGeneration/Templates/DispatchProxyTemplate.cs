@@ -50,7 +50,7 @@ namespace CrossBase.CodeGeneration.Templates
 			foreach(var attribute in @class.Attributes)
 			{
 				if (attribute.Name != "DispatchProxy")
-					continue;
+					continue; 
 						
 				ProxyName = @class.Name;
 				ProxyNamespace = @class.Namespace.Name;
