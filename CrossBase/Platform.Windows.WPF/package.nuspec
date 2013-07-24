@@ -20,6 +20,7 @@
       <frameworkAssembly assemblyName="System" targetFramework="" />
       <frameworkAssembly assemblyName="System.Core" targetFramework="" />
       <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+      <frameworkAssembly assemblyName="WindowsBase" targetFramework="" />
     </frameworkAssemblies>
   </metadata>
 </package>

@@ -24,3 +24,7 @@ project
 Future
 * Xamarin support 
 
+TODO
+- Fix nuget install script checking for correct project name when installing
+  NuGet package with GUI
+
