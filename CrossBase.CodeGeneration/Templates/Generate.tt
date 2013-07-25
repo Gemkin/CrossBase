@@ -21,6 +21,9 @@
 	
     var dt = new DispatchProxyTemplate{Parser = parser};
 	dt.Render();
+
+    var it = new InvokeProxyTemplate{Parser = parser};
+	it.Render();
  
     var st = new SerializedTemplate{Parser = parser};
 	st.Render();
