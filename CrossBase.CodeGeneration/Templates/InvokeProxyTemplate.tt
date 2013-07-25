@@ -14,7 +14,7 @@
     public override void Render()
 	{
 		debugOutput = string.Empty;
-        attributeName = "DispatchProxy";
+        attributeName = "InvokeProxy";
         var classes = Parser.GetAllClassesThatHaveAnAttribute(attributeName);
 
 		foreach (var @class in classes)
@@ -96,7 +96,6 @@ namespace <#= ProxyNamespace #>
 	public partial class <#= ProxyName  #>: I<#= ProxyName #>Ex<#+ if (containsNotifyPropertyChanged){#>, INotifyPropertyChanged<#+}#>
 
 	{
-		public IDispatcher UpDispatcher { get; set; }
         public IDispatcher DownDispatcher { get; set; }
         
 <#+			foreach (var evnt in @interface.Events)
@@ -120,7 +119,7 @@ namespace <#= ProxyNamespace #>
 			set
 			{
 				var clone = value.DeepClone();
-				DownDispatcher.BeginInvoke(() => 
+				DownDispatcher.Invoke(() => 
 				{
 					if (clone == <#= fieldName #>.<#= prop.Name #>)
 						return;
@@ -185,12 +184,9 @@ namespace <#= ProxyNamespace #>
 				case "<#= property.Name #>":
 					{
 						var propClone = <#= fieldName #>.<#= property.Name #>.DeepClone();
-						UpDispatcher.BeginInvoke(() =>
-							{
-								<#= property.GetDefaultPrivateFieldName() #> = propClone;
-								var handler = PropertyChanged;
-								if (handler != null) handler(this, new PropertyChangedEventArgs(e.PropertyName));
-							});
+						<#= property.GetDefaultPrivateFieldName() #> = propClone;
+						var handler = PropertyChanged;
+						if (handler != null) handler(this, new PropertyChangedEventArgs(e.PropertyName));
 
 						break;
 					}
@@ -210,11 +206,8 @@ namespace <#= ProxyNamespace #>
 		private void On<#= evnt.Name #>Handler(object sender, <#= evnt.GenericEventHandlerType #> e)
 		{
 			var clone = e.DeepClone();
-			UpDispatcher.BeginInvoke(() =>
-				{
-					var handler = <#= evnt.Name #>;
-					if (handler != null) handler(this, clone);
-				});
+			var handler = <#= evnt.Name #>;
+			if (handler != null) handler(this, clone);
 		}
 <#+
 					}
@@ -251,16 +244,16 @@ namespace <#= ProxyNamespace #>
 				{#>
 		<#= function.Signature("") #>
 		{
-			DownDispatcher.BeginInvoke(() => 
+			DownDispatcher.Invoke(() => 
 				{
-					UpDispatcher.BeginInvoke(() => Invoke<#= function.Name #>Started(EventArgs.Empty));
+					Invoke<#= function.Name #>Started(EventArgs.Empty);
 					try
 					{
 						<#= fieldName #>.<#= function.CallSignature("") #>;
 					}
 					finally
 					{
-						UpDispatcher.BeginInvoke(() => Invoke<#= function.Name #>Finished(EventArgs.Empty));
+						Invoke<#= function.Name #>Finished(EventArgs.Empty);
 					}
 				});
 		}

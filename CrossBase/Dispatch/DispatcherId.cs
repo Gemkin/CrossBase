@@ -7,7 +7,7 @@ namespace CrossBase.Dispatch
 
         private readonly string name;
 
-        protected DispatcherId(string name)
+        public DispatcherId(string name)
         {
             this.name = name;
         }
