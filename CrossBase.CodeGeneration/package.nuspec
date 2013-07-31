@@ -17,6 +17,8 @@
      
     </dependencies>
     <frameworkAssemblies>
+		<frameworkAssembly assemblyName="EnvDTE"  />
+		<frameworkAssembly assemblyName="EnvDTE80"  />
     </frameworkAssemblies>
   </metadata>
 </package>

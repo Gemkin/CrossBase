@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DB323046-1910-4800-877C-2992BDFCF8E8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Test.CrossBase.CodeGeneration</RootNamespace>
+    <AssemblyName>Test.CrossBase.CodeGeneration</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\Test.CrossBase\bin\Debug\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="TestData\DispatchFoekiController.cs" />
+    <Compile Include="TestData\DispatchFoekiController.IOekiFoekiController.DispatchProxy.g.cs">
+      <DependentUpon>DispatchFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\InvokeFoekiController.cs" />
+    <Compile Include="TestData\InvokeFoekiController.IOekiFoekiController.InvokeProxy.g.cs">
+      <DependentUpon>InvokeFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\IOekiFoekiController.cs" />
+    <Compile Include="TestGenerationOfInvokeProxy.cs" />
+    <Compile Include="TestData\OekiData.cs" />
+    <Compile Include="TestData\OekiFoekiController.cs" />
+    <Compile Include="TestData\OekiFoekiEventArgs.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CrossBase.CodeGeneration\CrossBase.CodeGeneration.csproj">
+      <Project>{2F246FE3-E3F0-4977-9431-A2250E9F227E}</Project>
+      <Name>CrossBase.CodeGeneration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CrossBase\CrossBase.Windows.csproj">
+      <Project>{14FEDC1B-EB44-40A1-BB92-48D924BD97D7}</Project>
+      <Name>CrossBase.Windows</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
