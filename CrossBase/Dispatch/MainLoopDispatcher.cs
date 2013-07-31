@@ -67,10 +67,17 @@ namespace CrossBase.Dispatch
             var mre = new ManualResetEvent(false);
 
             BeginInvoke(() =>
-                            {
-                                actionToInvoke();
-                                mre.Set();
-                            });
+            {
+                try
+                {
+                    actionToInvoke();
+
+                }
+                finally
+                {
+                    mre.Set();
+                }
+            });
 
             mre.WaitOne();
         }
