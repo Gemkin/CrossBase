@@ -55,7 +55,7 @@ namespace CrossBase.CodeGeneration.Templates
 			var projectItem = Parser.GetProjectItem(fileName);
 			var outputFileName = fileName.Replace(".cs", ".Serialized.g.cs");
 			GenerateHeader();
-			GenerateUsings(@class, new List<string> { "System", "System.IO", "System.Xml.Serialization", "CrossBase.Reflection", "CrossBase.Common", @class.Namespace.Name});
+			GenerateUsings(@class, new List<string> { "System", "System.IO", "System.Xml.Serialization", "CrossBase.Reflection", "CrossBase.Common"});
 
         
         #line default

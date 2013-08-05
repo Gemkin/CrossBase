@@ -1,9 +1,7 @@
 ﻿<#@ template debug="true" hostspecific="false" language="C#" inherits="CrossBase.CodeGeneration.Templates.TemplateBase"  #>
-<#@ import namespace="CodeGeneration.Attributes" #>
-<#@ import namespace="CrossBase.CodeGeneration.Attributes" #>
-<#@ import namespace="CrossBase.CodeGeneration.Language" #>
+<#@ import namespace="Attributes" #>
+<#@ import namespace="Language" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="CodeGeneration.Language" #>
 
 <#+
 	public override void Render()

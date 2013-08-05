@@ -1,7 +1,6 @@
-<#@ template debug="true" hostspecific="false" language="C#" inherits="CodeGeneration.Templates.TemplateBase"  #>
-<#@ import namespace="CodeGeneration.Attributes" #>
+<#@ template debug="true" hostspecific="false" language="C#" inherits="Templates.TemplateBase"  #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ import namespace="CodeGeneration.Language" #>
+<#@ import namespace="Language" #>
 
 <#+
     public string ClassName;
@@ -58,7 +57,7 @@
 				var propertyName = useDefaultRule? @interface.GetDefaultPropertyName() : ClassName;
 
 
-			    var containsNotifyPropertyChanged = @interface.Events.Exists((s) => s.Name == "PropertyChanged");
+			    var containsNotifyPropertyChanged = @interface.AllEvents.Exists((s) => s.Name == "PropertyChanged");
 
 				GenerateHeader();
 			    var usings = new List<string>
@@ -66,7 +65,6 @@
 			            "System",
 			            "CrossBase.Dispatch",
 			            "CrossBase.Serialization",
-			            @class.Namespace.Name
 			        };
 				if (containsNotifyPropertyChanged)
 					usings.Add("System.ComponentModel");
@@ -76,29 +74,12 @@ using <#=  @interface.Namespace.Name #>;
 
 namespace <#= ProxyNamespace #>	
 {
-	public interface I<#= ProxyName #>Ex
-	{
-<#+
-		foreach (var evnt in @interface.Events)
-		{#>
-		event <#= evnt.Type #> <#= evnt.Name #>;
-<#+
-		}
-		foreach (var function in @interface.Functions)
-		{#>
-		<#= function.InterfaceSignature("") #>;
-		event EventHandler<EventArgs> <#= function.Name #>Started;
-		event EventHandler<EventArgs> <#= function.Name #>Finished;
-<#+ 
-		}#>
-	}
-	
-	public partial class <#= ProxyName  #>: I<#= ProxyName #>Ex<#+ if (containsNotifyPropertyChanged){#>, INotifyPropertyChanged<#+}#>
+	public partial class <#= ProxyName  #><#+ if (containsNotifyPropertyChanged){#>: INotifyPropertyChanged<#+}#>
 
 	{
         public IDispatcher DownDispatcher { get; set; }
         
-<#+			foreach (var evnt in @interface.Events)
+<#+			foreach (var evnt in @interface.AllEvents)
 				{#>
 		public event <#= evnt.Type #> <#= evnt.Name #>;
 <#+
@@ -107,7 +88,7 @@ namespace <#= ProxyNamespace #>
 <#+
 				if (containsNotifyPropertyChanged)
 				{
-				    foreach (var prop in @interface.Properties)
+				    foreach (var prop in @interface.AllProperties)
 				    { #>
 		private <#= prop.Type #> <#= prop.GetDefaultPrivateFieldName() #>;
 		public <#= prop.Type #> <#= prop.Name #> 
@@ -131,7 +112,7 @@ namespace <#= ProxyNamespace #>
 <#+
 				    }
 				}
-				foreach (var function in @interface.Functions)
+				foreach (var function in @interface.AllFunctions)
 				{#>
 		public event EventHandler<EventArgs> <#= function.Name #>Started;
 		public event EventHandler<EventArgs> <#= function.Name #>Finished;
@@ -168,7 +149,7 @@ namespace <#= ProxyNamespace #>
 			}
 		}
 <#+
-				foreach (var evnt in @interface.Events)
+				foreach (var evnt in @interface.AllEvents)
 				{
 					if (evnt.Name == "PropertyChanged")
 					{
@@ -178,7 +159,7 @@ namespace <#= ProxyNamespace #>
 			switch (e.PropertyName)
 			{
 <#+
-						foreach (var property in @interface.Properties)
+						foreach (var property in @interface.AllProperties)
 						{
 #>
 				case "<#= property.Name #>":
@@ -218,7 +199,7 @@ namespace <#= ProxyNamespace #>
 			if (<#= fieldName #> == null)
 				return;
 <#+
-				foreach (var evnt in @interface.Events)
+				foreach (var evnt in @interface.AllEvents)
 				{
 #>
 			<#= fieldName #>.<#= evnt.Name #> -= On<#= evnt.Name #>Handler;
@@ -230,7 +211,7 @@ namespace <#= ProxyNamespace #>
 		private void SubscribeTo<#= propertyName #>()
 		{
 <#+
-				foreach (var evnt in @interface.Events)
+				foreach (var evnt in @interface.AllEvents)
 				{
 #>
 			<#= fieldName #>.<#= evnt.Name #> += On<#= evnt.Name #>Handler;
@@ -240,7 +221,7 @@ namespace <#= ProxyNamespace #>
 		}
 
 <#+
-				foreach (var function in @interface.Functions)
+				foreach (var function in @interface.AllFunctions)
 				{#>
 		<#= function.Signature("") #>
 		{

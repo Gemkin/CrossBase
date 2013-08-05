@@ -9,26 +9,19 @@ Wies Hubbers
 using System;
 using CrossBase.Dispatch;
 using CrossBase.Serialization;
-using Test.CrossBase.CodeGeneration.TestData;
 using CrossBase.CodeGeneration.Attributes;
 using Test.CrossBase.CodeGeneration.TestData;
 
 namespace Test.CrossBase.CodeGeneration.TestData	
 {
-	public interface IDispatchFoekiControllerEx
-	{
-		event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> OekiDoeki;
-		void DoThis();
-		event EventHandler<EventArgs> DoThisStarted;
-		event EventHandler<EventArgs> DoThisFinished;
-	}
-	
-	public partial class DispatchFoekiController: IDispatchFoekiControllerEx
+	public partial class DispatchFoekiController
 	{
 		public IDispatcher UpDispatcher { get; set; }
         public IDispatcher DownDispatcher { get; set; }
         
 		public event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> OekiDoeki;
+		public event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InProgress;
+		public event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InBuilding;
 		public event EventHandler<EventArgs> DoThisStarted;
 		public event EventHandler<EventArgs> DoThisFinished;
 		
@@ -41,6 +34,48 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		private void InvokeDoThisFinished(EventArgs e)
 	    {
 	       	var handler = DoThisFinished;
+	       	if (handler != null) handler(this, e);
+	    }	
+				public event EventHandler<EventArgs> CleanUpStarted;
+		public event EventHandler<EventArgs> CleanUpFinished;
+		
+		private void InvokeCleanUpStarted(EventArgs e)
+	    {
+	       	var handler = CleanUpStarted;
+	       	if (handler != null) handler(this, e);
+	    }
+			
+		private void InvokeCleanUpFinished(EventArgs e)
+	    {
+	       	var handler = CleanUpFinished;
+	       	if (handler != null) handler(this, e);
+	    }	
+				public event EventHandler<EventArgs> BuildStarted;
+		public event EventHandler<EventArgs> BuildFinished;
+		
+		private void InvokeBuildStarted(EventArgs e)
+	    {
+	       	var handler = BuildStarted;
+	       	if (handler != null) handler(this, e);
+	    }
+			
+		private void InvokeBuildFinished(EventArgs e)
+	    {
+	       	var handler = BuildFinished;
+	       	if (handler != null) handler(this, e);
+	    }	
+				public event EventHandler<EventArgs> DisposeStarted;
+		public event EventHandler<EventArgs> DisposeFinished;
+		
+		private void InvokeDisposeStarted(EventArgs e)
+	    {
+	       	var handler = DisposeStarted;
+	       	if (handler != null) handler(this, e);
+	    }
+			
+		private void InvokeDisposeFinished(EventArgs e)
+	    {
+	       	var handler = DisposeFinished;
 	       	if (handler != null) handler(this, e);
 	    }	
 				private  IOekiFoekiController controller;
@@ -69,16 +104,38 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					if (handler != null) handler(this, clone);
 				});
 		}
+		private void OnInProgressHandler(object sender, Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs e)
+		{
+			var clone = e.DeepClone();
+			UpDispatcher.BeginInvoke(() =>
+				{
+					var handler = InProgress;
+					if (handler != null) handler(this, clone);
+				});
+		}
+		private void OnInBuildingHandler(object sender, Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs e)
+		{
+			var clone = e.DeepClone();
+			UpDispatcher.BeginInvoke(() =>
+				{
+					var handler = InBuilding;
+					if (handler != null) handler(this, clone);
+				});
+		}
 		public void UnsubscribeToController()
 		{
 			if (controller == null)
 				return;
 			controller.OekiDoeki -= OnOekiDoekiHandler;
+			controller.InProgress -= OnInProgressHandler;
+			controller.InBuilding -= OnInBuildingHandler;
 		}		
 
 		private void SubscribeToController()
 		{
 			controller.OekiDoeki += OnOekiDoekiHandler;
+			controller.InProgress += OnInProgressHandler;
+			controller.InBuilding += OnInBuildingHandler;
 		}
 
 		public void DoThis()
@@ -93,6 +150,51 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					finally
 					{
 						UpDispatcher.BeginInvoke(() => InvokeDoThisFinished(EventArgs.Empty));
+					}
+				});
+		}
+		public void CleanUp()
+		{
+			DownDispatcher.BeginInvoke(() => 
+				{
+					UpDispatcher.BeginInvoke(() => InvokeCleanUpStarted(EventArgs.Empty));
+					try
+					{
+						controller.CleanUp();
+					}
+					finally
+					{
+						UpDispatcher.BeginInvoke(() => InvokeCleanUpFinished(EventArgs.Empty));
+					}
+				});
+		}
+		public void Build()
+		{
+			DownDispatcher.BeginInvoke(() => 
+				{
+					UpDispatcher.BeginInvoke(() => InvokeBuildStarted(EventArgs.Empty));
+					try
+					{
+						controller.Build();
+					}
+					finally
+					{
+						UpDispatcher.BeginInvoke(() => InvokeBuildFinished(EventArgs.Empty));
+					}
+				});
+		}
+		public void Dispose()
+		{
+			DownDispatcher.BeginInvoke(() => 
+				{
+					UpDispatcher.BeginInvoke(() => InvokeDisposeStarted(EventArgs.Empty));
+					try
+					{
+						controller.Dispose();
+					}
+					finally
+					{
+						UpDispatcher.BeginInvoke(() => InvokeDisposeFinished(EventArgs.Empty));
 					}
 				});
 		}

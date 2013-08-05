@@ -13,8 +13,8 @@ namespace CrossBase.CodeGeneration.Templates
     using System.Collections.Generic;
     using EnvDTE;
     using System.IO;
-    using CodeGeneration.Language;
-    using CodeGeneration.Parsers;
+    using Language;
+    using Parsers;
     using System;
     
     /// <summary>

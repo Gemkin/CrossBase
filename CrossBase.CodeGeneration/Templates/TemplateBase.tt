@@ -3,8 +3,8 @@
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="EnvDTE" #>
 <#@ import namespace="System.IO" #>
-<#@ import namespace="CodeGeneration.Language" #>
-<#@ import namespace="CodeGeneration.Parsers" #>
+<#@ import namespace="Language" #>
+<#@ import namespace="Parsers" #>
 
 <#+
     protected string debugOutput;

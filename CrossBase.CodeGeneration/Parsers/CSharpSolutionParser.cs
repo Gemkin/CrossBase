@@ -18,6 +18,7 @@ namespace CrossBase.CodeGeneration.Parsers
         public List<Project> Projects { get; set; }
         public Dictionary<string, ProjectItem> ProjectItems { get; set; }
         private readonly DTE2 dte2;
+        private Dictionary<Interface, List<CodeInterface2>> unresolvedInterfaces;
 
         public ProjectItem GetProjectItem(string fileName)
         {
@@ -122,6 +123,7 @@ namespace CrossBase.CodeGeneration.Parsers
             Interfaces = new List<Interface>();
             Classes = new List<Class>();
             ProjectItems = new Dictionary<string, ProjectItem>();
+            unresolvedInterfaces = new Dictionary<Interface, List<CodeInterface2>>();
             Console.WriteLine("ParseSolution " + dte2.Solution.FullName);
 
 
@@ -149,6 +151,32 @@ namespace CrossBase.CodeGeneration.Parsers
 
 
             ParseProjects(Projects);
+            ResolveInterfaceBases();
+
+        }
+
+        private void ResolveInterfaceBases()
+        {
+            foreach (var kv in unresolvedInterfaces)
+            {
+                var @interface = kv.Key;
+                foreach (var codeInterface in kv.Value)
+                {
+                    var @namespace = codeInterface.Namespace.Name;
+                    var name = codeInterface.Name;
+                    var baseInterface = Interfaces.Find(i => i.Namespace.Name == @namespace && i.Name == name);
+                    if (baseInterface == null)
+                    {
+                        ParseInterface(codeInterface, new List<Namespace>(), new Namespace { Name = codeInterface.Namespace.Name }, string.Empty);
+                        baseInterface = Interfaces.Find(i => i.Namespace.Name == @namespace && i.Name == name);
+
+                    }
+                    if (baseInterface != null)
+                        @interface.InterfaceBases.Add(baseInterface);
+                }
+            }
+            unresolvedInterfaces.Clear();
+
         }
 
         private static IEnumerable<Project> GetSolutionFolderProjects(Project solutionFolder)
@@ -386,7 +414,7 @@ namespace CrossBase.CodeGeneration.Parsers
         private void ParseInterface(CodeInterface2 codeInterface, List<Namespace> usings, Namespace @namespace, string currentFile)
         {
             Console.WriteLine("ParseInterface" + " " + codeInterface.Name);
-
+            
             var @interface = new Interface { Namespace = @namespace, Name = codeInterface.Name, Usings = usings, Type = codeInterface.Name, FileName = currentFile};
             foreach (CodeAttribute2 codeElement in codeInterface.Attributes)
             {
@@ -413,7 +441,29 @@ namespace CrossBase.CodeGeneration.Parsers
                         break;
                 }
             }
+
+
+            var interfaces = GetUnResolvedInterfaces(codeInterface);
+            if (interfaces.Count > 0)
+            {
+                unresolvedInterfaces.Add(@interface, interfaces);
+            }
             Interfaces.Add(@interface);
+        }
+
+        private  List<CodeInterface2> GetUnResolvedInterfaces(CodeInterface2 @interface)
+        {
+            var interfaces = new List<CodeInterface2>();
+
+            if (@interface.Bases.Count <= 0)
+                return interfaces;
+            
+            foreach (CodeInterface2 baseInterface in @interface.Bases)
+            {
+                interfaces.Add(baseInterface);
+                interfaces.AddRange(GetUnResolvedInterfaces(baseInterface));
+            }
+            return interfaces;
         }
 
         private static Event ParseEvent(CodeEvent codeEvent, string currentFile)
