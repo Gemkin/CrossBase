@@ -109,13 +109,18 @@ Wies Hubbers
 // ReSharper disable PartialMethodWithSinglePart
 // ReSharper disable RedundantNameQualifier
 // ReSharper disable RedundantUsingDirective
+// ReSharper disable SuspiciousTypeConversion.Global
+// ReSharper disable RedundantCast
+#pragma warning disable 649
+#pragma warning disable 183
+
 ");
 
         
         #line default
         #line hidden
         
-        #line 55 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 60 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
     }
 	protected void GenerateFooter()
@@ -124,43 +129,15 @@ Wies Hubbers
         #line default
         #line hidden
         
-        #line 58 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
-this.Write("// ReSharper restore PartialMethodWithSinglePart\r\n// ReSharper restore RedundantN" +
-        "ameQualifier\r\n// ReSharper restore RedundantUsingDirective\r\n");
-
-        
-        #line default
-        #line hidden
-        
-        #line 62 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
-
-    }
-
-	protected void GenerateUsings(Class @class, List<string> namespacesDefaultIncluded)
-    {
-		foreach (var @using in namespacesDefaultIncluded)
-		{
-
-        
-        #line default
-        #line hidden
-        
-        #line 69 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
-this.Write("using ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 70 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(@using));
-
-        
-        #line default
-        #line hidden
-        
-        #line 70 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
-this.Write(";\r\n");
+        #line 63 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+this.Write(@"// ReSharper restore PartialMethodWithSinglePart
+// ReSharper restore RedundantNameQualifier
+// ReSharper restore RedundantUsingDirective
+// ReSharper restore SuspiciousTypeConversion.Global
+// ReSharper restore RedundantCast
+#pragma warning restore 649
+#pragma warning restore 183
+");
 
         
         #line default
@@ -168,12 +145,12 @@ this.Write(";\r\n");
         
         #line 71 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
-		}
+    }
 
-		foreach (string @using in @class.Usings.ToList())
+	protected void GenerateUsings(Class @class, List<string> namespacesDefaultIncluded)
+    {
+		foreach (var @using in namespacesDefaultIncluded)
 		{
-			if (namespacesDefaultIncluded.Contains(@using))
-				continue;
 
         
         #line default
@@ -201,6 +178,40 @@ this.Write(";\r\n");
         #line hidden
         
         #line 80 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+
+		}
+
+		foreach (string @using in @class.Usings.ToList())
+		{
+			if (namespacesDefaultIncluded.Contains(@using))
+				continue;
+
+        
+        #line default
+        #line hidden
+        
+        #line 87 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+this.Write("using ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 88 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(@using));
+
+        
+        #line default
+        #line hidden
+        
+        #line 88 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+this.Write(";\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 89 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
 		}
     }

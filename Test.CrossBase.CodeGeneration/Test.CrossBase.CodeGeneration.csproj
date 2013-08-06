@@ -46,10 +46,6 @@
     <Compile Include="TestData\DispatchFoekiController.IOekiFoekiController.DispatchProxy.g.cs">
       <DependentUpon>DispatchFoekiController.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestData\InvokeFoekiController.cs" />
-    <Compile Include="TestData\InvokeFoekiController.IOekiFoekiController.InvokeProxy.g.cs">
-      <DependentUpon>InvokeFoekiController.cs</DependentUpon>
-    </Compile>
     <Compile Include="TestData\IOekiFoekiController.cs" />
     <Compile Include="TestGenerationOfInvokeProxy.cs" />
     <Compile Include="TestData\OekiData.cs" />

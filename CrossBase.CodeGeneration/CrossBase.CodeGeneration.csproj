@@ -47,6 +47,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\InvokeProxyAttribute.cs" />
     <Compile Include="Attributes\DispatchProxyAttribute.cs" />
     <Compile Include="Attributes\EventPropertyAttribute.cs" />
     <Compile Include="Language\Access.cs" />

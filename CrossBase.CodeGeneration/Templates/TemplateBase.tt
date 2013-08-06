@@ -52,6 +52,11 @@ Wies Hubbers
 // ReSharper disable PartialMethodWithSinglePart
 // ReSharper disable RedundantNameQualifier
 // ReSharper disable RedundantUsingDirective
+// ReSharper disable SuspiciousTypeConversion.Global
+// ReSharper disable RedundantCast
+#pragma warning disable 649
+#pragma warning disable 183
+
 <#+
     }
 	protected void GenerateFooter()
@@ -59,6 +64,10 @@ Wies Hubbers
 // ReSharper restore PartialMethodWithSinglePart
 // ReSharper restore RedundantNameQualifier
 // ReSharper restore RedundantUsingDirective
+// ReSharper restore SuspiciousTypeConversion.Global
+// ReSharper restore RedundantCast
+#pragma warning restore 649
+#pragma warning restore 183
 <#+
     }
 

@@ -19,7 +19,7 @@ namespace CrossBase.CodeGeneration.Language
             return Signature(string.Empty);
         }
 
-        public string CallSignature(string prefix)
+        public string CallSignature(string prefix = "", string postFix = "")
         {
             var param = string.Empty;
 
@@ -30,11 +30,11 @@ namespace CrossBase.CodeGeneration.Language
                     param += ", ";
             }
 
-            return string.Format("{0}{1}({2})", prefix, Name, param);
+            return string.Format("{0}{1}{2}({3})", prefix, Name, postFix, param);
         }
 
 
-        public string Signature(string prefix)
+        public string Signature(string prefix = "", string postFix = "")
         {
             var param = string.Empty;
 
@@ -45,10 +45,10 @@ namespace CrossBase.CodeGeneration.Language
                     param += ", ";
             }
 
-            return string.Format("{0} {1} {2}{3}({4})", Access.ToString().ToLower(), Type, prefix, Name, param);
+            return string.Format("{0} {1} {2}{3}{4}({5})", Access.ToString().ToLower(), Type, prefix, Name, postFix, param);
         }
 
-        public string InterfaceSignature(string prefix)
+        public string InterfaceSignature(string prefix = "", string postFix = "")
         {
             var param = string.Empty;
 
@@ -59,7 +59,7 @@ namespace CrossBase.CodeGeneration.Language
                     param += ", ";
             }
 
-            return string.Format("{0} {1}{2}({3})", Type, prefix, Name, param);
+            return string.Format("{0} {1}{2}{3}({4})", Type, prefix, Name, postFix, param);
         }
 
     }
