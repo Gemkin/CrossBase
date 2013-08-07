@@ -340,7 +340,7 @@ this.Write("\t\t");
         #line hidden
         
         #line 112 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(func.InterfaceSignature(string.Empty, "BeginInvoke")));
+this.Write(this.ToStringHelper.ToStringWithCulture(func.InterfaceSignature()));
 
         
         #line default
@@ -1570,7 +1570,7 @@ this.Write("\t\t");
         #line hidden
         
         #line 330 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(function.Signature("", "BeginInvoke")));
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Signature()));
 
         
         #line default

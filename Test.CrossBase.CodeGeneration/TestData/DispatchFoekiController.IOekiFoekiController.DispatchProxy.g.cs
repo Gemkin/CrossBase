@@ -36,16 +36,16 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		event EventHandler<EventArgs> DisposeStarted;
 		event EventHandler<EventArgs> DisposeFinished;
 		string NameInvoke { get; set; } 
-		void DoThisBeginInvoke();
+		void DoThis();
 		void DoThisInvoke();
-		void DoThisBeginInvoke(int times);
+		void DoThis(int times);
 		void DoThisInvoke(int times);
-		void CleanUpBeginInvoke();
+		void CleanUp();
 		void CleanUpInvoke();
 		System.Collections.Generic.List<System.EventArgs> ProcessEventsInvoke(int bla);
-		void BuildBeginInvoke();
+		void Build();
 		void BuildInvoke();
-		void DisposeBeginInvoke();
+		void Dispose();
 		void DisposeInvoke();
 	}
 
@@ -230,7 +230,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 			controller.InBuilding += OnInBuildingHandler;
 		}
 
-		public void DoThisBeginInvoke()
+		public void DoThis()
 		{
 			DownDispatcher.BeginInvoke(() => 
 				{
@@ -262,7 +262,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 				});
 		}
 				        
-		public void DoThisBeginInvoke(int times)
+		public void DoThis(int times)
 		{
 			DownDispatcher.BeginInvoke(() => 
 				{
@@ -294,7 +294,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 				});
 		}
 				        
-		public void CleanUpBeginInvoke()
+		public void CleanUp()
 		{
 			DownDispatcher.BeginInvoke(() => 
 				{
@@ -344,7 +344,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 				});
 			return result;
 		}
-		public void BuildBeginInvoke()
+		public void Build()
 		{
 			DownDispatcher.BeginInvoke(() => 
 				{
@@ -376,7 +376,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 				});
 		}
 				        
-		public void DisposeBeginInvoke()
+		public void Dispose()
 		{
 			DownDispatcher.BeginInvoke(() => 
 				{

@@ -109,7 +109,7 @@ namespace <#= ProxyNamespace #>
 				{ 
 					if (func.Type == "void")
 					{#>
-		<#= func.InterfaceSignature(string.Empty, "BeginInvoke") #>;
+		<#= func.InterfaceSignature() #>;
 <#+					    
 					}#>
 		<#= func.InterfaceSignature(string.Empty, "Invoke") #>;
@@ -327,7 +327,7 @@ namespace <#= ProxyNamespace #>
 				{
 				    if (function.Type == "void") 
 					{#>
-		<#= function.Signature("", "BeginInvoke") #>
+		<#= function.Signature() #>
 		{
 			DownDispatcher.BeginInvoke(() => 
 				{
