@@ -79,11 +79,19 @@ namespace <#= ProxyNamespace #>
 		<#= @interface.Name #> <#= propertyName #> { get; set; }
 		IDispatcher UpDispatcher { get; set; }
         IDispatcher DownDispatcher { get; set; }
-<#+			foreach (var function in @interface.AllFunctions)
-				{#>
+			
+<#+ 
+				var generatedFunctions = new List<string>();
+				foreach (var function in @interface.AllFunctions)
+				{
+					if (generatedFunctions.Contains(function.Name))
+						continue;
+					generatedFunctions.Add(function.Name);
+				#>
 		event EventHandler<EventArgs> <#= function.Name #>Started;
 		event EventHandler<EventArgs> <#= function.Name #>Finished;
 <#+
+					generatedFunctions.Add(function.Name);
 				}
 
 				foreach (var prop in @interface.AllProperties)
@@ -186,8 +194,14 @@ namespace <#= ProxyNamespace #>
 		}				    
 <#+					}
 				}
+				generatedFunctions.Clear();
 				foreach (var function in @interface.AllFunctions)
-				{#>
+				{
+					if (generatedFunctions.Contains(function.Name))
+						continue;
+					generatedFunctions.Add(function.Name);
+
+				#>
 		public event EventHandler<EventArgs> <#= function.Name #>Started;
 		public event EventHandler<EventArgs> <#= function.Name #>Finished;
 		

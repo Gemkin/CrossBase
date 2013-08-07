@@ -23,5 +23,6 @@ namespace Test.CrossBase.CodeGeneration.TestData
     {
         event EventHandler<OekiFoekiEventArgs> OekiDoeki;
         void DoThis();
+        void DoThis(int times);
     }
 }

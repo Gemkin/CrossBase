@@ -24,6 +24,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		IOekiFoekiController Controller { get; set; }
 		IDispatcher UpDispatcher { get; set; }
         IDispatcher DownDispatcher { get; set; }
+			
 		event EventHandler<EventArgs> DoThisStarted;
 		event EventHandler<EventArgs> DoThisFinished;
 		event EventHandler<EventArgs> CleanUpStarted;
@@ -37,6 +38,8 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		string NameInvoke { get; set; } 
 		void DoThisBeginInvoke();
 		void DoThisInvoke();
+		void DoThisBeginInvoke(int times);
+		void DoThisInvoke(int times);
 		void CleanUpBeginInvoke();
 		void CleanUpInvoke();
 		System.Collections.Generic.List<System.EventArgs> ProcessEventsInvoke(int bla);
@@ -251,6 +254,38 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					try
 					{
 						controller.DoThis();
+					}
+					finally
+					{
+						InvokeDoThisFinished(EventArgs.Empty);
+					}
+				});
+		}
+				        
+		public void DoThisBeginInvoke(int times)
+		{
+			DownDispatcher.BeginInvoke(() => 
+				{
+					UpDispatcher.BeginInvoke(() => InvokeDoThisStarted(EventArgs.Empty));
+					try
+					{
+						controller.DoThis(times);
+					}
+					finally
+					{
+						UpDispatcher.BeginInvoke(() => InvokeDoThisFinished(EventArgs.Empty));
+					}
+				});
+		}
+		public void DoThisInvoke(int times)
+		{
+			
+			DownDispatcher.Invoke(() => 
+				{
+					InvokeDoThisStarted(EventArgs.Empty);
+					try
+					{
+						controller.DoThis(times);
 					}
 					finally
 					{
