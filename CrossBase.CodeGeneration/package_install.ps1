@@ -1,9 +1,7 @@
 param($installPath, $toolsPath, $package, $project)
 [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms");
 
-$project = Get-Project;
-
-if ($project.ProjectName -ne "CrossBase.CodeGeneration") 
+if ($project.Name -ne "CrossBase.CodeGeneration") 
 { 
 	[Windows.Forms.MessageBox]::Show("Error, please install this package only to a project named: 'CrossBase.CodeGeneration'");
 	throw [system.Exception];
