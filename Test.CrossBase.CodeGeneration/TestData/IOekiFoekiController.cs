@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Test.CrossBase.CodeGeneration.TestData
 {
@@ -7,6 +8,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
         string Name { get; set; }
         void CleanUp();
         event EventHandler<OekiFoekiEventArgs> InProgress;
+        List<EventArgs> ProcessEvents(int bla);
 
     }
 

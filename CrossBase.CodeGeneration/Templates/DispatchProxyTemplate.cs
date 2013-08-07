@@ -319,46 +319,62 @@ this.Write("BeginInvoke { get; set; } \r\n");
 
 				foreach (var func in @interface.AllFunctions)
 				{ 
+					if (func.Type == "void")
+					{
         
         #line default
         #line hidden
         
-        #line 101 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 103 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t");
 
         
         #line default
         #line hidden
         
-        #line 102 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 104 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(func.InterfaceSignature(string.Empty, "BeginInvoke")));
 
         
         #line default
         #line hidden
         
-        #line 102 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write(";\r\n\t\t");
-
-        
-        #line default
-        #line hidden
-        
-        #line 103 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(func.InterfaceSignature(string.Empty, "Invoke")));
-
-        
-        #line default
-        #line hidden
-        
-        #line 103 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 104 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n");
 
         
         #line default
         #line hidden
         
-        #line 104 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 105 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+					    
+					}
+        
+        #line default
+        #line hidden
+        
+        #line 106 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 107 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(func.InterfaceSignature(string.Empty, "Invoke")));
+
+        
+        #line default
+        #line hidden
+        
+        #line 107 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(";\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 108 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				}
 
@@ -366,61 +382,61 @@ this.Write(";\r\n");
         #line default
         #line hidden
         
-        #line 106 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 110 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t}\r\n\r\n\tpublic partial class ");
 
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(ProxyName));
 
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(": I");
 
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(ProxyName));
 
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
  if (containsNotifyPropertyChanged){
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(", INotifyPropertyChanged");
 
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 }
         
         #line default
         #line hidden
         
-        #line 109 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 113 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\r\n\t{\r\n\t\tpublic IDispatcher UpDispatcher { get; set; }\r\n        public IDispatcher" +
         " DownDispatcher { get; set; }\r\n        \r\n");
 
@@ -428,49 +444,49 @@ this.Write("\r\n\t{\r\n\t\tpublic IDispatcher UpDispatcher { get; set; }\r\n    
         #line default
         #line hidden
         
-        #line 115 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 119 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 				foreach (var evnt in @interface.AllEvents)
 				{
         
         #line default
         #line hidden
         
-        #line 116 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 120 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tpublic event ");
 
         
         #line default
         #line hidden
         
-        #line 117 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 121 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Type));
 
         
         #line default
         #line hidden
         
-        #line 117 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 121 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 117 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 121 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 117 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 121 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n");
 
         
         #line default
         #line hidden
         
-        #line 118 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 122 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				}
 
@@ -478,7 +494,7 @@ this.Write(";\r\n");
         #line default
         #line hidden
         
-        #line 121 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 125 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				foreach (var prop in @interface.AllProperties)
 				{ 
@@ -488,91 +504,91 @@ this.Write(";\r\n");
         #line default
         #line hidden
         
-        #line 125 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 129 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tprivate ");
 
         
         #line default
         #line hidden
         
-        #line 126 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 130 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 126 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 130 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 126 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 130 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.GetDefaultPrivateFieldName()));
 
         
         #line default
         #line hidden
         
-        #line 126 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 130 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("BeginInvoke;\r\n\t\tpublic ");
 
         
         #line default
         #line hidden
         
-        #line 127 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 127 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 127 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 127 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("BeginInvoke \r\n\t\t{\r\n\t\t\tget\r\n\t\t\t{\r\n\t\t\t\treturn ");
 
         
         #line default
         #line hidden
         
-        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 135 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.GetDefaultPrivateFieldName()));
 
         
         #line default
         #line hidden
         
-        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 135 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t}\r\n\t\t\tset\r\n\t\t\t{\r\n\t\t\t\tif (value is ICloneable)\r\n\t\t\t\t{\r\n\t\t\t\t\tvalue = (");
 
         
         #line default
         #line hidden
         
-        #line 137 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 141 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 137 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 141 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")(clone as ICloneable).Clone();\r\n\t\t\t\t}\r\n\t\t\t\tDownDispatcher.BeginInvoke(() => \r\n\t\t" +
         "\t\t{\r\n\t\t\t\t\tif (value == ");
 
@@ -580,63 +596,63 @@ this.Write(")(clone as ICloneable).Clone();\r\n\t\t\t\t}\r\n\t\t\t\tDownDispatch
         #line default
         #line hidden
         
-        #line 141 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 145 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 141 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 145 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 141 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 145 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 141 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 145 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")\r\n\t\t\t\t\t\treturn;\r\n\t\t\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" = value; \r\n\t\t\t\t});\r\n\r\n\t\t\t}\r\n\t\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 148 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 152 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				    }
 					else
@@ -645,119 +661,119 @@ this.Write(" = value; \r\n\t\t\t\t});\r\n\r\n\t\t\t}\r\n\t\t}\r\n");
         #line default
         #line hidden
         
-        #line 151 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 155 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tprivate ");
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 156 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 156 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 156 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.GetDefaultPrivateFieldName()));
 
         
         #line default
         #line hidden
         
-        #line 152 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 156 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Invoke;\r\n\r\n\t\tpublic ");
 
         
         #line default
         #line hidden
         
-        #line 154 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 158 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 154 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 158 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 154 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 158 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 154 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 158 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Invoke \r\n\t\t{\r\n\t\t\tget\r\n\t\t\t{\r\n\t\t\t\tvar value = ");
 
         
         #line default
         #line hidden
         
-        #line 158 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 162 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.GetDefaultPrivateFieldName()));
 
         
         #line default
         #line hidden
         
-        #line 158 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 162 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Invoke;\r\n\t\t\t\tDownDispatcher.Invoke(() => \r\n\t\t\t\t{\r\n\t\t\t\t\tvalue = ");
 
         
         #line default
         #line hidden
         
-        #line 161 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 161 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 161 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 161 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t\t\tif (value is ICloneable)\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tvalue = (");
 
         
         #line default
         #line hidden
         
-        #line 164 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 168 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 164 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 168 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")(value as ICloneable).Clone();\r\n\t\t\t\t\t}\t\t\t\t\t \r\n\t\t\t\t});\r\n\t\t\t\treturn value;\r\n\t\t\t}\r\n" +
         "\t\t\tset\r\n\t\t\t{\r\n\t\t\t\tif (value is ICloneable)\r\n\t\t\t\t{\r\n\t\t\t\t\tvalue = (");
 
@@ -765,14 +781,14 @@ this.Write(")(value as ICloneable).Clone();\r\n\t\t\t\t\t}\t\t\t\t\t \r\n\t\t\t\
         #line default
         #line hidden
         
-        #line 173 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Type));
 
         
         #line default
         #line hidden
         
-        #line 173 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")(value as ICloneable).Clone();\r\n\t\t\t\t}\r\n\t\t\t\tDownDispatcher.Invoke(() => \r\n\t\t\t\t{\r\n" +
         "\t\t\t\t\tif (value == ");
 
@@ -780,63 +796,63 @@ this.Write(")(value as ICloneable).Clone();\r\n\t\t\t\t}\r\n\t\t\t\tDownDispatch
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 181 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 181 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 181 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 181 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")\r\n\t\t\t\t\t\treturn;\r\n\t\t\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 183 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 183 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 183 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(prop.Name));
 
         
         #line default
         #line hidden
         
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 183 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" = value; \r\n\t\t\t\t});\r\n\t\t\t}\r\n\t\t}\t\t\t\t    \r\n");
 
         
         #line default
         #line hidden
         
-        #line 183 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 187 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 					}
 				}
 				foreach (var function in @interface.AllFunctions)
@@ -845,63 +861,63 @@ this.Write(" = value; \r\n\t\t\t\t});\r\n\t\t\t}\r\n\t\t}\t\t\t\t    \r\n");
         #line default
         #line hidden
         
-        #line 186 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tpublic event EventHandler<EventArgs> ");
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 191 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 187 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 191 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Started;\r\n\t\tpublic event EventHandler<EventArgs> ");
 
         
         #line default
         #line hidden
         
-        #line 188 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 192 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 188 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 192 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Finished;\r\n\t\t\r\n\t\tprivate void Invoke");
 
         
         #line default
         #line hidden
         
-        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 194 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 194 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Started(EventArgs e)\r\n\t    {\r\n\t       \tvar handler = ");
 
         
         #line default
         #line hidden
         
-        #line 192 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 196 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 192 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 196 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Started;\r\n\t       \tif (handler != null) handler(this, e);\r\n\t    }\r\n\t\t\t\r\n\t\tprivate" +
         " void Invoke");
 
@@ -909,35 +925,35 @@ this.Write("Started;\r\n\t       \tif (handler != null) handler(this, e);\r\n\t 
         #line default
         #line hidden
         
-        #line 196 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 200 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 196 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 200 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Finished(EventArgs e)\r\n\t    {\r\n\t       \tvar handler = ");
 
         
         #line default
         #line hidden
         
-        #line 198 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 198 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Finished;\r\n\t       \tif (handler != null) handler(this, e);\r\n\t    }\t\r\n\t\t");
 
         
         #line default
         #line hidden
         
-        #line 201 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 205 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				}
 				
@@ -945,140 +961,140 @@ this.Write("Finished;\r\n\t       \tif (handler != null) handler(this, e);\r\n\t
         #line default
         #line hidden
         
-        #line 203 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 207 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tprivate  ");
 
         
         #line default
         #line hidden
         
-        #line 204 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 208 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@interface.Name));
 
         
         #line default
         #line hidden
         
-        #line 204 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 208 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 204 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 208 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 204 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 208 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t\r\n\t\tpublic ");
 
         
         #line default
         #line hidden
         
-        #line 206 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 210 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@interface.Name));
 
         
         #line default
         #line hidden
         
-        #line 206 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 210 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 206 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 210 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 206 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 210 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\r\n\t\t{\r\n\t\t\tget\r\n\t\t\t{\r\n\t\t\t\treturn ");
 
         
         #line default
         #line hidden
         
-        #line 210 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 214 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 210 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 214 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t}\r\n\t\t\tset\r\n\t\t\t{\t\t\t\r\n\t\t\t\tif (");
 
         
         #line default
         #line hidden
         
-        #line 214 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 218 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 214 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 218 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" != null) \r\n\t\t\t\t\tUnsubscribeTo");
 
         
         #line default
         #line hidden
         
-        #line 215 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 219 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 215 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 219 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("();\r\n\r\n\t\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 217 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 221 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 217 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 221 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" = value;\r\n\t\t\t\tSubscribeTo");
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 222 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 218 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 222 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("();\r\n\t\t\t}\r\n\t\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 221 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				foreach (var evnt in @interface.AllEvents)
 				{
@@ -1089,21 +1105,21 @@ this.Write("();\r\n\t\t\t}\r\n\t\t}\r\n");
         #line default
         #line hidden
         
-        #line 226 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 230 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tprivate void On");
 
         
         #line default
         #line hidden
         
-        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 231 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 231 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Handler(object sender, PropertyChangedEventArgs e)\r\n\t\t{\r\n\t\t\tswitch (e.PropertyNam" +
         "e)\r\n\t\t\t{\r\n");
 
@@ -1111,7 +1127,7 @@ this.Write("Handler(object sender, PropertyChangedEventArgs e)\r\n\t\t{\r\n\t\t\
         #line default
         #line hidden
         
-        #line 231 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 235 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 						foreach (var property in @interface.AllProperties)
 						{
@@ -1120,91 +1136,91 @@ this.Write("Handler(object sender, PropertyChangedEventArgs e)\r\n\t\t{\r\n\t\t\
         #line default
         #line hidden
         
-        #line 234 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t\t\tcase \"");
 
         
         #line default
         #line hidden
         
-        #line 235 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 239 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
 
         
         #line default
         #line hidden
         
-        #line 235 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 239 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\":\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tvar propClone = ");
 
         
         #line default
         #line hidden
         
-        #line 237 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 241 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 237 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 241 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 237 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 241 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
 
         
         #line default
         #line hidden
         
-        #line 237 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 241 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t\t\t\tif (");
 
         
         #line default
         #line hidden
         
-        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 242 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 242 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 242 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(property.Name));
 
         
         #line default
         #line hidden
         
-        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 242 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" is ICloneable)\r\n\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\tpropClone = (");
 
         
         #line default
         #line hidden
         
-        #line 240 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 244 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(property.Type));
 
         
         #line default
         #line hidden
         
-        #line 240 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 244 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")(propClone as ICloneable).Clone();\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\tUpDispatcher.BeginInvoke(() =" +
         ">\r\n\t\t\t\t\t\t\t{\r\n\t\t\t\t\t\t\t\t");
 
@@ -1212,14 +1228,14 @@ this.Write(")(propClone as ICloneable).Clone();\r\n\t\t\t\t\t\t}\r\n\t\t\t\t\t\t
         #line default
         #line hidden
         
-        #line 244 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 248 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(property.GetDefaultPrivateFieldName()));
 
         
         #line default
         #line hidden
         
-        #line 244 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 248 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" = propClone;\r\n\t\t\t\t\t\t\t\tvar handler = PropertyChanged;\r\n\t\t\t\t\t\t\t\tif (handler != nul" +
         "l) handler(this, new PropertyChangedEventArgs(e.PropertyName));\r\n\t\t\t\t\t\t\t});\r\n\r\n\t" +
         "\t\t\t\t\tbreak;\r\n\t\t\t\t\t}\r\n");
@@ -1228,7 +1244,7 @@ this.Write(" = propClone;\r\n\t\t\t\t\t\t\t\tvar handler = PropertyChanged;\r\n\
         #line default
         #line hidden
         
-        #line 251 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 						}
 
@@ -1236,14 +1252,14 @@ this.Write(" = propClone;\r\n\t\t\t\t\t\t\t\tvar handler = PropertyChanged;\r\n\
         #line default
         #line hidden
         
-        #line 253 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 257 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t\t\t\t\r\n\t\t\t}\r\n\t\t}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 258 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 262 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 						
 					}
@@ -1254,35 +1270,35 @@ this.Write("\t\t\t\t\t\r\n\t\t\t}\r\n\t\t}\r\n\r\n");
         #line default
         #line hidden
         
-        #line 263 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 267 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tprivate void On");
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 268 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 268 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Handler(object sender, ");
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 268 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.GenericEventHandlerType));
 
         
         #line default
         #line hidden
         
-        #line 264 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 268 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" e)\r\n\t\t{\r\n\t\t    var eventArgs = e;\r\n\t\t\tif (eventArgs is ICloneable)\r\n\t\t\t{\r\n\t\t\t\tev" +
         "entArgs = (");
 
@@ -1290,14 +1306,14 @@ this.Write(" e)\r\n\t\t{\r\n\t\t    var eventArgs = e;\r\n\t\t\tif (eventArgs is
         #line default
         #line hidden
         
-        #line 269 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 273 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.GenericEventHandlerType));
 
         
         #line default
         #line hidden
         
-        #line 269 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 273 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(")(eventArgs as ICloneable).Clone();\r\n\t\t\t}\r\n\t\t\tUpDispatcher.BeginInvoke(() =>\r\n\t\t\t" +
         "\t{\r\n\t\t\t\t\tvar handler = ");
 
@@ -1305,21 +1321,21 @@ this.Write(")(eventArgs as ICloneable).Clone();\r\n\t\t\t}\r\n\t\t\tUpDispatcher
         #line default
         #line hidden
         
-        #line 273 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 277 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 273 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 277 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t\t\tif (handler != null) handler(this, eventArgs);\r\n\t\t\t\t});\r\n\t\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 277 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 					}
 				}
@@ -1328,42 +1344,42 @@ this.Write(";\r\n\t\t\t\t\tif (handler != null) handler(this, eventArgs);\r\n\t\
         #line default
         #line hidden
         
-        #line 280 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 284 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\tpublic void UnsubscribeTo");
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 285 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write("()\r\n\t\t{\r\n\t\t\tif (");
-
-        
-        #line default
-        #line hidden
-        
-        #line 283 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 283 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write(" == null)\r\n\t\t\t\treturn;\r\n");
 
         
         #line default
         #line hidden
         
         #line 285 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("()\r\n\t\t{\r\n\t\t\tif (");
+
+        
+        #line default
+        #line hidden
+        
+        #line 287 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 287 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(" == null)\r\n\t\t\t\treturn;\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				foreach (var evnt in @interface.AllEvents)
 				{
@@ -1372,56 +1388,56 @@ this.Write(" == null)\r\n\t\t\t\treturn;\r\n");
         #line default
         #line hidden
         
-        #line 288 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 292 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 293 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 293 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 293 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 293 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" -= On");
 
         
         #line default
         #line hidden
         
-        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 293 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 289 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 293 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Handler;\r\n");
 
         
         #line default
         #line hidden
         
-        #line 290 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 294 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				}
 		
@@ -1429,28 +1445,28 @@ this.Write("Handler;\r\n");
         #line default
         #line hidden
         
-        #line 292 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 296 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t}\t\t\r\n\r\n\t\tprivate void SubscribeTo");
 
         
         #line default
         #line hidden
         
-        #line 295 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 299 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 295 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 299 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("()\r\n\t\t{\r\n");
 
         
         #line default
         #line hidden
         
-        #line 297 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				foreach (var evnt in @interface.AllEvents)
 				{
@@ -1459,56 +1475,56 @@ this.Write("()\r\n\t\t{\r\n");
         #line default
         #line hidden
         
-        #line 300 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 304 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(" += On");
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt.Name));
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Handler;\r\n");
 
         
         #line default
         #line hidden
         
-        #line 302 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 306 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				}
 		
@@ -1516,36 +1532,38 @@ this.Write("Handler;\r\n");
         #line default
         #line hidden
         
-        #line 304 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 308 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 307 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 311 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				foreach (var function in @interface.AllFunctions)
 				{
+				    if (function.Type == "void") 
+					{
         
         #line default
         #line hidden
         
-        #line 309 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 315 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t\t");
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 316 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Signature("", "BeginInvoke")));
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 316 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\r\n\t\t{\r\n\t\t\tDownDispatcher.BeginInvoke(() => \r\n\t\t\t\t{\r\n\t\t\t\t\tUpDispatcher.BeginInvoke" +
         "(() => Invoke");
 
@@ -1553,146 +1571,289 @@ this.Write("\r\n\t\t{\r\n\t\t\tDownDispatcher.BeginInvoke(() => \r\n\t\t\t\t{\r\
         #line default
         #line hidden
         
-        #line 314 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 320 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 314 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 320 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("Started(EventArgs.Empty));\r\n\t\t\t\t\ttry\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 317 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 323 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 317 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 323 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 317 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 323 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.CallSignature("")));
 
         
         #line default
         #line hidden
         
-        #line 317 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 323 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t\t\t}\r\n\t\t\t\t\tfinally\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tUpDispatcher.BeginInvoke(() => Invoke");
 
         
         #line default
         #line hidden
         
-        #line 321 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 327 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 321 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write("Finished(EventArgs.Empty));\r\n\t\t\t\t\t}\r\n\t\t\t\t});\r\n\t\t}\r\n\t\t");
+        #line 327 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Finished(EventArgs.Empty));\r\n\t\t\t\t\t}\r\n\t\t\t\t});\r\n\t\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 325 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 331 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+					}
+				    if (function.Type != "void")
+				    { 
+        
+        #line default
+        #line hidden
+        
+        #line 333 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 334 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Type));
+
+        
+        #line default
+        #line hidden
+        
+        #line 334 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(" ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 334 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 334 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Dummy;\r\n\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 335 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Signature("", "Invoke")));
 
         
         #line default
         #line hidden
         
-        #line 325 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write("\r\n\t\t{\r\n\t\t\tDownDispatcher.Invoke(() => \r\n\t\t\t\t{\r\n\t\t\t\t\tInvoke");
+        #line 335 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("\r\n\t\t{\r\n\t\t\tvar result = ");
 
         
         #line default
         #line hidden
         
-        #line 329 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 337 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 329 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write("Started(EventArgs.Empty);\r\n\t\t\t\t\ttry\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t");
+        #line 337 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Dummy;\r\n\t\t\tDownDispatcher.Invoke(() => \r\n\t\t\t\t{\r\n\t\t\t\t\tInvoke");
 
         
         #line default
         #line hidden
         
-        #line 332 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 340 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 340 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Started(EventArgs.Empty);\r\n\t\t\t\t\ttry\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tresult = ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 343 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 332 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 343 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(".");
 
         
         #line default
         #line hidden
         
-        #line 332 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 343 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.CallSignature("")));
 
         
         #line default
         #line hidden
         
-        #line 332 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 343 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(";\r\n\t\t\t\t\t}\r\n\t\t\t\t\tfinally\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tInvoke");
 
         
         #line default
         #line hidden
         
-        #line 336 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 347 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
 
         
         #line default
         #line hidden
         
-        #line 336 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
-this.Write("Finished(EventArgs.Empty);\r\n\t\t\t\t\t}\r\n\t\t\t\t});\r\n\t\t}\r\n\r\n\r\n\r\n");
+        #line 347 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Finished(EventArgs.Empty);\r\n\t\t\t\t\t}\r\n\t\t\t\t});\r\n\t\t\treturn result;\r\n\t\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 343 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 352 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+					}
+				    else
+				    {
+        
+        #line default
+        #line hidden
+        
+        #line 354 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 355 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Signature("", "Invoke")));
+
+        
+        #line default
+        #line hidden
+        
+        #line 355 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("\r\n\t\t{\r\n\t\t\t\r\n\t\t\tDownDispatcher.Invoke(() => \r\n\t\t\t\t{\r\n\t\t\t\t\tInvoke");
+
+        
+        #line default
+        #line hidden
+        
+        #line 360 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 360 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Started(EventArgs.Empty);\r\n\t\t\t\t\ttry\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\t");
+
+        
+        #line default
+        #line hidden
+        
+        #line 363 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 363 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(".");
+
+        
+        #line default
+        #line hidden
+        
+        #line 363 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.CallSignature("")));
+
+        
+        #line default
+        #line hidden
+        
+        #line 363 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(";\r\n\t\t\t\t\t}\r\n\t\t\t\t\tfinally\r\n\t\t\t\t\t{\r\n\t\t\t\t\t\tInvoke");
+
+        
+        #line default
+        #line hidden
+        
+        #line 367 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(function.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 367 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+this.Write("Finished(EventArgs.Empty);\r\n\t\t\t\t\t}\r\n\t\t\t\t});\r\n\t\t}\r\n\t\t\t\t        \r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 372 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+				    }						
 				}
         
         #line default
         #line hidden
         
-        #line 343 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 373 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 this.Write("\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 347 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
+        #line 377 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\DispatchProxyTemplate.tt"
 
 				GenerateFooter();
 				debugOutput += string.Format("Generated {0}\r\n", outputFileName);

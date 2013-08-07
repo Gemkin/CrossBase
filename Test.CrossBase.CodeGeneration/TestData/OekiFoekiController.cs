@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Test.CrossBase.CodeGeneration.TestData
 {
@@ -26,6 +27,13 @@ namespace Test.CrossBase.CodeGeneration.TestData
         }
 
         public event EventHandler<OekiFoekiEventArgs> InProgress;
+        public List<EventArgs> ProcessEvents(int bla)
+        {
+            throw new NotImplementedException();
+            
+
+        }
+
         public void Dispose()
         {
             throw new NotImplementedException();

@@ -28,6 +28,8 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		event EventHandler<EventArgs> DoThisFinished;
 		event EventHandler<EventArgs> CleanUpStarted;
 		event EventHandler<EventArgs> CleanUpFinished;
+		event EventHandler<EventArgs> ProcessEventsStarted;
+		event EventHandler<EventArgs> ProcessEventsFinished;
 		event EventHandler<EventArgs> BuildStarted;
 		event EventHandler<EventArgs> BuildFinished;
 		event EventHandler<EventArgs> DisposeStarted;
@@ -37,6 +39,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		void DoThisInvoke();
 		void CleanUpBeginInvoke();
 		void CleanUpInvoke();
+		System.Collections.Generic.List<System.EventArgs> ProcessEventsInvoke(int bla);
 		void BuildBeginInvoke();
 		void BuildInvoke();
 		void DisposeBeginInvoke();
@@ -108,6 +111,20 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		private void InvokeCleanUpFinished(EventArgs e)
 	    {
 	       	var handler = CleanUpFinished;
+	       	if (handler != null) handler(this, e);
+	    }	
+				public event EventHandler<EventArgs> ProcessEventsStarted;
+		public event EventHandler<EventArgs> ProcessEventsFinished;
+		
+		private void InvokeProcessEventsStarted(EventArgs e)
+	    {
+	       	var handler = ProcessEventsStarted;
+	       	if (handler != null) handler(this, e);
+	    }
+			
+		private void InvokeProcessEventsFinished(EventArgs e)
+	    {
+	       	var handler = ProcessEventsFinished;
 	       	if (handler != null) handler(this, e);
 	    }	
 				public event EventHandler<EventArgs> BuildStarted;
@@ -227,6 +244,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		}
 		public void DoThisInvoke()
 		{
+			
 			DownDispatcher.Invoke(() => 
 				{
 					InvokeDoThisStarted(EventArgs.Empty);
@@ -240,9 +258,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					}
 				});
 		}
-
-
-
+				        
 		public void CleanUpBeginInvoke()
 		{
 			DownDispatcher.BeginInvoke(() => 
@@ -260,6 +276,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		}
 		public void CleanUpInvoke()
 		{
+			
 			DownDispatcher.Invoke(() => 
 				{
 					InvokeCleanUpStarted(EventArgs.Empty);
@@ -273,9 +290,25 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					}
 				});
 		}
-
-
-
+				        
+		System.Collections.Generic.List<System.EventArgs> ProcessEventsDummy;
+		public System.Collections.Generic.List<System.EventArgs> ProcessEventsInvoke(int bla)
+		{
+			var result = ProcessEventsDummy;
+			DownDispatcher.Invoke(() => 
+				{
+					InvokeProcessEventsStarted(EventArgs.Empty);
+					try
+					{
+						result = controller.ProcessEvents(bla);
+					}
+					finally
+					{
+						InvokeProcessEventsFinished(EventArgs.Empty);
+					}
+				});
+			return result;
+		}
 		public void BuildBeginInvoke()
 		{
 			DownDispatcher.BeginInvoke(() => 
@@ -293,6 +326,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		}
 		public void BuildInvoke()
 		{
+			
 			DownDispatcher.Invoke(() => 
 				{
 					InvokeBuildStarted(EventArgs.Empty);
@@ -306,9 +340,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					}
 				});
 		}
-
-
-
+				        
 		public void DisposeBeginInvoke()
 		{
 			DownDispatcher.BeginInvoke(() => 
@@ -326,6 +358,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		}
 		public void DisposeInvoke()
 		{
+			
 			DownDispatcher.Invoke(() => 
 				{
 					InvokeDisposeStarted(EventArgs.Empty);
@@ -339,9 +372,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 					}
 				});
 		}
-
-
-
+				        
 	}
 }
 

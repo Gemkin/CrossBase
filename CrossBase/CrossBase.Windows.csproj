@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C5">
-      <HintPath>..\packages\C5.1.0.2.0\lib\net40\C5.dll</HintPath>
+    <Reference Include="C5, Version=2.2.4881.16939, Culture=neutral, PublicKeyToken=282361b99ded7e8e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\C5.2.2.4881.16939\lib\portable-win+net40+sl40+wp+Xbox40\C5.dll</HintPath>
     </Reference>
     <Reference Include="Plossum CommandLine">
       <HintPath>..\packages\Plossum.CommandLine.0.3.0.14\lib\net40\Plossum CommandLine.dll</HintPath>
@@ -62,7 +63,7 @@
     <Compile Include="Platform.Shared\BinarySerializer.cs" />
     <Compile Include="Platform.Shared\FileSystemManager.cs" />
     <Compile Include="Platform.Shared\ISystemServicesConstructor.cs" />
-    <Compile Include="Platform.Shared\SystemServicesesConstructor.cs" />
+    <Compile Include="Platform.Shared\SystemServicesConstructor.cs" />
     <Compile Include="Platform.Shared\ThreadManager.cs" />
     <Compile Include="Properties\AssemblyInfoWindows.cs" />
     <Compile Include="Random\DefaultRandomManager.cs" />

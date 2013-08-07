@@ -98,8 +98,12 @@ namespace <#= ProxyNamespace #>
 				}
 
 				foreach (var func in @interface.AllFunctions)
-				{ #>
+				{ 
+					if (func.Type == "void")
+					{#>
 		<#= func.InterfaceSignature(string.Empty, "BeginInvoke") #>;
+<#+					    
+					}#>
 		<#= func.InterfaceSignature(string.Empty, "Invoke") #>;
 <#+
 				}
@@ -306,7 +310,9 @@ namespace <#= ProxyNamespace #>
 
 <#+
 				foreach (var function in @interface.AllFunctions)
-				{#>
+				{
+				    if (function.Type == "void") 
+					{#>
 		<#= function.Signature("", "BeginInvoke") #>
 		{
 			DownDispatcher.BeginInvoke(() => 
@@ -322,8 +328,33 @@ namespace <#= ProxyNamespace #>
 					}
 				});
 		}
+<#+					}
+				    if (function.Type != "void")
+				    { #>
+		<#= function.Type #> <#= function.Name #>Dummy;
 		<#= function.Signature("", "Invoke") #>
 		{
+			var result = <#= function.Name #>Dummy;
+			DownDispatcher.Invoke(() => 
+				{
+					Invoke<#= function.Name #>Started(EventArgs.Empty);
+					try
+					{
+						result = <#= fieldName #>.<#= function.CallSignature("") #>;
+					}
+					finally
+					{
+						Invoke<#= function.Name #>Finished(EventArgs.Empty);
+					}
+				});
+			return result;
+		}
+<#+					}
+				    else
+				    {#>
+		<#= function.Signature("", "Invoke") #>
+		{
+			
 			DownDispatcher.Invoke(() => 
 				{
 					Invoke<#= function.Name #>Started(EventArgs.Empty);
@@ -337,10 +368,9 @@ namespace <#= ProxyNamespace #>
 					}
 				});
 		}
-
-
-
-<#+				}#>
+				        
+<#+				    }						
+				}#>
 	}
 }
 
