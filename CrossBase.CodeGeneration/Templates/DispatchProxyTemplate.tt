@@ -80,8 +80,15 @@ namespace <#= ProxyNamespace #>
 		IDispatcher UpDispatcher { get; set; }
         IDispatcher DownDispatcher { get; set; }
 			
-<#+ 
-				var generatedFunctions = new List<string>();
+<#+
+
+			    foreach (var evnt in @interface.AllEvents)
+			    {#>
+					event <#= evnt.Type #> <#= evnt.Name #>;	
+<#+
+			    }
+
+			    var generatedFunctions = new List<string>();
 				foreach (var function in @interface.AllFunctions)
 				{
 					if (generatedFunctions.Contains(function.Name))
