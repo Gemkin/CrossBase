@@ -739,7 +739,7 @@ this.Write("\t\t\t}\r\n        }\r\n\t\r\n");
         #line hidden
         
         #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\t\tprotected void On");
+this.Write("\t\tprotected virtual void On");
 
         
         #line default
@@ -767,7 +767,7 @@ this.Write(this.ToStringHelper.ToStringWithCulture(changingEventArgs));
         #line hidden
         
         #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" e) {}\r\n\t\tprotected void On");
+this.Write(" e) {}\r\n\t\tprotected virtual void On");
 
         
         #line default

@@ -162,8 +162,8 @@ namespace <#= @class.Namespace.Name #>
 <#+ 
 		if (GenerateForEventProperty(generationMode))
 		{
-#>		protected void On<#=propertyName#>Changing(<#=changingEventArgs#> e) {}
-		protected void On<#=propertyName#>Changed(<#=changedEventArgs#> e) {}
+#>		protected virtual void On<#=propertyName#>Changing(<#=changingEventArgs#> e) {}
+		protected virtual void On<#=propertyName#>Changed(<#=changedEventArgs#> e) {}
 <#+ 
         }
 		if (generateSetters)
