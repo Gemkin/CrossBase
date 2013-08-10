@@ -128,7 +128,7 @@ namespace <#= @class.Namespace.Name #>
 		{
 #>				var changingEventArgs = new <#=changingEventArgs #> { Old<#=propertyName #> = old, New<#=propertyName #> = value };
 				
-				On<#=propertyName #>Changing(changingEventArgs);
+				OnBase<#=propertyName #>Changing(changingEventArgs);
                 if (changingEventArgs.Cancel)
                     return;
 					
@@ -146,7 +146,7 @@ namespace <#= @class.Namespace.Name #>
 		{
 #>
                 var changedEventArgs = new <#=changedEventArgs#> { Old<#=propertyName#> = old, New<#=propertyName#> = value };
-				On<#=propertyName#>Changed(changedEventArgs);
+				OnBase<#=propertyName#>Changed(changedEventArgs);
                 Invoke<#=propertyName#>Changed(changedEventArgs);
 <#+ 
         }
@@ -162,8 +162,8 @@ namespace <#= @class.Namespace.Name #>
 <#+ 
 		if (GenerateForEventProperty(generationMode))
 		{
-#>		protected virtual void On<#=propertyName#>Changing(<#=changingEventArgs#> e) {}
-		protected virtual void On<#=propertyName#>Changed(<#=changedEventArgs#> e) {}
+#>		partial void OnBase<#=propertyName#>Changing(<#=changingEventArgs#> e);
+		partial void OnBase<#=propertyName#>Changed(<#=changedEventArgs#> e);
 <#+ 
         }
 		if (generateSetters)
