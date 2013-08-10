@@ -1328,10 +1328,21 @@ this.Write(this.ToStringHelper.ToStringWithCulture(@class.Name));
         #line hidden
         
         #line 318 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\r\n    {\r\n\t\tpublic event PropertyChangedEventHandler PropertyChanged;\r\n\r\n\t\tprivate" +
-        " void NotifyPropertyChanged(String info)\r\n\t\t{\r\n\t\t\tif (PropertyChanged != null)\r\n" +
-        "\t\t\t{\r\n\t\t\t\tPropertyChanged(this, new PropertyChangedEventArgs(info));\r\n\t\t\t}\r\n\t\t}\r" +
-        "\n\t}\r\n}\r\n\r\n");
+this.Write(@"
+    {
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		protected virtual void NotifyPropertyChanged(String info)
+		{
+			if (PropertyChanged != null)
+			{
+				PropertyChanged(this, new PropertyChangedEventArgs(info));
+			}
+		}
+	}
+}
+
+");
 
         
         #line default
