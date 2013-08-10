@@ -6,6 +6,8 @@
 <#+
 	public override void Render()
 	{
+
+
 	    Name = "EventProperty Generator";
 		debugOutput = string.Empty;
 		var classes = Parser.GetAllClassesThatContainPrivateFieldWithAnAttribute("EventProperty");
@@ -17,6 +19,8 @@
 
 	    base.Render();
 	}
+
+	
 
 	private void GenerateClass(Class @class)
     {
@@ -36,6 +40,7 @@
 		}
 		
 		GenerateNotifyChanged(@class, fields);
+		
 		GenerateNotifyChangedInterface(@class, fields);
 
 		foreach (var field in fields)
@@ -231,12 +236,29 @@ namespace <#= @class.Namespace.Name #>
 		return generationMode;
     }
 
+	private bool GetNotifyChangedGenerationSkipForClass(List<Field> fields)
+	{
+		foreach(var field in fields)
+        {
+			var attribute = field.Attributes.Find(a=>a.Name == "EventProperty");
+			var skipS = GetStringArgumentFromAttribute(attribute, "GenerateNotifyChangedGenerationSkip", null);
+
+			if (skipS != null)
+			{
+			    return true;
+			}
+        }
+
+		return false;
+    }
+
+	
+
 	public void GenerateNotifyChangedInterface(Class @class, List<Field> fields)
     {
 		var generationMode = GetGenerationModeForClass(fields);
 		if (!GenerateForNotifyProperty(generationMode))
 			return;
-		
 		var fileName = @class.FileWithShortestName();
 		var projectItem = Parser.GetProjectItem(fileName);
 		var outputFileName = fileName.Replace(".cs", ".EventPropertyInterface.g.cs");
@@ -280,6 +302,9 @@ namespace <#= @class.Namespace.Name #>
 		if (!GenerateForNotifyProperty(generationMode))
 			return;
 		
+		if (GetNotifyChangedGenerationSkipForClass(fields))
+	        return;
+
 		var fileName = @class.FileWithShortestName();
 		var projectItem = Parser.GetProjectItem(fileName);
 		var outputFileName = fileName.Replace(".cs", ".PropertyEvents.g.cs");

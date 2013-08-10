@@ -47,7 +47,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 
 				var changingEventArgs = new OekiFoekiControllerAhhChangingEventArgs { OldAhh = old, NewAhh = value };
 				
-				OnAhhChanging(changingEventArgs);
+				OnBaseAhhChanging(changingEventArgs);
                 if (changingEventArgs.Cancel)
                     return;
 					
@@ -58,14 +58,14 @@ namespace Test.CrossBase.CodeGeneration.TestData
 				ahh = value;
 				
                 var changedEventArgs = new OekiFoekiControllerAhhChangedEventArgs { OldAhh = old, NewAhh = value };
-				OnAhhChanged(changedEventArgs);
+				OnBaseAhhChanged(changedEventArgs);
                 InvokeAhhChanged(changedEventArgs);
 				NotifyPropertyChanged("Ahh");
 			}
         }
 	
-		protected void OnAhhChanging(OekiFoekiControllerAhhChangingEventArgs e) {}
-		protected void OnAhhChanged(OekiFoekiControllerAhhChangedEventArgs e) {}
+		partial void OnBaseAhhChanging(OekiFoekiControllerAhhChangingEventArgs e);
+		partial void OnBaseAhhChanged(OekiFoekiControllerAhhChangedEventArgs e);
 	}
     
 	public class OekiFoekiControllerAhhChangingEventArgs : OekiFoekiControllerAhhChangedEventArgs

@@ -7,6 +7,10 @@ namespace Test.CrossBase.CodeGeneration.TestData
     public partial class OekiFoekiController : IOekiFoekiController
     {
         [EventProperty]
+        private string ohh;
+
+        
+        [EventProperty]
         private string ahh;
 
         public event EventHandler<OekiFoekiEventArgs> OekiDoeki;
