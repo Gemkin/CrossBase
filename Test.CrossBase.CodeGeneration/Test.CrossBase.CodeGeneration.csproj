@@ -47,6 +47,15 @@
       <DependentUpon>DispatchFoekiController.cs</DependentUpon>
     </Compile>
     <Compile Include="TestData\IOekiFoekiController.cs" />
+    <Compile Include="TestData\OekiFoekiController.AhhEventProperty.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\OekiFoekiController.EventPropertyInterface.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\OekiFoekiController.PropertyEvents.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestGenerationOfInvokeProxy.cs" />
     <Compile Include="TestData\OekiData.cs" />
     <Compile Include="TestData\OekiFoekiController.cs" />

@@ -162,8 +162,8 @@ namespace <#= @class.Namespace.Name #>
 <#+ 
 		if (GenerateForEventProperty(generationMode))
 		{
-#>		partial void On<#=propertyName#>Changing(<#=changingEventArgs#> e);
-		partial void On<#=propertyName#>Changed(<#=changedEventArgs#> e);
+#>		protected void On<#=propertyName#>Changing(<#=changingEventArgs#> e) {}
+		protected void On<#=propertyName#>Changed(<#=changedEventArgs#> e) {}
 <#+ 
         }
 		if (generateSetters)

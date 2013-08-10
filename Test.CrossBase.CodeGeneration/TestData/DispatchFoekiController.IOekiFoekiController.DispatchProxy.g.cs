@@ -25,6 +25,9 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		IDispatcher UpDispatcher { get; set; }
         IDispatcher DownDispatcher { get; set; }
 			
+					event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> OekiDoeki;	
+					event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InProgress;	
+					event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InBuilding;	
 		event EventHandler<EventArgs> DoThisStarted;
 		event EventHandler<EventArgs> DoThisFinished;
 		event EventHandler<EventArgs> CleanUpStarted;

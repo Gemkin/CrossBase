@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using CrossBase.CodeGeneration.Attributes;
 
 namespace Test.CrossBase.CodeGeneration.TestData
 {
-    public class OekiFoekiController : IOekiFoekiController
+    public partial class OekiFoekiController : IOekiFoekiController
     {
+        [EventProperty]
+        private string ahh;
+
         public event EventHandler<OekiFoekiEventArgs> OekiDoeki;
 
         protected virtual void OnOekiDoeki(OekiFoekiEventArgs e)
@@ -17,6 +21,11 @@ namespace Test.CrossBase.CodeGeneration.TestData
         public void DoThis()
         {
             OnOekiDoeki(new OekiFoekiEventArgs {Data = new OekiData {DadDa = "BlaBlaBla"}});
+        }
+
+        public void DoThis(int times)
+        {
+            throw new NotImplementedException();
         }
 
         public string Name { get; set; }
