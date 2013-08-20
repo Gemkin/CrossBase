@@ -125,9 +125,23 @@ namespace <#= ProxyNamespace #>
 #>
 	}
 
+
+
+
 	public partial class <#= ProxyName  #>: I<#= ProxyName  #> <#+ if (containsNotifyPropertyChanged){#>, INotifyPropertyChanged<#+}#>
 
 	{
+		protected T GetCloneIfPossible<T>(T obj)
+		{
+			Object x = obj;
+ 
+			if (x is ICloneable)
+			{
+				var cloneable = (object) x as ICloneable;
+				x = cloneable.Clone();
+			}
+			return (T)x;
+		}
 		public IDispatcher UpDispatcher { get; set; }
         public IDispatcher DownDispatcher { get; set; }
         
@@ -151,10 +165,7 @@ namespace <#= ProxyNamespace #>
 			}
 			set
 			{
-				if (value is ICloneable)
-				{
-					value = (<#= prop.Type #>)(clone as ICloneable).Clone();
-				}
+				value = GetCloneIfPossible(value);
 				DownDispatcher.BeginInvoke(() => 
 				{
 					if (value == <#= fieldName #>.<#= prop.Name #>)
@@ -177,20 +188,15 @@ namespace <#= ProxyNamespace #>
 				var value = <#= prop.GetDefaultPrivateFieldName() #>Invoke;
 				DownDispatcher.Invoke(() => 
 				{
+					
 					value = <#= fieldName #>.<#= prop.Name #>;
-					if (value is ICloneable)
-					{
-						value = (<#= prop.Type #>)(value as ICloneable).Clone();
-					}					 
+					value = GetCloneIfPossible(value);									 
 				});
 				return value;
 			}
 			set
 			{
-				if (value is ICloneable)
-				{
-					value = (<#= prop.Type #>)(value as ICloneable).Clone();
-				}
+				value = GetCloneIfPossible(value);
 				DownDispatcher.Invoke(() => 
 				{
 					if (value == <#= fieldName #>.<#= prop.Name #>)
@@ -260,10 +266,7 @@ namespace <#= ProxyNamespace #>
 				case "<#= property.Name #>":
 					{
 						var propClone = <#= fieldName #>.<#= property.Name #>;
-						if (<#= fieldName #>.<#= property.Name #> is ICloneable)
-						{
-							propClone = (<#= property.Type #>)(propClone as ICloneable).Clone();
-						}
+						propClone = GetCloneIfPossible(propClone);
 						UpDispatcher.BeginInvoke(() =>
 							{
 								<#= property.GetDefaultPrivateFieldName() #> = propClone;
@@ -289,10 +292,7 @@ namespace <#= ProxyNamespace #>
 		private void On<#= evnt.Name #>Handler(object sender, <#= evnt.GenericEventHandlerType #> e)
 		{
 		    var eventArgs = e;
-			if (eventArgs is ICloneable)
-			{
-				eventArgs = (<#= evnt.GenericEventHandlerType #>)(eventArgs as ICloneable).Clone();
-			}
+			eventArgs = GetCloneIfPossible(eventArgs);
 			UpDispatcher.BeginInvoke(() =>
 				{
 					var handler = <#= evnt.Name #>;
