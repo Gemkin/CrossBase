@@ -358,7 +358,7 @@ namespace CrossBase.CodeGeneration.Parsers
                         @class.Functions.Add(function);
                         break;
                     case vsCMElement.vsCMElementProperty:
-                        var property = ParseProperty((CodeProperty2)element, currentFile);
+                        var property = ParseProperty((CodeProperty)element, currentFile);
                         @class.Properties.Add(property);
                         break;
                     case vsCMElement.vsCMElementEvent:
@@ -430,7 +430,7 @@ namespace CrossBase.CodeGeneration.Parsers
                         @interface.Functions.Add(function);
                         break;
                     case vsCMElement.vsCMElementProperty:
-                        var property = ParseProperty((CodeProperty2) element, currentFile);
+                        var property = ParseProperty((CodeProperty) element, currentFile);
                         @interface.Properties.Add(property); 
                         break;
                     case vsCMElement.vsCMElementEvent:
@@ -473,7 +473,7 @@ namespace CrossBase.CodeGeneration.Parsers
             return @event;
         }
 
-        private static Property ParseProperty(CodeProperty2 codeProperty, string currentFile)
+        private static Property ParseProperty(CodeProperty codeProperty, string currentFile)
         {
             var property = new Property { Name = codeProperty.Name, Type = codeProperty.Type.AsString, Access = codeProperty.Access.Convert(), FileName = currentFile };
             Console.WriteLine("ParseProperty" + " " + codeProperty.Name + " " + codeProperty.Type.AsString);
