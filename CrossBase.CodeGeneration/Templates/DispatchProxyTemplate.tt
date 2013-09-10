@@ -8,13 +8,13 @@
 	public string InterfaceName;
 	public string ProxyNamespace;
 	public List<string> CustomDefaultNamespaces;
-    private string attributeName;
+	private string attributeName;
 
-    public override void Render()
+	public override void Render()
 	{
 		debugOutput = string.Empty;
-        attributeName = "DispatchProxy";
-        var classes = Parser.GetAllClassesThatHaveAnAttribute(attributeName);
+		attributeName = "DispatchProxy";
+		var classes = Parser.GetAllClassesThatHaveAnAttribute(attributeName);
 
 		foreach (var @class in classes)
 		{
@@ -22,7 +22,7 @@
 			{
 				if (attribute.Name != attributeName)
 					continue; 
-						
+
 				ProxyName = @class.Name;
 				ProxyNamespace = @class.Namespace.Name;
 				InterfaceName = attribute.GetArgument("InterfaceName");
@@ -45,11 +45,11 @@
 					continue;
 				}
 
-			    var useDefaultRule = false;
+				var useDefaultRule = false;
 				if (string.IsNullOrEmpty(ClassName))
 				{
 					debugOutput += string.Format("ClassName to proxy not set on " + attributeName + " attribute on class {0}, using default name derived from interface name\r\n", @class.Name);
-				    useDefaultRule = true;
+					useDefaultRule = true;
 				}
 
 
@@ -57,15 +57,15 @@
 				var propertyName = useDefaultRule? @interface.GetDefaultPropertyName() : ClassName;
 
 
-			    var containsNotifyPropertyChanged = @interface.AllEvents.Exists(s => s.Name == "PropertyChanged");
+				var containsNotifyPropertyChanged = @interface.AllEvents.Exists(s => s.Name == "PropertyChanged");
 
 				GenerateHeader();
-			    var usings = new List<string>
-			        {
-			            "System",
-			            "CrossBase.Dispatch",
-			            "CrossBase.Serialization",
-			        };
+				var usings = new List<string>
+					{
+						"System",
+						"CrossBase.Dispatch",
+						"CrossBase.Serialization",
+					};
 				if (containsNotifyPropertyChanged)
 					usings.Add("System.ComponentModel");
 				GenerateUsings(@class, usings);
@@ -78,17 +78,17 @@ namespace <#= ProxyNamespace #>
 	{
 		<#= @interface.Name #> <#= propertyName #> { get; set; }
 		IDispatcher UpDispatcher { get; set; }
-        IDispatcher DownDispatcher { get; set; }
-			
+		IDispatcher DownDispatcher { get; set; }
+
 <#+
 
-			    foreach (var evnt in @interface.AllEvents)
-			    {#>
-					event <#= evnt.Type #> <#= evnt.Name #>;	
+				foreach (var evnt in @interface.AllEvents)
+				{#>
+					event <#= evnt.Type #> <#= evnt.Name #>;
 <#+
-			    }
+				}
 
-			    var generatedFunctions = new List<string>();
+				var generatedFunctions = new List<string>();
 				foreach (var function in @interface.AllFunctions)
 				{
 					if (generatedFunctions.Contains(function.Name))
@@ -117,16 +117,13 @@ namespace <#= ProxyNamespace #>
 					if (func.Type == "void")
 					{#>
 		<#= func.InterfaceSignature() #>;
-<#+					    
+<#+
 					}#>
 		<#= func.InterfaceSignature(string.Empty, "Invoke") #>;
 <#+
 				}
 #>
 	}
-
-
-
 
 	public partial class <#= ProxyName  #>: I<#= ProxyName  #> <#+ if (containsNotifyPropertyChanged){#>, INotifyPropertyChanged<#+}#>
 
@@ -143,8 +140,8 @@ namespace <#= ProxyNamespace #>
 			return (T)x;
 		}
 		public IDispatcher UpDispatcher { get; set; }
-        public IDispatcher DownDispatcher { get; set; }
-        
+		public IDispatcher DownDispatcher { get; set; }
+
 <#+				foreach (var evnt in @interface.AllEvents)
 				{#>
 		public event <#= evnt.Type #> <#= evnt.Name #>;
@@ -185,26 +182,46 @@ namespace <#= ProxyNamespace #>
 		{
 			get
 			{
+				Exception exception = null;
 				var value = <#= prop.GetDefaultPrivateFieldName() #>Invoke;
 				DownDispatcher.Invoke(() => 
 				{
-					
-					value = <#= fieldName #>.<#= prop.Name #>;
-					value = GetCloneIfPossible(value);									 
+					try
+					{
+						value = <#= fieldName #>.<#= prop.Name #>;
+						value = GetCloneIfPossible(value);									 
+					}
+					catch (Exception ex)
+					{
+						exception = ex;
+					}
 				});
+				if (exception != null)
+					throw exception;
 				return value;
 			}
 			set
 			{
+				Exception exception = null;
 				value = GetCloneIfPossible(value);
 				DownDispatcher.Invoke(() => 
 				{
-					if (value == <#= fieldName #>.<#= prop.Name #>)
-						return;
-					<#= fieldName #>.<#= prop.Name #> = value; 
+					try
+					{
+						if (value == <#= fieldName #>.<#= prop.Name #>)
+							return;
+						<#= fieldName #>.<#= prop.Name #> = value; 
+					}
+					catch (Exception ex)
+					{
+						exception = ex;
+					}
 				});
+
+				if (exception != null)
+					throw exception;
 			}
-		}				    
+		}
 <#+					}
 				}
 				generatedFunctions.Clear();
@@ -219,21 +236,21 @@ namespace <#= ProxyNamespace #>
 		public event EventHandler<EventArgs> <#= function.Name #>Finished;
 		
 		private void Invoke<#= function.Name #>Started(EventArgs e)
-	    {
-	       	var handler = <#= function.Name #>Started;
-	       	if (handler != null) handler(this, e);
-	    }
-			
+		{
+		var handler = <#= function.Name #>Started;
+		if (handler != null) handler(this, e);
+		}
+
 		private void Invoke<#= function.Name #>Finished(EventArgs e)
-	    {
-	       	var handler = <#= function.Name #>Finished;
-	       	if (handler != null) handler(this, e);
-	    }	
+		{
+			var handler = <#= function.Name #>Finished;
+			if (handler != null) handler(this, e);
+		}
 		<#+
 				}
 				#>
 		private  <#= @interface.Name #> <#= fieldName #>;
-			
+
 		public <#=  @interface.Name #> <#= propertyName #>
 		{
 			get
@@ -291,7 +308,7 @@ namespace <#= ProxyNamespace #>
 #>
 		private void On<#= evnt.Name #>Handler(object sender, <#= evnt.GenericEventHandlerType #> e)
 		{
-		    var eventArgs = e;
+			var eventArgs = e;
 			eventArgs = GetCloneIfPossible(eventArgs);
 			UpDispatcher.BeginInvoke(() =>
 				{
@@ -332,7 +349,7 @@ namespace <#= ProxyNamespace #>
 <#+
 				foreach (var function in @interface.AllFunctions)
 				{
-				    if (function.Type == "void") 
+					if (function.Type == "void") 
 					{#>
 		<#= function.Signature() #>
 		{
@@ -350,12 +367,13 @@ namespace <#= ProxyNamespace #>
 				});
 		}
 <#+					}
-				    if (function.Type != "void")
-				    { #>
+					if (function.Type != "void")
+					{ #>
 		<#= function.Type #> <#= function.Name #>Dummy;
 		<#= function.Signature("", "Invoke") #>
 		{
 			var result = <#= function.Name #>Dummy;
+			Exception exception = null;
 			DownDispatcher.Invoke(() => 
 				{
 					Invoke<#= function.Name #>Started(EventArgs.Empty);
@@ -363,18 +381,25 @@ namespace <#= ProxyNamespace #>
 					{
 						result = <#= fieldName #>.<#= function.CallSignature("") #>;
 					}
+					catch(Exception ex)
+					{
+						exception = ex;
+					}
 					finally
 					{
 						Invoke<#= function.Name #>Finished(EventArgs.Empty);
 					}
 				});
+			if (exception != null)
+				throw exception;
 			return result;
 		}
 <#+					}
-				    else
-				    {#>
+					else
+					{#>
 		<#= function.Signature("", "Invoke") #>
 		{
+			Exception exception = null;
 			
 			DownDispatcher.Invoke(() => 
 				{
@@ -383,14 +408,20 @@ namespace <#= ProxyNamespace #>
 					{
 						<#= fieldName #>.<#= function.CallSignature("") #>;
 					}
+					catch(Exception ex)
+					{
+						exception = ex;
+					}
 					finally
 					{
 						Invoke<#= function.Name #>Finished(EventArgs.Empty);
 					}
 				});
+			if (exception != null)
+				throw exception;
 		}
-				        
-<#+				    }						
+
+<#+					}
 				}#>
 	}
 }
