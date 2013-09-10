@@ -84,7 +84,7 @@ namespace <#= ProxyNamespace #>
 
 				foreach (var evnt in @interface.AllEvents)
 				{#>
-					event <#= evnt.Type #> <#= evnt.Name #>;
+		event <#= evnt.Type #> <#= evnt.Name #>;
 <#+
 				}
 
@@ -139,6 +139,7 @@ namespace <#= ProxyNamespace #>
 			}
 			return (T)x;
 		}
+
 		public IDispatcher UpDispatcher { get; set; }
 		public IDispatcher DownDispatcher { get; set; }
 
@@ -148,6 +149,8 @@ namespace <#= ProxyNamespace #>
 <#+
 				}
 #>
+
+
 <#+
 				foreach (var prop in @interface.AllProperties)
 				{ 
@@ -232,6 +235,7 @@ namespace <#= ProxyNamespace #>
 					generatedFunctions.Add(function.Name);
 
 				#>
+
 		public event EventHandler<EventArgs> <#= function.Name #>Started;
 		public event EventHandler<EventArgs> <#= function.Name #>Finished;
 		
