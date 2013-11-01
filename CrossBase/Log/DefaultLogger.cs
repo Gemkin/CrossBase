@@ -2,6 +2,10 @@ namespace CrossBase.Log
 {
     public class DefaultLogger : ILogger
     {
+        public object GetNativeLogger()
+        {
+            return new object();
+        }
         public void Error(string message)
         {
         }

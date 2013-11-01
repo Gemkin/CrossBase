@@ -2,6 +2,7 @@
 {
     public interface ILogger
     {
+        object GetNativeLogger();
         void Error(string message);
         void ErrorFormat(string format, params object[] p);
         void Debug(string message);
