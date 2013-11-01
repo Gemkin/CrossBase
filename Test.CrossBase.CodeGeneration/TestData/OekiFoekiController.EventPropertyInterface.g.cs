@@ -22,6 +22,8 @@ namespace Test.CrossBase.CodeGeneration.TestData
     public interface IOekiFoekiControllerEventProperties
     {
 		event PropertyChangedEventHandler PropertyChanged;
+			string Bla { get;set; }
+
 			string Ohh { get;set; }
 
 			string Ahh { get;set; }

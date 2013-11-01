@@ -5,6 +5,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 {
     public interface IDoItAlso: IOekiFoekiBase
     {
+        ushort Address { get; set; }
         string Name { get; set; }
         void CleanUp();
         event EventHandler<OekiFoekiEventArgs> InProgress;

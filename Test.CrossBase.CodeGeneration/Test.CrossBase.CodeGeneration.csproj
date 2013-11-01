@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Test.CrossBase.CodeGeneration</RootNamespace>
     <AssemblyName>Test.CrossBase.CodeGeneration</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,12 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestData\CalculatorController.cs" />
     <Compile Include="TestData\DispatchFoekiController.cs" />
     <Compile Include="TestData\DispatchFoekiController.IOekiFoekiController.DispatchProxy.g.cs">
       <DependentUpon>DispatchFoekiController.cs</DependentUpon>
     </Compile>
     <Compile Include="TestData\IOekiFoekiController.cs" />
-    <Compile Include="TestGenerationOfInvokeProxy.cs" />
+    <Compile Include="TestData\OekiFoekiController.AhhEventProperty.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\OekiFoekiController.BlaEventProperty.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\OekiFoekiController.EventPropertyInterface.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\OekiFoekiController.OhhEventProperty.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\OekiFoekiController.PropertyEvents.g.cs">
+      <DependentUpon>OekiFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestCalulatorController.cs" />
     <Compile Include="TestData\OekiData.cs" />
     <Compile Include="TestData\OekiFoekiController.cs" />
     <Compile Include="TestData\OekiFoekiEventArgs.cs" />

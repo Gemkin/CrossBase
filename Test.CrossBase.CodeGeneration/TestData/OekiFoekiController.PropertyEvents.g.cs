@@ -23,7 +23,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
     {
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		private void NotifyPropertyChanged(String info)
+		protected virtual void NotifyPropertyChanged(String info)
 		{
 			if (PropertyChanged != null)
 			{

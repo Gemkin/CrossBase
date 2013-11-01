@@ -6,6 +6,9 @@ namespace Test.CrossBase.CodeGeneration.TestData
 {
     public partial class OekiFoekiController : IOekiFoekiController
     {
+        [EventProperty(GenerateSetters = true, GenerateReadOnly = true)] 
+        private string bla;
+
         [EventProperty]
         private string ohh;
 
@@ -32,6 +35,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
             throw new NotImplementedException();
         }
 
+        public ushort Address { get; set; }
         public string Name { get; set; }
 
         public void CleanUp()

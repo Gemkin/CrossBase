@@ -9,9 +9,10 @@ namespace CrossBase.CodeGeneration.Attributes
         public const string EventPropertyOnly = "EventPropertyOnly";
         public const string NotifyPropertyOnly = "NotifyPropertyOnly";
         public const string GenerationSkip = "Skip";
-
+        
         public bool GenerateAlwaysUpdate { get; set; }
         public bool GenerateSetters { get; set; }
+        public bool GenerateReadOnly { get; set; }
         public string GenerationMode { get; set; }
         public string GenerateNotifyChangedGenerationSkip { get; set; }
     }

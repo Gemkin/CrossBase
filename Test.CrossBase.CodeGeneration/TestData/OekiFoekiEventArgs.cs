@@ -1,6 +1,8 @@
-﻿namespace Test.CrossBase.CodeGeneration.TestData
+﻿using System;
+
+namespace Test.CrossBase.CodeGeneration.TestData
 {
-    public class OekiFoekiEventArgs
+    public class OekiFoekiEventArgs :EventArgs
     {
         public OekiData Data;
     }

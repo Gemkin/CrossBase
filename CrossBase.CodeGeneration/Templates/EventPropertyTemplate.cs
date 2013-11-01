@@ -114,7 +114,7 @@ namespace CrossBase.CodeGeneration.Templates
 		var generateAlwaysUpdate = GetBoolArgumentFromAttribute(attribute, "GenerateAlwaysUpdate");
 		var generateSetters = GetBoolArgumentFromAttribute(attribute, "GenerateSetters");
 		var generationMode = GetStringArgumentFromAttribute(attribute, "GenerationMode", EventPropertyAttribute.NotifyPropertyAndEventProperty);
-
+        var generateReadOnly = GetBoolArgumentFromAttribute(attribute, "GenerateReadOnly");
 		var fileName = attribute.FileName;
 		var projectItem = Parser.GetProjectItem(fileName);
 		var outputFileName = fileName.Replace(".cs", "." + propertyName + "EventProperty.g.cs");
@@ -422,27 +422,75 @@ this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
         #line hidden
         
         #line 120 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("; }\r\n            set\r\n            {\r\n                var old = ");
+this.Write("; }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 123 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+        #line 121 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
-        
-        #line default
-        #line hidden
-        
-        #line 123 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(";\r\n");
+	    if (generateReadOnly)
+	    {
 
         
         #line default
         #line hidden
         
         #line 124 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("\t        protected set\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 126 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    }
+	    else
+	    {
+
+        
+        #line default
+        #line hidden
+        
+        #line 130 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("\t        set\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 132 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    }
+
+        
+        #line default
+        #line hidden
+        
+        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("            {\r\n                var old = ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 136 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 136 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(";\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 137 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
 		if (!generateAlwaysUpdate)
 		{
@@ -451,27 +499,83 @@ this.Write(";\r\n");
         #line default
         #line hidden
         
-        #line 127 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 140 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\t\t\t\tif (old == value)\r\n                    return;\r\n");
 
         
         #line default
         #line hidden
         
-        #line 129 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 142 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 		}
         
         #line default
         #line hidden
         
-        #line 129 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" \r\n\r\n");
+        #line 142 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" \r\n                Update");
 
         
         #line default
         #line hidden
         
-        #line 131 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("(old, value);\r\n            }\r\n        }\r\n\r\n        protected virtual void Update");
+
+        
+        #line default
+        #line hidden
+        
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("(");
+
+        
+        #line default
+        #line hidden
+        
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
+
+        
+        #line default
+        #line hidden
+        
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" old, ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
+
+        
+        #line default
+        #line hidden
+        
+        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" value)\r\n        {\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 150 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
 		if (GenerateForEventProperty(generationMode))
 		{
@@ -480,100 +584,100 @@ this.Write(" \r\n\r\n");
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\t\t\t\tvar changingEventArgs = new ");
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("\t\t\tvar changingEventArgs = new ");
 
         
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changingEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" { Old");
 
         
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" = old, New");
 
         
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 134 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" = value };\r\n\t\t\t\t\r\n\t\t\t\tOnBase");
+        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" = value };\r\n\t\t\t\t\r\n\t\t\tOnBase");
 
         
         #line default
         #line hidden
         
-        #line 136 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 155 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 136 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("Changing(changingEventArgs);\r\n                if (changingEventArgs.Cancel)\r\n    " +
-        "                return;\r\n\t\t\t\t\t\r\n\t\t\t\tInvoke");
+        #line 155 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("Changing(changingEventArgs);\r\n            if (changingEventArgs.Cancel)\r\n        " +
+        "        return;\r\n\t\t\t\t\t\r\n\t\t\tInvoke");
 
         
         #line default
         #line hidden
         
-        #line 140 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 159 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 140 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("Changing(changingEventArgs);\r\n                if (changingEventArgs.Cancel)\r\n    " +
-        "                return;\r\n\t\t\t\tvalue = changingEventArgs.New");
+        #line 159 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("Changing(changingEventArgs);\r\n            if (changingEventArgs.Cancel)\r\n        " +
+        "        return;\r\n\t\t\tvalue = changingEventArgs.New");
 
         
         #line default
         #line hidden
         
-        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 162 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 143 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 162 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(";\r\n");
 
         
         #line default
         #line hidden
         
-        #line 144 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 163 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 		}
  
@@ -581,28 +685,28 @@ this.Write(";\r\n");
         #line default
         #line hidden
         
-        #line 146 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\t\t\t\t");
+        #line 165 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("\t\t    ");
 
         
         #line default
         #line hidden
         
-        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 166 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 147 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 166 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" = value;\r\n\t\t\t\t\r\n");
 
         
         #line default
         #line hidden
         
-        #line 149 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 168 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
 		if (GenerateForEventProperty(generationMode))
 		{
@@ -611,84 +715,84 @@ this.Write(" = value;\r\n\t\t\t\t\r\n");
         #line default
         #line hidden
         
-        #line 152 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("                var changedEventArgs = new ");
+        #line 171 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("            var changedEventArgs = new ");
 
         
         #line default
         #line hidden
         
-        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changedEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" { Old");
 
         
         #line default
         #line hidden
         
-        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" = old, New");
 
         
         #line default
         #line hidden
         
-        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 153 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" = value };\r\n\t\t\t\tOnBase");
+        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" = value };\r\n\t\t\tOnBase");
 
         
         #line default
         #line hidden
         
-        #line 154 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 173 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 154 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("Changed(changedEventArgs);\r\n                Invoke");
+        #line 173 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("Changed(changedEventArgs);\r\n            Invoke");
 
         
         #line default
         #line hidden
         
-        #line 155 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 174 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 155 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 174 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("Changed(changedEventArgs);\r\n");
 
         
         #line default
         #line hidden
         
-        #line 156 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 175 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
         }
 		if (GenerateForNotifyProperty(generationMode))
@@ -698,28 +802,28 @@ this.Write("Changed(changedEventArgs);\r\n");
         #line default
         #line hidden
         
-        #line 160 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\t\t\t\tNotifyPropertyChanged(\"");
+        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("\t\t\tNotifyPropertyChanged(\"");
 
         
         #line default
         #line hidden
         
-        #line 161 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 180 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 161 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 180 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\");\r\n");
 
         
         #line default
         #line hidden
         
-        #line 162 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 181 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 		} 
 
 
@@ -727,14 +831,14 @@ this.Write("\");\r\n");
         #line default
         #line hidden
         
-        #line 164 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\t\t\t}\r\n        }\r\n\t\r\n");
+        #line 183 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("\t\t\t\r\n        }\r\n\t\r\n");
 
         
         #line default
         #line hidden
         
-        #line 167 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 186 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
 		if (GenerateForEventProperty(generationMode))
 		{
@@ -743,72 +847,73 @@ this.Write("\t\t\t}\r\n        }\r\n\t\r\n");
         #line default
         #line hidden
         
-        #line 170 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 189 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\t\tpartial void OnBase");
 
         
         #line default
         #line hidden
         
-        #line 170 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 189 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 170 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 189 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("Changing(");
 
         
         #line default
         #line hidden
         
-        #line 170 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 189 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changingEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 170 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 189 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" e);\r\n\t\tpartial void OnBase");
 
         
         #line default
         #line hidden
         
-        #line 171 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 171 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("Changed(");
 
         
         #line default
         #line hidden
         
-        #line 171 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changedEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 171 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 190 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" e);\r\n");
 
         
         #line default
         #line hidden
         
-        #line 172 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 191 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
         }
+
 		if (generateSetters)
 		{
 
@@ -816,154 +921,257 @@ this.Write(" e);\r\n");
         #line default
         #line hidden
         
-        #line 176 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("\t\tpublic void Set");
+        #line 198 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    if (generateReadOnly)
+	    {
 
         
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 201 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("      \r\n        protected ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    }
+	    else
+	    {
+
+        
+        #line default
+        #line hidden
+        
+        #line 206 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("      \r\n        public ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 207 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    }
+        
+        
+        #line default
+        #line hidden
+        
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("void Set");
+
+        
+        #line default
+        #line hidden
+        
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("Forced(");
+
+        
+        #line default
+        #line hidden
+        
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
+
+        
+        #line default
+        #line hidden
+        
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" new");
+
+        
+        #line default
+        #line hidden
+        
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 209 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(")\r\n\t\t{\r\n            Update");
+
+        
+        #line default
+        #line hidden
+        
+        #line 211 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 211 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("(");
 
         
         #line default
         #line hidden
         
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
-
-        
-        #line default
-        #line hidden
-        
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" new");
-
-        
-        #line default
-        #line hidden
-        
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 177 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(")\r\n\t\t{\r\n\t\t\t");
-
-        
-        #line default
-        #line hidden
-        
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" = new");
-
-        
-        #line default
-        #line hidden
-        
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 179 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(";\r\n\t\t}\r\n\r\n\t\tpublic void Set");
-
-        
-        #line default
-        #line hidden
-        
-        #line 182 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 182 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write("Silently(");
-
-        
-        #line default
-        #line hidden
-        
-        #line 182 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
-
-        
-        #line default
-        #line hidden
-        
-        #line 182 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" new");
-
-        
-        #line default
-        #line hidden
-        
-        #line 182 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
-
-        
-        #line default
-        #line hidden
-        
-        #line 182 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(")\r\n\t\t{\r\n\t\t\t ");
-
-        
-        #line default
-        #line hidden
-        
-        #line 184 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 211 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
 
         
         #line default
         #line hidden
         
-        #line 184 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
-this.Write(" = new");
+        #line 211 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(", new");
 
         
         #line default
         #line hidden
         
-        #line 184 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 211 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 184 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 211 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(");\r\n\t\t}\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 214 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    if (generateReadOnly)
+	    {
+
+        
+        #line default
+        #line hidden
+        
+        #line 217 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("      \r\n        protected ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 218 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    }
+	    else
+	    {
+
+        
+        #line default
+        #line hidden
+        
+        #line 222 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("      \r\n        public ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 223 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+
+	    }
+        
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("void Set");
+
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write("Silently(");
+
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
+
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" new");
+
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 225 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(")\r\n\t\t{\r\n\t\t\t ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(fieldName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(" = new");
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
+
+        
+        #line default
+        #line hidden
+        
+        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(";\r\n\t\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 186 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 229 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 		}
 
@@ -971,14 +1179,14 @@ this.Write(";\r\n\t\t}\r\n");
         #line default
         #line hidden
         
-        #line 188 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 231 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 189 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 232 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
  
 		if (GenerateForEventProperty(generationMode))
 		{
@@ -988,126 +1196,126 @@ this.Write("\t}\r\n");
         #line default
         #line hidden
         
-        #line 193 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 236 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("    \r\n\tpublic class ");
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changingEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" : ");
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changedEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 195 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 238 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\r\n    {\r\n        public bool Cancel { get; set; }\r\n    }\r\n\r\n    public class ");
 
         
         #line default
         #line hidden
         
-        #line 200 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 243 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(changedEventArgs));
 
         
         #line default
         #line hidden
         
-        #line 200 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 243 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(": EventArgs\r\n    {\r\n        public ");
 
         
         #line default
         #line hidden
         
-        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 245 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
 
         
         #line default
         #line hidden
         
-        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 245 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" New");
 
         
         #line default
         #line hidden
         
-        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 245 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 202 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 245 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" { get; set; }\r\n        public ");
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 246 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 246 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" Old");
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 246 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 203 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 246 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" { get; set; }\r\n\t}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 205 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 248 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
         }
         
         #line default
         #line hidden
         
-        #line 206 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 249 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 208 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 251 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -1173,42 +1381,42 @@ this.Write("}\r\n");
         #line default
         #line hidden
         
-        #line 268 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 311 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 270 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 313 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@class.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 270 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 313 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\t\r\n{\r\n    public interface I");
 
         
         #line default
         #line hidden
         
-        #line 272 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 315 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@class.Name));
 
         
         #line default
         #line hidden
         
-        #line 272 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 315 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("EventProperties\r\n    {\r\n\t\tevent PropertyChangedEventHandler PropertyChanged;\r\n");
 
         
         #line default
         #line hidden
         
-        #line 275 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 318 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 	    foreach (var field in fields)
 	    {
@@ -1219,42 +1427,42 @@ this.Write("EventProperties\r\n    {\r\n\t\tevent PropertyChangedEventHandler Pr
         #line default
         #line hidden
         
-        #line 280 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 323 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\t\t\t");
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyType));
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(propertyName));
 
         
         #line default
         #line hidden
         
-        #line 281 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(" { get;set; }\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 283 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 
 		
@@ -1264,14 +1472,14 @@ this.Write(" { get;set; }\r\n\r\n");
         #line default
         #line hidden
         
-        #line 287 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 330 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\r\n\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 292 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 335 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -1299,35 +1507,35 @@ this.Write("\r\n\t}\r\n}\r\n\r\n");
         #line default
         #line hidden
         
-        #line 314 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 357 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 359 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@class.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 316 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 359 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write("\t\r\n{\r\n    public partial class ");
 
         
         #line default
         #line hidden
         
-        #line 318 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 361 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@class.Name));
 
         
         #line default
         #line hidden
         
-        #line 318 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 361 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 this.Write(@"
     {
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1348,7 +1556,7 @@ this.Write(@"
         #line default
         #line hidden
         
-        #line 332 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
+        #line 375 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\EventPropertyTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);

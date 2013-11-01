@@ -38,30 +38,36 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		public string Ahh
         {
             get { return ahh; }
-            set
+	        set
             {
                 var old = ahh;
 				if (old == value)
                     return;
  
+                UpdateAhh(old, value);
+            }
+        }
 
-				var changingEventArgs = new OekiFoekiControllerAhhChangingEventArgs { OldAhh = old, NewAhh = value };
+        protected virtual void UpdateAhh(string old, string value)
+        {
+
+			var changingEventArgs = new OekiFoekiControllerAhhChangingEventArgs { OldAhh = old, NewAhh = value };
 				
-				OnBaseAhhChanging(changingEventArgs);
-                if (changingEventArgs.Cancel)
-                    return;
+			OnBaseAhhChanging(changingEventArgs);
+            if (changingEventArgs.Cancel)
+                return;
 					
-				InvokeAhhChanging(changingEventArgs);
-                if (changingEventArgs.Cancel)
-                    return;
-				value = changingEventArgs.NewAhh;
-				ahh = value;
+			InvokeAhhChanging(changingEventArgs);
+            if (changingEventArgs.Cancel)
+                return;
+			value = changingEventArgs.NewAhh;
+		    ahh = value;
 				
-                var changedEventArgs = new OekiFoekiControllerAhhChangedEventArgs { OldAhh = old, NewAhh = value };
-				OnBaseAhhChanged(changedEventArgs);
-                InvokeAhhChanged(changedEventArgs);
-				NotifyPropertyChanged("Ahh");
-			}
+            var changedEventArgs = new OekiFoekiControllerAhhChangedEventArgs { OldAhh = old, NewAhh = value };
+			OnBaseAhhChanged(changedEventArgs);
+            InvokeAhhChanged(changedEventArgs);
+			NotifyPropertyChanged("Ahh");
+			
         }
 	
 		partial void OnBaseAhhChanging(OekiFoekiControllerAhhChangingEventArgs e);
