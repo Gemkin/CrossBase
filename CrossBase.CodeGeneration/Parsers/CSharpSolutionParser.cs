@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
@@ -19,6 +20,8 @@ namespace CrossBase.CodeGeneration.Parsers
         public Dictionary<string, ProjectItem> ProjectItems { get; set; }
         private readonly DTE2 dte2;
         private Dictionary<Interface, List<CodeInterface2>> unresolvedInterfaces;
+        private string logFile;
+        private bool loggingEnabled;
 
         public ProjectItem GetProjectItem(string fileName)
         {
@@ -97,6 +100,22 @@ namespace CrossBase.CodeGeneration.Parsers
         {
         }
 
+        private void PrepareLogging()
+        {
+            loggingEnabled = false; //For debugging purposes set to true
+            if (!loggingEnabled)
+                return;
+
+            const string logDir = "c:\\Temp";
+            logFile = Path.Combine(logDir, "CrossBase.CodeGeneration.SolutionParser.log");
+            if (Directory.Exists(logDir))
+                return;
+            Directory.CreateDirectory(logDir);
+
+            if (File.Exists(logFile))
+                File.Delete(logFile);
+        }
+
 
         public CSharpSolutionParser(bool singleVsTesting)
         {
@@ -114,8 +133,14 @@ namespace CrossBase.CodeGeneration.Parsers
                 throw new Exception("T4Generator can only execute through the Visual Studio host");
             }
 
+            PrepareLogging();
         }
 
+        public void WriteLine(string value)
+        {
+            if (loggingEnabled)
+                File.AppendAllText(logFile, value + Environment.NewLine);
+        }
 
         public void ParseSolution()
         {
@@ -124,7 +149,7 @@ namespace CrossBase.CodeGeneration.Parsers
             Classes = new List<Class>();
             ProjectItems = new Dictionary<string, ProjectItem>();
             unresolvedInterfaces = new Dictionary<Interface, List<CodeInterface2>>();
-            Console.WriteLine("ParseSolution " + dte2.Solution.FullName);
+            WriteLine("ParseSolution " + dte2.Solution.FullName);
 
 
             Projects = new List<Project>();
@@ -212,18 +237,18 @@ namespace CrossBase.CodeGeneration.Parsers
 
             if (project == null)
             {
-                Console.WriteLine("Project " + name + " not found!");
+                WriteLine("Project " + name + " not found!");
                 return;
             }
 
-            Console.WriteLine("ParseProject " + name);
+            WriteLine("ParseProject " + name);
             ParseProject(project);
         }
 
 
         private void ParseProjects(List<Project> projects)
         {
-            Console.WriteLine("ParseProjects " + projects.Count);
+            WriteLine("ParseProjects " + projects.Count);
 
             foreach (var project in projects)
             {
@@ -235,7 +260,7 @@ namespace CrossBase.CodeGeneration.Parsers
         {
             if (project == null)
                 return;
-            Console.WriteLine("ParseProject " + project.Name);
+            WriteLine("ParseProject " + project.Name);
             ParseProjectItems(project.ProjectItems);
         }
 
@@ -243,7 +268,7 @@ namespace CrossBase.CodeGeneration.Parsers
         {
             if (projectItems == null)
                 return;
-            Console.WriteLine("ParseProjectItems " + projectItems.Count);
+            WriteLine("ParseProjectItems " + projectItems.Count);
 
             foreach (var item in projectItems.Cast<ProjectItem>())
             {
@@ -259,14 +284,12 @@ namespace CrossBase.CodeGeneration.Parsers
             switch (projectItem.Kind)
             {
                 case "{6BB5F8EE-4483-11D3-8BCF-00C04F8EC28C}":
-                    Console.WriteLine("ParseProjectItem vsProjectItemKindPhysicalFile");
+                    WriteLine("ParseProjectItem vsProjectItemKindPhysicalFile");
                     ParseFile(projectItem);
                     break;
                 case "{6BB5F8EF-4483-11D3-8BCF-00C04F8EC28C}":
-                    Console.WriteLine("ParseProjectItem vsProjectItemKindPhysicalFolder");
+                    WriteLine("ParseProjectItem vsProjectItemKindPhysicalFolder");
                     ParseProjectItems(projectItem.ProjectItems);
-                    break;
-                default:
                     break;
             }
         }
@@ -274,9 +297,17 @@ namespace CrossBase.CodeGeneration.Parsers
         private void ParseFile(ProjectItem projectItem)
         {
             if (projectItem.FileCodeModel == null)
+            {
+                WriteLine("ParseFile: " + projectItem.Name + " skipped because no code file");
                 return;
+            }
+            if (!projectItem.Name.EndsWith(".cs"))
+            {
+                WriteLine("ParseFile: " + projectItem.Name + " skipped because no c# file");
+                return;
+            }
+            WriteLine("ParseFile: " + projectItem.Name);
 
-            Console.WriteLine("ParseFile: " + projectItem.Name);
 
             var usings = new List<Namespace>();
             var currentFile = projectItem.FileNames[0];
@@ -289,7 +320,7 @@ namespace CrossBase.CodeGeneration.Parsers
                 if (codeElement is CodeImport)
                 {
                     var @using = ParseUsing(codeElement);
-                    Console.WriteLine("Using " + @using.Name);
+                    WriteLine("Using " + @using.Name);
                     usings.Add(@using);
                 }
                 else
@@ -312,15 +343,13 @@ namespace CrossBase.CodeGeneration.Parsers
                 case vsCMElement.vsCMElementNamespace:
                     ParseNameSpace((CodeNamespace)codeElement, usings, currentFile);
                     break;
-                default:
-                    break;
             }
         }
 
         private void ParseNameSpace(CodeNamespace codeNamespace, List<Namespace> usings, string currentFile)
         {
             var @namespace = new Namespace { Name = codeNamespace.Name };
-            Console.WriteLine("ParseNameSpace" + codeNamespace.Name);
+            WriteLine("ParseNameSpace" + codeNamespace.Name);
 
             foreach (var element in codeNamespace.Members.Cast<CodeElement2>())
             {
@@ -332,15 +361,13 @@ namespace CrossBase.CodeGeneration.Parsers
                     case vsCMElement.vsCMElementClass:
                         ParseClass((CodeClass2)element, usings, @namespace, currentFile);
                         break;
-                    default:
-                        break;
                 }
             }
         }
 
         private void ParseClass(CodeClass2 codeClass, List<Namespace> usings, Namespace @namespace, string currentFile)
         {
-            Console.WriteLine("ParseClass" + " " + codeClass.Name);
+            WriteLine("ParseClass" + " " + codeClass.Name);
             var @class = Classes.Find(c => c.Name == codeClass.Name) ??
                          new Class { Namespace = @namespace, Name = codeClass.Name, Usings = usings };
             @class.Files.Add(currentFile);
@@ -369,18 +396,15 @@ namespace CrossBase.CodeGeneration.Parsers
                         var field = ParseField((CodeVariable2) element, currentFile);
                         @class.Fields.Add(field);
                         break;
-                        
-                    default:
-                        break;
                 }
             }
             Classes.Add(@class);
             
         }
 
-        private static Field ParseField(CodeVariable2 codeVariable, string currentFile)
+        private Field ParseField(CodeVariable2 codeVariable, string currentFile)
         {
-            Console.WriteLine("ParseField" + " " + codeVariable.Name + " " + codeVariable.Type.AsString);
+            WriteLine("ParseField" + " " + codeVariable.Name + " " + codeVariable.Type.AsString);
 
             var field = new Field {Name = codeVariable.Name, Type = codeVariable.Type.AsString, Access = codeVariable.Access.Convert(), FileName = currentFile};
             foreach (CodeAttribute2 attribute in codeVariable.Attributes)
@@ -390,9 +414,9 @@ namespace CrossBase.CodeGeneration.Parsers
             return field;
         }
 
-        private static void ParseAttribute(CodeAttribute2 codeAttribute, AccessControlledElement element, string currentFile)
+        private void ParseAttribute(CodeAttribute2 codeAttribute, AccessControlledElement element, string currentFile)
         {
-            Console.WriteLine("ParseAttribute" + " " + codeAttribute.Name);
+            WriteLine("ParseAttribute" + " " + codeAttribute.Name);
 
             var attribute = new Attribute { Name = codeAttribute.Name, FileName = currentFile};
 
@@ -413,7 +437,7 @@ namespace CrossBase.CodeGeneration.Parsers
 
         private void ParseInterface(CodeInterface2 codeInterface, List<Namespace> usings, Namespace @namespace, string currentFile)
         {
-            Console.WriteLine("ParseInterface" + " " + codeInterface.Name);
+            WriteLine("ParseInterface" + " " + codeInterface.Name);
             
             var @interface = new Interface { Namespace = @namespace, Name = codeInterface.Name, Usings = usings, Type = codeInterface.Name, FileName = currentFile};
             foreach (CodeAttribute2 codeElement in codeInterface.Attributes)
@@ -436,8 +460,6 @@ namespace CrossBase.CodeGeneration.Parsers
                     case vsCMElement.vsCMElementEvent:
                         var @event = ParseEvent((CodeEvent) element, currentFile);
                         @interface.Events.Add(@event);
-                        break;
-                    default:
                         break;
                 }
             }
@@ -466,17 +488,17 @@ namespace CrossBase.CodeGeneration.Parsers
             return interfaces;
         }
 
-        private static Event ParseEvent(CodeEvent codeEvent, string currentFile)
+        private Event ParseEvent(CodeEvent codeEvent, string currentFile)
         {
             var @event = new Event {Name = codeEvent.Name, Type = codeEvent.Type.AsString, Access = codeEvent.Access.Convert(), FileName = currentFile};
-            Console.WriteLine("ParseEvent" + " " + codeEvent.Name + " " + codeEvent.Type);
+            WriteLine("ParseEvent" + " " + codeEvent.Name + " " + codeEvent.Type);
             return @event;
         }
 
-        private static Property ParseProperty(CodeProperty codeProperty, string currentFile)
+        private Property ParseProperty(CodeProperty codeProperty, string currentFile)
         {
             var property = new Property { Name = codeProperty.Name, Type = codeProperty.Type.AsString, Access = codeProperty.Access.Convert(), FileName = currentFile };
-            Console.WriteLine("ParseProperty" + " " + codeProperty.Name + " " + codeProperty.Type.AsString);
+            WriteLine("ParseProperty" + " " + codeProperty.Name + " " + codeProperty.Type.AsString);
             foreach (CodeAttribute2 codeElement in codeProperty.Attributes)
             {
                 ParseAttribute(codeElement, property, currentFile);
@@ -484,10 +506,10 @@ namespace CrossBase.CodeGeneration.Parsers
             return property;
         }
 
-        private static Function ParseFunction(CodeFunction2 codeFunction, string currentFile)
+        private Function ParseFunction(CodeFunction2 codeFunction, string currentFile)
         {
             var function = new Function {Name = codeFunction.Name, Type = codeFunction.Type.AsString, Access = codeFunction.Access.Convert(), FileName = currentFile};
-            Console.WriteLine("ParseFunction" + " " + function.Name + " " + function.Type);
+            WriteLine("ParseFunction" + " " + function.Name + " " + function.Type);
             foreach (CodeAttribute2 codeElement in codeFunction.Attributes)
             {
                 ParseAttribute(codeElement, function, currentFile);
@@ -502,10 +524,10 @@ namespace CrossBase.CodeGeneration.Parsers
             return function;
         }
 
-        private static Parameter ParseParameter(CodeParameter2 codeParameter)
+        private Parameter ParseParameter(CodeParameter2 codeParameter)
         {
             var parameter = new Parameter {Name = codeParameter.Name, Type = codeParameter.Type.AsString, Modifier = codeParameter.ParameterKind.Convert()};
-            Console.WriteLine("ParseParameter" + " " + codeParameter.Name + " " + codeParameter.Type.AsString);
+            WriteLine("ParseParameter" + " " + codeParameter.Name + " " + codeParameter.Type.AsString);
             return parameter;
         }
     }
