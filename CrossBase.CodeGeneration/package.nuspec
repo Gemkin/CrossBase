@@ -19,7 +19,6 @@
     <frameworkAssemblies>
 		<frameworkAssembly assemblyName="EnvDTE"  />
 		<frameworkAssembly assemblyName="EnvDTE80"  />
-        <frameworkAssembly assemblyName="CrossBase" />
     </frameworkAssemblies>
   </metadata>
 </package>
