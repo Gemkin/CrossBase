@@ -38,14 +38,23 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGeneration\Attributes\EventPropertyAttribute.cs" />
+    <Compile Include="CodeGeneration\Attributes\DispatchProxyAttribute.cs" />
     <Compile Include="Dispatch\IDispatcherManager.cs" />
     <Compile Include="FileSystem\IFileSystemManager.cs" />
     <Compile Include="Log\DefaultLogger.cs" />
-    <Compile Include="Serialization\CloneExtension.cs" />
     <Compile Include="Dispatch\DispatcherId.cs" />
-    <Compile Include="Serialization\IObjectSerializer.cs" />
     <Compile Include="Log\DefaultLogManager.cs" />
     <Compile Include="Random\DefaultRandomManager.cs" />
+    <Compile Include="StateMachine\BaseState.cs" />
+    <Compile Include="StateMachine\IState.cs" />
+    <Compile Include="StateMachine\IStateContext.cs" />
+    <Compile Include="StateMachine\IStateMachine.cs" />
+    <Compile Include="StateMachine\StateChangedEventArgsBase.cs" />
+    <Compile Include="StateMachine\StateEvent.cs" />
+    <Compile Include="StateMachine\StateMachineBase.cs" />
+    <Compile Include="StateMachine\StateTransistion.cs" />
+    <Compile Include="StateMachine\StateTransitionsDefinitionBase.cs" />
     <Compile Include="Timers\DefaultTimerManager.cs" />
     <Compile Include="Time\TimeManager.cs" />
     <Compile Include="Dispatch\DispatcherManager.cs" />

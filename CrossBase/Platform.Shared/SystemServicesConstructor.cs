@@ -13,7 +13,6 @@ namespace CrossBase.Platform.Shared
             SystemServices.DispatcherManager = new DispatcherManager();
             SystemServices.FileSystemManager = new FileSystemManager();
             SystemServices.LogManager = new DefaultLogManager();
-            SystemServices.ObjectSerializer = new BinarySerializer();
             SystemServices.RandomManager = new DefaultRandomManager();
             SystemServices.ThreadManager = new ThreadManager();
             SystemServices.TimeManager = new TimeManager();
@@ -25,7 +24,6 @@ namespace CrossBase.Platform.Shared
             SystemServices.DispatcherManager.Dispose();
             SystemServices.FileSystemManager.Dispose();
             SystemServices.LogManager.Dispose();
-            SystemServices.ObjectSerializer.Dispose();
             SystemServices.RandomManager.Dispose();
             SystemServices.ThreadManager.Dispose();
             SystemServices.TimeManager.Dispose();

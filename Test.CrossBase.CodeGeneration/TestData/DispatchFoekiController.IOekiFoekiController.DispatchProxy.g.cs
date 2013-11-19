@@ -13,7 +13,6 @@ Wies Hubbers
 
 using System;
 using CrossBase.Dispatch;
-using CrossBase.Serialization;
 using CrossBase.CodeGeneration.Attributes;
 using Test.CrossBase.CodeGeneration.TestData;
 

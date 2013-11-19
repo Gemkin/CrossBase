@@ -1,10 +1,7 @@
-﻿using System;
-using System.Reflection;
-using CrossBase.Dispatch;
+﻿using CrossBase.Dispatch;
 using CrossBase.FileSystem;
 using CrossBase.Log;
 using CrossBase.Random;
-using CrossBase.Serialization;
 using CrossBase.Threading;
 using CrossBase.Time;
 using CrossBase.Timers;
@@ -20,6 +17,5 @@ namespace CrossBase
         public static ILogManager LogManager { get; set; }
         public static IRandomManager RandomManager { get; set; }
         public static IThreadManager ThreadManager { get; set; }
-        public static IObjectSerializer ObjectSerializer { get; set; }
     }
 }

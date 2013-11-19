@@ -64,7 +64,6 @@
 					{
 						"System",
 						"CrossBase.Dispatch",
-						"CrossBase.Serialization",
 					};
 				if (containsNotifyPropertyChanged)
 					usings.Add("System.ComponentModel");

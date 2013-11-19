@@ -3,6 +3,13 @@ AUTOMATIC GENERATED FILE! DO NOT CHANGE MANUALLY
 CrossBase.CodeGeneration
 Wies Hubbers
 **************************************************************************/
+// ReSharper disable PartialMethodWithSinglePart
+// ReSharper disable RedundantNameQualifier
+// ReSharper disable RedundantUsingDirective
+// ReSharper disable SuspiciousTypeConversion.Global
+// ReSharper disable RedundantCast
+#pragma warning disable 649
+#pragma warning disable 183
 
 using System;
 using Test.CrossBase.CodeGeneration.TestData;
@@ -12,6 +19,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 {
     public partial class OekiFoekiController
     {
+		//private string bla in C:\projects\CrossBase\Test.CrossBase.CodeGeneration\TestData\OekiFoekiController.cs (NotifyPropertyAndEventProperty)
         
 		public event EventHandler<OekiFoekiControllerBlaChangingEventArgs> BlaChanging;
 		private void InvokeBlaChanging(OekiFoekiControllerBlaChangingEventArgs e)
@@ -88,3 +96,10 @@ namespace Test.CrossBase.CodeGeneration.TestData
         public string OldBla { get; set; }
 	}
 }
+// ReSharper restore PartialMethodWithSinglePart
+// ReSharper restore RedundantNameQualifier
+// ReSharper restore RedundantUsingDirective
+// ReSharper restore SuspiciousTypeConversion.Global
+// ReSharper restore RedundantCast
+#pragma warning restore 649
+#pragma warning restore 183

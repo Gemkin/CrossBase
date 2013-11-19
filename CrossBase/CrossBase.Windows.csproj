@@ -33,22 +33,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="C5, Version=2.2.4881.16939, Culture=neutral, PublicKeyToken=282361b99ded7e8e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\C5.2.2.4881.16939\lib\portable-win+net40+sl40+wp+Xbox40\C5.dll</HintPath>
-    </Reference>
-    <Reference Include="Plossum CommandLine">
-      <HintPath>..\packages\Plossum.CommandLine.0.3.0.14\lib\net40\Plossum CommandLine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CodeGeneration\Attributes\DispatchProxyAttribute.cs" />
+    <Compile Include="CodeGeneration\Attributes\EventPropertyAttribute.cs" />
     <Compile Include="Dispatch\DispatcherId.cs" />
     <Compile Include="Dispatch\DispatcherManager.cs" />
     <Compile Include="Dispatch\IDispatcher.cs" />
@@ -61,7 +55,6 @@
     <Compile Include="Log\DefaultLogManager.cs" />
     <Compile Include="Log\ILogger.cs" />
     <Compile Include="Log\ILogManager.cs" />
-    <Compile Include="Platform.Shared\BinarySerializer.cs" />
     <Compile Include="Platform.Shared\FileSystemManager.cs" />
     <Compile Include="Platform.Shared\ISystemServicesConstructor.cs" />
     <Compile Include="Platform.Shared\SystemServicesConstructor.cs" />
@@ -70,8 +63,15 @@
     <Compile Include="Random\DefaultRandomManager.cs" />
     <Compile Include="Random\IRandomManager.cs" />
     <Compile Include="Random\SimulateRandomMode.cs" />
-    <Compile Include="Serialization\CloneExtension.cs" />
-    <Compile Include="Serialization\IObjectSerializer.cs" />
+    <Compile Include="StateMachine\BaseState.cs" />
+    <Compile Include="StateMachine\IState.cs" />
+    <Compile Include="StateMachine\IStateContext.cs" />
+    <Compile Include="StateMachine\IStateMachine.cs" />
+    <Compile Include="StateMachine\StateChangedEventArgsBase.cs" />
+    <Compile Include="StateMachine\StateEvent.cs" />
+    <Compile Include="StateMachine\StateMachineBase.cs" />
+    <Compile Include="StateMachine\StateTransistion.cs" />
+    <Compile Include="StateMachine\StateTransitionsDefinitionBase.cs" />
     <Compile Include="SystemServices.cs" />
     <Compile Include="Threading\IThreadManager.cs" />
     <Compile Include="Timers\DefaultTimerManager.cs" />
