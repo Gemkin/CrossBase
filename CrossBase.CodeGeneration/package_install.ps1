@@ -13,7 +13,7 @@ Function FindProject($projects, $name)
                 $a += $prtemp.Subproject;
             }
 
-            $prtemp = ParseProjects $a $name
+            $prtemp = FindProject $a $name
             if ($prtemp -ne $null)
             {
                 return $prtemp
@@ -59,6 +59,7 @@ Function ParseItems($items)
 	}
 }
 
+
 if ($project.Name -ne "CrossBase.CodeGeneration") 
 { 
 	[Windows.Forms.MessageBox]::Show("Error, please install this package only to a project named: 'CrossBase.CodeGeneration'");
@@ -67,6 +68,7 @@ if ($project.Name -ne "CrossBase.CodeGeneration")
 ParseItems($project.ProjectItems);
 
 $cross = FindProject $dte.Solution.Projects "CrossBase"
+$project = FindProject $dte.Solution.Projects "CrossBase.CodeGeneration";
 
 if ($cross -eq $null) 
 { 
@@ -74,4 +76,5 @@ if ($cross -eq $null)
 	throw [system.Exception];
 }
 
-$ref = $project.References.AddProject($cross)
+$ref = $project.Object.References.AddProject($cross)
+
