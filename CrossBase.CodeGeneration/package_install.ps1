@@ -74,4 +74,4 @@ if ($cross -eq $null)
 	throw [system.Exception];
 }
 
-$ref = $project.Object.References.AddProject($cross)
+$ref = $project.References.AddProject($cross)
