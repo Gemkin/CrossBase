@@ -1,11 +1,38 @@
 param($installPath, $toolsPath, $package, $project)
 [System.Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms");
 
-if ($project.Name -ne "CrossBase.CodeGeneration") 
-{ 
-	[Windows.Forms.MessageBox]::Show("Error, please install this package only to a project named: 'CrossBase.CodeGeneration'");
-	throw [system.Exception];
+Function FindProject($projects, $name)
+{
+    foreach ($proj in $projects) 
+    {
+        if ($proj.Kind -eq "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}") 
+        {
+            $a = @()
+            foreach ($prtemp in $proj.ProjectItems)
+            {
+                $a += $prtemp.Subproject;
+            }
+
+            $prtemp = ParseProjects $a $name
+            if ($prtemp -ne $null)
+            {
+                return $prtemp
+            }
+        }
+        else 
+        { 
+            if ($proj.Kind -eq "{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}")
+            { 
+                if ($proj.Name -eq $name)
+                {
+                    return $proj
+                }
+            }
+        }
+    }
+    return;
 }
+
 
 Function ParseFile($item)
 {
@@ -32,4 +59,19 @@ Function ParseItems($items)
 	}
 }
 
+if ($project.Name -ne "CrossBase.CodeGeneration") 
+{ 
+	[Windows.Forms.MessageBox]::Show("Error, please install this package only to a project named: 'CrossBase.CodeGeneration'");
+	throw [system.Exception];
+}
 ParseItems($project.ProjectItems);
+
+$cross = FindProject $dte.Solution.Projects "CrossBase"
+
+if ($cross -eq $null) 
+{ 
+	[Windows.Forms.MessageBox]::Show("Error, cannot find a project named'CrossBase' in this solution. CrossBase.CodeGeneration depends on CrossBase package so please install it first");
+	throw [system.Exception];
+}
+
+$ref = $project.Object.References.AddProject($cross)
