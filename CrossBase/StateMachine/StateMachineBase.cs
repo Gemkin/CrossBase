@@ -12,7 +12,7 @@ namespace CrossBase.StateMachine
     /// <typeparam name="Q">Type of state transistion object. This object defines the initial state, normal and special state transitions</typeparam>
     /// <typeparam name="R">Type of event args raised when a state change happens</typeparam>
     public abstract class StateMachineBase<P, Q, R, S> : IDisposable, IStateMachine<S> 
-        where P : IStateContext, new()
+        where P : IStateContext
         where Q : StateTransitionsDefinitionBase, new()
         where R : StateChangedEventArgsBase, new()
         where S : StateEvent
@@ -32,12 +32,13 @@ namespace CrossBase.StateMachine
         /// </summary>
         /// <param name="log">logger</param>
         /// <param name="dispatcher">dispatcher used to dispatch StateEvent handling</param>
-        protected StateMachineBase(ILogger log, IDispatcher dispatcher)
+        /// <param name="context">context for the statemachine</param>
+        protected StateMachineBase(ILogger log, IDispatcher dispatcher, P context)
         {
             this.log = log;
             this.dispatcher = dispatcher;
 
-            context = new P();
+            this.context = context;
             transitionsDefinition = new Q();
             currentState = CreateNextState(transitionsDefinition.InitialStateType);
             dispatcher.BeginInvoke(() => currentState.Enter());
