@@ -311,7 +311,7 @@ namespace <#= @currentClass.Namespace.Name #>
         {
         }
 
-        protected override void OnEnteringNextState(SomeStateMachineStateChangedEventArgs e)
+        protected override void OnEnteringNextState(<#= currentClass.Name  #>StateChangedEventArgs e)
         {
             base.OnEnteringNextState(e);
 <#+
@@ -459,7 +459,7 @@ digraph <#= name #> { graph [ dpi = 300 ]
 		projectItem.ProjectItems.AddFromFile(pngFileName);  
 	}
 
-        private void GenerateTransitions()
+    private void GenerateTransitions()
     {
         var fileName = currentClass.FileWithShortestName();
 		var projectItem = Parser.GetProjectItem(fileName);
@@ -477,39 +477,66 @@ namespace <#= @currentClass.Namespace.Name #>
         public override StateTransistion[] Normal
         {
             get 
-            { 
+            {
+<#+
+        if (transitions.Count == 0)
+        {
+#>
+                return new StateTransistion[0];
+<#+            
+        }
+        else
+        {
+#>             
                 return new [] 
                 {
 <#+
-        foreach (var transition in transitions)
-        {
+            foreach (var transition in transitions)
+            {
 #>
                     new StateTransistion{ Current = typeof(<#= transition.Current #>), Event = <#= @currentClass.Name #>StateEvent.<#= transition.Event #>, Next = typeof(<#= transition.Next #>) },
-<#+            
-        }
+<#+
+            }
 #>
 
-                }; 
+                };
+<#+
+        }
+#>                 
             }
         }
 
         public override StateTransistion[] Special
         {
             get 
-            { 
+            {
+<#+
+        if (specials.Count == 0)
+        {
+#>
+                return new StateTransistion[0];
+<#+            
+        }
+        else
+        {
+#>             
                 return new [] 
                 {
 <#+
-        foreach (var special in specials)
-        {
+            foreach (var s in specials)
+            {
 #>
-                    new StateTransistion{ Event = <#= @currentClass.Name #>StateEvent.<#= special.Event #>, Next = typeof(<#= special.Next #>) },
-<#+            
-        }
+                    new StateTransistion{ Event = <#= @currentClass.Name #>StateEvent.<#= s.Event #>, Next = typeof(<#= s.Next #>) },
+<#+
+            }
 #>
 
-                }; 
+                };
+<#+
+        }
+#>                 
             }
+        }
         }
 
         public override Type InitialStateType

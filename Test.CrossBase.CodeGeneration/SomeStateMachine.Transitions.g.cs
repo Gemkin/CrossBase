@@ -23,27 +23,32 @@ namespace Test.CrossBase.CodeGeneration
         public override StateTransistion[] Normal
         {
             get 
-            { 
+            {
+             
                 return new [] 
                 {
                     new StateTransistion{ Current = typeof(IdleState), Event = SomeStateMachineStateEvent.Init, Next = typeof(WaitState) },
                     new StateTransistion{ Current = typeof(WaitState), Event = SomeStateMachineStateEvent.Go, Next = typeof(RunState) },
                     new StateTransistion{ Current = typeof(RunState), Event = SomeStateMachineStateEvent.Done, Next = typeof(IdleState) },
 
-                }; 
+                };
+                 
             }
         }
 
         public override StateTransistion[] Special
         {
             get 
-            { 
+            {
+             
                 return new [] 
                 {
                     new StateTransistion{ Event = SomeStateMachineStateEvent.Stop, Next = typeof(IdleState) },
 
-                }; 
+                };
+                 
             }
+        }
         }
 
         public override Type InitialStateType
