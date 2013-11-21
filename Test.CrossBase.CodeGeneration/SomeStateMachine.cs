@@ -6,7 +6,7 @@ namespace Test.CrossBase.CodeGeneration
 {
 
     [StateMachine(InitState   = "Idle",
-                  Special     = "Stop -> Idle; ",
+                  Special     = "Stop -> Idle;",
                             
                   Transitions = "Idle | Init -> Wait;" +
                                 "Wait | Go   -> Run;" +

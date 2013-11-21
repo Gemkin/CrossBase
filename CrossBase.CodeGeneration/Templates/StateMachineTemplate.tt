@@ -555,8 +555,7 @@ namespace <#= @currentClass.Namespace.Name #>
 #>                 
             }
         }
-        }
-
+        
         public override Type InitialStateType
         {
             get { return typeof(<#= initialState #>); }
