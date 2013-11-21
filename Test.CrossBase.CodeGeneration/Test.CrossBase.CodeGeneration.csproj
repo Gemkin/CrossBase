@@ -120,14 +120,6 @@
     <None Include="SomeStateMachine.Transitions.g.dot">
       <DependentUpon>SomeStateMachine.cs</DependentUpon>
     </None>
-    <None Include="SomeStateMachine.Transitions.g.dot.svg">
-      <DependentUpon>SomeStateMachine.cs</DependentUpon>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="SomeStateMachine.Transitions.g.dot.png">
-      <DependentUpon>SomeStateMachine.cs</DependentUpon>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

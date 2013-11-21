@@ -1,5 +1,12 @@
 digraph SomeStateMachineTransitions { graph [ dpi = 300 ]
+    IdleState [shape=box];
+    AnyState [shape=box] [style=dotted];
     IdleState -> WaitState [label=Init];
     WaitState -> RunState [label=Go];
     RunState -> IdleState [label=Done];
+
+  AnyState -> IdleState [color=red] [label=Stop];
+
+
+
 }

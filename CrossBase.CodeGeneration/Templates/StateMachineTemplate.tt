@@ -436,14 +436,32 @@ namespace <#= @currentClass.Namespace.Name #>
 		
 #>
 digraph <#= name #> { graph [ dpi = 300 ]
+    <#= initialState #> [shape=box];
+    AnyState [shape=box] [style=dotted];
 <#+
+        
         foreach (var t in transitions)
         {
+            
+
 #>
     <#= t.Current #> -> <#= t.Next #> [label=<#= t.Event #>];
 <#+            
         }
+        
+        foreach (var s in specials)
+        {
+            
+
 #>
+
+  AnyState -> <#= s.Next #> [color=red] [label=<#= s.Event #>];
+<#+            
+        }
+#>
+
+
+
 }
 <#+
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
