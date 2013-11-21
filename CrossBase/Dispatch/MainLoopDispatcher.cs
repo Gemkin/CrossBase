@@ -126,7 +126,7 @@ namespace CrossBase.Dispatch
                 }
                 catch (Exception e)
                 {
-                    log.Error("Mainloop Dispatch exception" + e);
+                    log.Error("Mainloop catched exception: " + e.Message);
                 }
             }
             log.Debug("Mainloop exit");
