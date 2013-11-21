@@ -42,18 +42,58 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SomeStateMachine.cs" />
+    <Compile Include="SomeStateMachine.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.IdleState.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.IdleStateEventArgs.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.RunState.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.RunStateEventArgs.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.StateEvent.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.Transitions.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.WaitState.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.WaitStateEventArgs.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachineContext.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachineStateBase.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachineStateChangedEventArgs.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
     <Compile Include="TestData\CalculatorController.cs" />
     <Compile Include="TestData\DispatchFoekiController.cs" />
     <Compile Include="TestData\DispatchFoekiController.IOekiFoekiController.DispatchProxy.g.cs">
       <DependentUpon>DispatchFoekiController.cs</DependentUpon>
     </Compile>
     <Compile Include="TestData\IOekiFoekiController.cs" />
+    <Compile Include="TestCalulatorController.cs" />
+    <Compile Include="TestData\OekiData.cs" />
     <Compile Include="TestData\OekiFoekiController.AhhEventProperty.g.cs">
       <DependentUpon>OekiFoekiController.cs</DependentUpon>
     </Compile>
     <Compile Include="TestData\OekiFoekiController.BlaEventProperty.g.cs">
       <DependentUpon>OekiFoekiController.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestData\OekiFoekiController.cs" />
     <Compile Include="TestData\OekiFoekiController.EventPropertyInterface.g.cs">
       <DependentUpon>OekiFoekiController.cs</DependentUpon>
     </Compile>
@@ -63,9 +103,6 @@
     <Compile Include="TestData\OekiFoekiController.PropertyEvents.g.cs">
       <DependentUpon>OekiFoekiController.cs</DependentUpon>
     </Compile>
-    <Compile Include="TestCalulatorController.cs" />
-    <Compile Include="TestData\OekiData.cs" />
-    <Compile Include="TestData\OekiFoekiController.cs" />
     <Compile Include="TestData\OekiFoekiEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,6 +115,19 @@
       <Project>{14FEDC1B-EB44-40A1-BB92-48D924BD97D7}</Project>
       <Name>CrossBase.Windows</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SomeStateMachine.Transitions.g.dot">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </None>
+    <None Include="SomeStateMachine.Transitions.g.dot.svg">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="SomeStateMachine.Transitions.g.dot.png">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -67,6 +67,11 @@
     <Compile Include="Language\Namespace.cs" />
     <Compile Include="Language\Parameter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Templates\StateMachineTemplate.cs">
+      <DependentUpon>StateMachineTemplate.tt</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Templates\DispatchProxyTemplate.cs">
       <DependentUpon>DispatchProxyTemplate.tt</DependentUpon>
       <SubType>Code</SubType>
@@ -85,6 +90,10 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <None Include="package.nuspec" />
+    <None Include="Templates\StateMachineTemplate.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StateMachineTemplate.cs</LastGenOutput>
+    </None>
     <None Include="Templates\Generate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Generate.result.txt</LastGenOutput>

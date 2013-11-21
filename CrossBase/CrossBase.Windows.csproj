@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="CodeGeneration\Attributes\DispatchProxyAttribute.cs" />
     <Compile Include="CodeGeneration\Attributes\EventPropertyAttribute.cs" />
+    <Compile Include="CodeGeneration\Attributes\StateMachineAttribute.cs" />
     <Compile Include="Dispatch\DispatcherId.cs" />
     <Compile Include="Dispatch\DispatcherManager.cs" />
     <Compile Include="Dispatch\IDispatcher.cs" />

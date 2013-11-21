@@ -40,6 +40,7 @@
   <ItemGroup>
     <Compile Include="CodeGeneration\Attributes\EventPropertyAttribute.cs" />
     <Compile Include="CodeGeneration\Attributes\DispatchProxyAttribute.cs" />
+    <Compile Include="CodeGeneration\Attributes\StateMachineAttribute.cs" />
     <Compile Include="Dispatch\IDispatcherManager.cs" />
     <Compile Include="FileSystem\IFileSystemManager.cs" />
     <Compile Include="Log\DefaultLogger.cs" />

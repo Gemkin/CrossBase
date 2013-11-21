@@ -1,0 +1,5 @@
+digraph SomeStateMachineTransitions { graph [ dpi = 300 ]
+    IdleState -> WaitState [label=Init];
+    WaitState -> RunState [label=Go];
+    RunState -> IdleState [label=Done];
+}

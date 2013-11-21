@@ -9,12 +9,13 @@
 <#
 	const bool debugging = false;
 	//Debugging is possible but VS locks dll sometimes, anyway got it to work using the way:
-	//(1) Make assembly include from $(TargetPath) to absolute path like "C:\......\CrossBase\bin\Debug\CrossBase.dll"
+	//(1) Make assembly include from $(TargetPath) to absolute path like "C:\projects\CrossBase\bin\Debug\CrossBase.CodeGeneration.dll"
 	//(2) Set debugging to true 
-	//(3) Might need to restart VS when debugger keeps look on dll
+	//(3) Might need to restart VS when debugger keeps lock on dll
 
 	var	parser = new CSharpSolutionParser(debugging);
 	parser.ParseSolution();
+    parser.DeleteAllGeneratedFiles();
 
     var et = new EventPropertyTemplate{Parser = parser};
 	et.Render();
@@ -22,5 +23,7 @@
     var dt = new DispatchProxyTemplate{Parser = parser};
 	dt.Render();
 
+    var st = new StateMachineTemplate {Parser = parser};
+    st.Render();
    
 #>
