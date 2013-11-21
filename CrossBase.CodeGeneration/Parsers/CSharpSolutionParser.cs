@@ -25,9 +25,63 @@ namespace CrossBase.CodeGeneration.Parsers
 
         public ProjectItem GetProjectItem(string fileName)
         {
-            return ProjectItems[fileName];
+            var projectItem = ProjectItems[fileName];
+            return projectItem;
         }
-        
+
+
+        public void DeleteAllGeneratedFiles()
+        {
+            var items = new List<ProjectItem>();
+            foreach (var projectItem in ProjectItems.Values)
+            {
+                items.Add(projectItem);
+                items.AddRange(Get(projectItem.ProjectItems));
+            }
+
+            var itemsToDelete = new List<ProjectItem>();
+            foreach (var projectItem in items)
+            {
+                var fileName = projectItem.FileNames[0];
+                if (fileName.EndsWith(".g.cs") || fileName.EndsWith(".g.dot") || fileName.EndsWith(".g.dot.svg") || fileName.EndsWith(".g.dot.png"))
+                {
+                    itemsToDelete.Add(projectItem);
+                }
+            }
+            foreach (var projectItem in itemsToDelete)
+            {
+                projectItem.Delete();
+            }
+        }
+
+        private static List<ProjectItem>Get(ProjectItems projectItems)
+        {
+            var items = new List<ProjectItem>();
+            foreach (var projectItem in projectItems.Cast<ProjectItem>())
+            {
+                items.Add(projectItem);
+                items.AddRange(Get(projectItem.ProjectItems));
+            }
+            return items;
+        }
+
+        private static List<ProjectItem> DeleteGeneratedFilesInProjectItems(ProjectItems projectItems)
+        {
+            var items = new List<ProjectItem>();
+            foreach (var projectItem in projectItems.Cast<ProjectItem>())
+            {
+                try
+                {
+                    items.AddRange(DeleteGeneratedFilesInProjectItems(projectItem.ProjectItems));
+                    if (projectItem.FileNames[0].EndsWith(".g.cs"))
+                        items.Add(projectItem);
+                }
+                catch (Exception)
+                {
+                }
+            }
+            return items;
+        }
 
         public List<Class> GetAllClassesThatContainPrivateFieldWithAnAttribute(string attributeName)
         {
