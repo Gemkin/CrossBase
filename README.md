@@ -56,4 +56,8 @@ Please see video tutorials below how to install CrossBase.
 
 ## Video's ##
 
-TODO!
+[Install CrossBase using NuGet][2]
+
+
+  [1]: http://en.wikipedia.org/wiki/Test-driven_development
+  [2]: http://www.youtube.com/watch?v=tNsX7Nfcm60
