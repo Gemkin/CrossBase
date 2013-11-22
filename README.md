@@ -23,9 +23,9 @@ CrossBase contains the following straight forward platform abstraction component
 
 In addition to the platform abstractions, CrossBase contains more advanced components for doing inter tread communication. At the heart of these components lays a fundamental architectural choice how to deal with inter thread communication. This architecture choice is, like the choice to use platform abstractions, evolved for making production code testable.
 
-The choice is to let all production code to be single threaded. If this succeeds all written unit tests will be true. Consider the other way around, if your production code is not single threaded, you need to create mufti threaded unit test to verify the behavior of the code.
+The choice is to let all production code to be single threaded. If this succeeds, all written unit tests will be true. Consider the other way around, if your production code is not single threaded, you need to create multi threaded unit test to verify the behavior of the code. Writting multi treaded unit test is complex because it needs a lot of environement setup (creation/deletion of threads) and the number of scenarios to test explode with multiple thread executing production code.
 
-CrossBase uses message queues to do inter thread communication. Obviously this is not some new, this approach is being used in almost all frameworks in on way or another. CrossBase used a simple abstraction for dispatchers and as several implementations that can be used for different kind of applications and of course for testing.
+CrossBase uses message queues to do inter thread communication. Obviously this is not some new, this approach is being used in almost all frameworks in one way or another. CrossBase uses a simple abstraction for dispatchers and contains several implementations that can be used for different kind of applications and of course for testing.
 
 The following components are based on the CrossBase dispatchers:
 
