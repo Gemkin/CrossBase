@@ -236,7 +236,11 @@ namespace CrossBase.CodeGeneration.Parsers
 
         private void ResolveInterfaceBases()
         {
-            foreach (var kv in unresolvedInterfaces)
+            while (unresolvedInterfaces.Count != 0)
+            {
+                var localCopyUnresolvedInterfaces = new Dictionary<Interface, List<CodeInterface2>>(unresolvedInterfaces);
+                unresolvedInterfaces.Clear();
+                foreach (var kv in localCopyUnresolvedInterfaces)
             {
                 var @interface = kv.Key;
                 foreach (var codeInterface in kv.Value)
@@ -254,8 +258,7 @@ namespace CrossBase.CodeGeneration.Parsers
                         @interface.InterfaceBases.Add(baseInterface);
                 }
             }
-            unresolvedInterfaces.Clear();
-
+            }
         }
 
         private static IEnumerable<Project> GetSolutionFolderProjects(Project solutionFolder)
