@@ -8,6 +8,7 @@ namespace CrossBase.Dispatch
 {
     public class MainLoopDispatcher : IDispatcher
     {
+        private readonly IDispatcher dispatcherToHandleExceptions;
         private static readonly ILogger log = SystemServices.LogManager.GetLogger("CrossBase.Dispatch.MainLoopDispatcher");
         private readonly Queue<Action> actions = new Queue<Action>();
         private readonly Object locker = new Object();
@@ -22,7 +23,12 @@ namespace CrossBase.Dispatch
         }
 
         public MainLoopDispatcher(DispatcherId id, bool usingOwnThread)
+            : this(id, usingOwnThread, null)
         {
+        }
+        public MainLoopDispatcher(DispatcherId id, bool usingOwnThread, IDispatcher dispatcherToHandleExceptions)
+        {
+            this.dispatcherToHandleExceptions = dispatcherToHandleExceptions;
             Id = id;
 
             running = true;
@@ -126,7 +132,18 @@ namespace CrossBase.Dispatch
                 }
                 catch (Exception e)
                 {
-                    log.Error("Mainloop catched exception: " + e.Message);
+                    if (dispatcherToHandleExceptions != null)
+                    {
+                        log.Error(string.Format("Exception occured in {0} dispatcher, throwing in {1} dispatcher", Id, dispatcherToHandleExceptions.Id) + e.Message);
+                        dispatcherToHandleExceptions.BeginInvoke(() =>
+                        {
+                            throw new Exception(string.Format("Exception occured in {0} dispatcher", Id), e);
+                        });
+                    }
+                    else
+                    {
+                        log.Error(string.Format("Exception occured in {0} dispatcher, catched and but not retrown: ", Id) + e.Message);    
+                    }
                 }
             }
             log.Debug("Mainloop exit");
