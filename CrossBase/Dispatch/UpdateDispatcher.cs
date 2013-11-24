@@ -74,14 +74,13 @@ namespace CrossBase.Dispatch
         {
             try
             {
-                Action action;
+                Action action = null;
                 Monitor.Enter(locker);
                 {
-                    while (actions.Count == 0)
+                    if (actions.Count != 0)
                     {
-                        Monitor.Wait(locker);
+                        action = actions.Dequeue();
                     }
-                    action = actions.Dequeue();
                 }
                 Monitor.Exit(locker);
 
