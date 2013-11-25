@@ -1,11 +1,11 @@
 namespace CrossBase.StateMachine
 {
-    public abstract class BaseState<P, Q, R> : IState
-        where P : IStateMachine<R> where R : StateEvent
-        where Q : IStateContext
+    public abstract class BaseState<TStateMachine, TStateContext, TStateEvent> : IState
+        where TStateMachine : IStateMachine<TStateEvent> where TStateEvent : StateEvent
+        where TStateContext : IStateContext
     {
-        public Q Context { get; set; }
-        public P Machine { get; set; }
+        public TStateContext Context { get; set; }
+        public TStateMachine Machine { get; set; }
 
         public virtual void Enter()
         {
