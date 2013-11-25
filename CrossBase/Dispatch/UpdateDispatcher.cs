@@ -7,14 +7,15 @@ namespace CrossBase.Dispatch
 {
     public class UpdateDispatcher : IDispatcher
     {
-        private static readonly ILogger log = SystemServices.LogManager.GetLogger("CrossBase.Dispatch.UpdateDispatcher");
+        private readonly ILogger log;
         private readonly Queue<Action> actions = new Queue<Action>();
         private readonly Object locker = new Object();
         private int lastCount; //debug logging
 
 
-        public UpdateDispatcher(DispatcherId id)
+        public UpdateDispatcher(DispatcherId id, ILogger log)
         {
+            this.log = log;
             Id = id;
         }
 
@@ -89,7 +90,7 @@ namespace CrossBase.Dispatch
             }
             catch (Exception e)
             {
-                log.Error("UpdateDispatcher catched exception: " + e.Message);
+                log.Error("UpdateDispatcher catched exception: " + e);
             }
         }
     }
