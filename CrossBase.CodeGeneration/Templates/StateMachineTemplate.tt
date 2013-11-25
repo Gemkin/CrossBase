@@ -16,6 +16,7 @@
     private List<string> events;
     private string specialString;
     private List<Spec> specials;
+    private List<string> namespaces;
 
     public static bool IsGraphvizInstalled()
     {
@@ -105,6 +106,15 @@
             specialString = @attribute.GetArgument("Special");
 	        break;
 	    }
+
+	    namespaces = new List<string>
+	    {
+	        "System",
+	        "CrossBase.StateMachine",
+	        "CrossBase.Dispatch",
+	        "CrossBase.Log",
+	        @currentClass.Namespace.Name
+	    };
 
 	    GetTransistions();
 	    GetSpecials();
@@ -223,7 +233,7 @@
 		var outputFileName = fileName.Replace(".cs", "Context.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
@@ -247,12 +257,12 @@ namespace <#= @currentClass.Namespace.Name #>
 		var outputFileName = fileName.Replace(".cs", "StateBase.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
 {
-    public partial class <#= currentClass.Name  #>StateBase: BaseState<<#= currentClass.Name  #>, <#= currentClass.Name  #>Context, <#= currentClass.Name  #>StateEvent>
+    public partial class <#= currentClass.Name  #>StateBase: BaseState<I<#= currentClass.Name  #>, <#= currentClass.Name  #>Context, <#= currentClass.Name  #>StateEvent>
     {
 	}
 }
@@ -271,7 +281,7 @@ namespace <#= @currentClass.Namespace.Name #>
 		var outputFileName = fileName.Replace(".cs", "StateChangedEventArgs.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
@@ -297,7 +307,7 @@ namespace <#= @currentClass.Namespace.Name #>
 		
 		GenerateHeader();
 
-		GenerateUsings(@currentClass, new List<string> { "System", "CrossBase.StateMachine", "CrossBase.Dispatch", "CrossBase.Log", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
@@ -305,7 +315,7 @@ namespace <#= @currentClass.Namespace.Name #>
     public partial class <#= currentClass.Name  #>: StateMachineBase< <#= currentClass.Name  #>Context,  
                                                                       <#= currentClass.Name  #>Transitions, 
                                                                       <#= currentClass.Name  #>StateChangedEventArgs, 
-                                                                      <#= currentClass.Name  #>StateEvent>
+                                                                      <#= currentClass.Name  #>StateEvent>, I<#= currentClass.Name  #>
     {
         public <#= currentClass.Name  #>(ILogger log, IDispatcher dispatcher, <#= currentClass.Name  #>Context context) : base(log, dispatcher, context)
         {
@@ -383,7 +393,7 @@ namespace <#= @currentClass.Namespace.Name #>
 		var outputFileName = fileName.Replace(".cs", "." + state + ".g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
@@ -485,7 +495,7 @@ digraph <#= name #> { graph [ dpi = 300 ]
 	    var outputFileName = fileName.Replace(".cs", ".Transitions.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
@@ -578,7 +588,7 @@ namespace <#= @currentClass.Namespace.Name #>
 		var outputFileName = fileName.Replace(".cs", ".StateEvent.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 #>
 
 namespace <#= @currentClass.Namespace.Name #>	
