@@ -122,6 +122,7 @@
         GetEvents();
 	    GenerateBaseState();
 	    GenerateStateClasses();
+        GenerateInterface();
 	    GenerateMachine();
 	    GenerateTransitions();
 	    GenerateEvents();
@@ -288,6 +289,41 @@ namespace <#= @currentClass.Namespace.Name #>
 {
     public partial class <#= currentClass.Name  #>StateChangedEventArgs:StateChangedEventArgsBase
     {
+	}
+}
+
+<#+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+	}
+
+    private void GenerateInterface()
+    {
+		var fileName = currentClass.FileWithShortestName();
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", "Interface.g.cs");
+		
+		GenerateHeader();
+
+		GenerateUsings(@currentClass, namespaces);
+#>
+
+namespace <#= @currentClass.Namespace.Name #>	
+{
+    public interface I<#= currentClass.Name  #>: IStateMachine<<#= currentClass.Name  #>StateEvent>
+    {
+
+<#+
+        foreach (var s in states)
+        {
+#>
+        event EventHandler<<#= s #>EventArgs> <#= s #>Leave;
+        event EventHandler<<#= s #>EventArgs> <#= s #>Enter;
+<#+
+        }
+#>
 	}
 }
 
