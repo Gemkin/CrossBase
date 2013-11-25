@@ -8,24 +8,26 @@ namespace CrossBase.StateMachine
     /// Base class for state machines. Takes care of creating new necessary state machine data objects: transistions
     /// and context
     /// </summary>
-    /// <typeparam name="P">Type of state context object. This object is shared between states</typeparam>
-    /// <typeparam name="Q">Type of state transistion object. This object defines the initial state, normal and special state transitions</typeparam>
-    /// <typeparam name="R">Type of event args raised when a state change happens</typeparam>
-    public abstract class StateMachineBase<P, Q, R, S> : IDisposable, IStateMachine<S> 
-        where P : IStateContext
-        where Q : StateTransitionsDefinitionBase, new()
-        where R : StateChangedEventArgsBase, new()
-        where S : StateEvent
+    /// <typeparam name="TStateContext">Type of state context object. This object is shared between states</typeparam>
+    /// <typeparam name="TStateTransitions">Type of state transistion object. This object defines the initial state, normal and special state transitions</typeparam>
+    /// <typeparam name="TStateChangedEventArgs">Type of event args raised when a state change happens</typeparam>
+    /// <typeparam name="TStateEvent">Type of state changes happens</typeparam>
+    public abstract class StateMachineBase<TStateContext, TStateTransitions, TStateChangedEventArgs, TStateEvent>
+        : IDisposable, IStateMachine<TStateEvent>
+        where TStateContext : IStateContext
+        where TStateTransitions : StateTransitionsDefinitionBase, new()
+        where TStateChangedEventArgs : StateChangedEventArgsBase, new()
+        where TStateEvent : StateEvent
     {
         protected ILogger log;
         protected IDispatcher dispatcher;
         protected IState currentState;
-        protected S lastEvent;
-        protected Q transitionsDefinition;
-        protected P context;
+        protected TStateEvent lastEvent;
+        protected TStateTransitions transitionsDefinition;
+        protected TStateContext context;
         protected IState previousState;
         protected bool stateMachineStarted;
-        public virtual event EventHandler<R> StateChanged;
+        public virtual event EventHandler<TStateChangedEventArgs> StateChanged;
 
         /// <summary>
         /// Constructs the base of the state machine
@@ -33,27 +35,34 @@ namespace CrossBase.StateMachine
         /// <param name="log">logger</param>
         /// <param name="dispatcher">dispatcher used to dispatch StateEvent handling</param>
         /// <param name="context">context for the statemachine</param>
-        protected StateMachineBase(ILogger log, IDispatcher dispatcher, P context)
+        protected StateMachineBase(ILogger log, IDispatcher dispatcher, TStateContext context)
         {
             this.log = log;
             this.dispatcher = dispatcher;
-
             this.context = context;
-            transitionsDefinition = new Q();
-            currentState = CreateNextState(transitionsDefinition.InitialStateType);
-            dispatcher.BeginInvoke(() => currentState.Enter());
+            transitionsDefinition = new TStateTransitions();
+            GotoInitialStateDispatched();
+        }
+
+        private void GotoInitialStateDispatched()
+        {
+            dispatcher.BeginInvoke(() =>
+            {
+                var nextState = CreateNextState(transitionsDefinition.InitialStateType);
+                GotoNextState(nextState);
+            });
         }
 
         /// <summary>
-        /// Handles state events asynchroniously on the logic dispatcher
+        /// Handles state events asynchroniously on the dispatcher
         /// </summary>
         /// <param name="stateEvent"></param>
-        public void HandleEvent(S stateEvent)
+        public void HandleEvent(TStateEvent stateEvent)
         {
             dispatcher.BeginInvoke(() => DoHandleEvent(stateEvent));
         }
 
-        private void DoHandleEvent(S stateEvent)
+        private void DoHandleEvent(TStateEvent stateEvent)
         {
             var nextState = GetNextState(stateEvent);
 
@@ -66,6 +75,11 @@ namespace CrossBase.StateMachine
             previousState = currentState;
             lastEvent = stateEvent;
 
+            GotoNextState(nextState);
+        }
+
+        private void GotoNextState(IState nextState)
+        {
             if (currentState != null)
             {
                 log.DebugFormat("Dispose old state {0}", currentState);
@@ -74,12 +88,12 @@ namespace CrossBase.StateMachine
 
             log.InfoFormat("Enter next state {0}", nextState);
             currentState = nextState;
-            OnEnteringNextState(new R{PrevState = previousState, NextState = currentState, StateEvent = stateEvent});
+            OnEnteringNextState(new TStateChangedEventArgs { PrevState = previousState, NextState = currentState, StateEvent = lastEvent });
 
             currentState.Enter();
         }
 
-        private IState GetNextState(S stateEvent)
+        private IState GetNextState(TStateEvent stateEvent)
         {
             foreach (var transistion in transitionsDefinition.Normal)
             {
@@ -107,7 +121,7 @@ namespace CrossBase.StateMachine
             return null;
         }
 
-        protected virtual void OnEnteringNextState(R e)
+        protected virtual void OnEnteringNextState(TStateChangedEventArgs e)
         {
             var evnt = StateChanged;
             if (evnt != null) evnt(this, e);
@@ -125,6 +139,5 @@ namespace CrossBase.StateMachine
             type.GetProperty("Machine").SetValue(state, this, null);
             return state;
         }
-
     }
 }
