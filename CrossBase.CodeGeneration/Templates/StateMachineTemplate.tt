@@ -127,6 +127,7 @@
 	    GenerateTransitions();
 	    GenerateEvents();
 	    GenerateContext();
+	    GenerateContextInterface();
 	    GenerateStateEventArgs();
 	    GenerateDotFromTransitions();
     }
@@ -226,12 +227,11 @@
         return s.Split(new[] {c}, StringSplitOptions.RemoveEmptyEntries);
     }
 
-   
-    private void GenerateContext()
+    private void GenerateContextInterface()
     {
 		var fileName = currentClass.FileWithShortestName();
 		var projectItem = Parser.GetProjectItem(fileName);
-		var outputFileName = fileName.Replace(".cs", "Context.g.cs");
+		var outputFileName = fileName.Replace(".cs", ".Context.Interface.g.cs");
 		
 		GenerateHeader();
 		GenerateUsings(@currentClass, namespaces);
@@ -239,7 +239,31 @@
 
 namespace <#= @currentClass.Namespace.Name #>	
 {
-    public partial class <#= currentClass.Name  #>Context: IStateContext
+    public partial interface I<#= currentClass.Name  #>Context: IStateContext
+    {
+	}
+}
+
+<#+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+	}
+   
+    private void GenerateContext()
+    {
+		var fileName = currentClass.FileWithShortestName();
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", ".Context.g.cs");
+		
+		GenerateHeader();
+		GenerateUsings(@currentClass, namespaces);
+#>
+
+namespace <#= @currentClass.Namespace.Name #>	
+{
+    public partial class <#= currentClass.Name  #>Context: I<#= currentClass.Name  #>Context
     {
 	}
 }
@@ -263,7 +287,7 @@ namespace <#= @currentClass.Namespace.Name #>
 
 namespace <#= @currentClass.Namespace.Name #>	
 {
-    public partial class <#= currentClass.Name  #>StateBase: BaseState<I<#= currentClass.Name  #>, <#= currentClass.Name  #>Context, <#= currentClass.Name  #>StateEvent>
+    public partial class <#= currentClass.Name  #>StateBase: BaseState<I<#= currentClass.Name  #>, I<#= currentClass.Name  #>Context, <#= currentClass.Name  #>StateEvent>
     {
 	}
 }
@@ -348,12 +372,12 @@ namespace <#= @currentClass.Namespace.Name #>
 
 namespace <#= @currentClass.Namespace.Name #>	
 {
-    public partial class <#= currentClass.Name  #>: StateMachineBase< <#= currentClass.Name  #>Context,  
+    public partial class <#= currentClass.Name  #>: StateMachineBase< I<#= currentClass.Name  #>Context,  
                                                                       <#= currentClass.Name  #>Transitions, 
                                                                       <#= currentClass.Name  #>StateChangedEventArgs, 
                                                                       <#= currentClass.Name  #>StateEvent>, I<#= currentClass.Name  #>
     {
-        public <#= currentClass.Name  #>(ILogger log, IDispatcher dispatcher, <#= currentClass.Name  #>Context context) : base(log, dispatcher, context)
+        public <#= currentClass.Name  #>(ILogger log, IDispatcher dispatcher, I<#= currentClass.Name  #>Context context) : base(log, dispatcher, context)
         {
         }
 
