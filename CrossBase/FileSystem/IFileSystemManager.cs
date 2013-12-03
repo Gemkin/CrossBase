@@ -14,6 +14,7 @@ namespace CrossBase.FileSystem
         void DirectoryCreate(string dir);
         byte[] FileReadAllBytes(string file);
         string[] DirectoryGetFiles(string path, string searchPattern);
+        string[] DirectoryRecursivelyGetSubdirectories(string path);
         string FileReadAllText(string file);
         void DirectoryDelete(string dir);
         void FileWriteAllBytes(string file, byte[] bytes);
