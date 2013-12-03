@@ -554,7 +554,14 @@ namespace CrossBase.CodeGeneration.Parsers
 
         private Property ParseProperty(CodeProperty codeProperty, string currentFile)
         {
-            var property = new Property { Name = codeProperty.Name, Type = codeProperty.Type.AsString, Access = codeProperty.Access.Convert(), FileName = currentFile };
+            var property = new Property
+                               {
+                                   Name = codeProperty.Name, 
+                                   Type = codeProperty.Type.AsString, 
+                                   Access = codeProperty.Access.Convert(), 
+                                   FileName = currentFile, 
+                                   HasSetter = (codeProperty.Setter != null)
+                               };
             WriteLine("ParseProperty" + " " + codeProperty.Name + " " + codeProperty.Type.AsString);
             foreach (CodeAttribute2 codeElement in codeProperty.Attributes)
             {

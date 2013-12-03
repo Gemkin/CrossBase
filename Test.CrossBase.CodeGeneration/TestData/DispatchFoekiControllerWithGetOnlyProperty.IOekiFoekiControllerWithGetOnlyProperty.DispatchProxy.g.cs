@@ -18,17 +18,14 @@ using Test.CrossBase.CodeGeneration.TestData;
 
 namespace Test.CrossBase.CodeGeneration.TestData	
 {
-	public interface IDispatchFoekiController 
+	public interface IDispatchFoekiControllerWithGetOnlyProperty 
 	{
-		IOekiFoekiController Controller { get; set; }
+		IOekiFoekiControllerWithGetOnlyProperty Controller { get; set; }
 		IDispatcher UpDispatcher { get; set; }
 		IDispatcher DownDispatcher { get; set; }
 
-		event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> OekiDoeki;
 		event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InProgress;
 		event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InBuilding;
-		event EventHandler<EventArgs> DoThisStarted;
-		event EventHandler<EventArgs> DoThisFinished;
 		event EventHandler<EventArgs> CleanUpStarted;
 		event EventHandler<EventArgs> CleanUpFinished;
 		event EventHandler<EventArgs> ProcessEventsStarted;
@@ -37,12 +34,9 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		event EventHandler<EventArgs> BuildFinished;
 		event EventHandler<EventArgs> DisposeStarted;
 		event EventHandler<EventArgs> DisposeFinished;
+		ushort AgeInvoke { get;  } 
 		ushort AddressInvoke { get;  set;  } 
 		string NameInvoke { get;  set;  } 
-		void DoThis();
-		void DoThisInvoke();
-		void DoThis(int times);
-		void DoThisInvoke(int times);
 		void CleanUp();
 		void CleanUpInvoke();
 		System.Collections.Generic.List<System.EventArgs> ProcessEventsInvoke(int bla);
@@ -52,7 +46,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		void DisposeInvoke();
 	}
 
-	public partial class DispatchFoekiController: IDispatchFoekiController 
+	public partial class DispatchFoekiControllerWithGetOnlyProperty: IDispatchFoekiControllerWithGetOnlyProperty 
 	{
 		protected T GetCloneIfPossible<T>(T obj)
 		{
@@ -69,9 +63,33 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		public IDispatcher UpDispatcher { get; set; }
 		public IDispatcher DownDispatcher { get; set; }
 
-		public event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> OekiDoeki;
 		public event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InProgress;
 		public event System.EventHandler<Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs> InBuilding;
+		private ushort ageInvoke;
+
+		public ushort AgeInvoke 
+		{
+			get
+			{
+				Exception exception = null;
+				var value = ageInvoke;
+				DownDispatcher.Invoke(() => 
+				{
+					try
+					{
+						value = controller.Age;
+						value = GetCloneIfPossible(value);									 
+					}
+					catch (Exception ex)
+					{
+						exception = ex;
+					}
+				});
+				if (exception != null)
+					throw exception;
+				return value;
+			}
+		}
 		private ushort addressInvoke;
 
 		public ushort AddressInvoke 
@@ -165,21 +183,6 @@ namespace Test.CrossBase.CodeGeneration.TestData
 			}
 		}
 
-		public event EventHandler<EventArgs> DoThisStarted;
-		public event EventHandler<EventArgs> DoThisFinished;
-		
-		private void InvokeDoThisStarted(EventArgs e)
-		{
-		var handler = DoThisStarted;
-		if (handler != null) handler(this, e);
-		}
-
-		private void InvokeDoThisFinished(EventArgs e)
-		{
-			var handler = DoThisFinished;
-			if (handler != null) handler(this, e);
-		}
-		
 		public event EventHandler<EventArgs> CleanUpStarted;
 		public event EventHandler<EventArgs> CleanUpFinished;
 		
@@ -239,9 +242,9 @@ namespace Test.CrossBase.CodeGeneration.TestData
 			var handler = DisposeFinished;
 			if (handler != null) handler(this, e);
 		}
-				private  IOekiFoekiController controller;
+				private  IOekiFoekiControllerWithGetOnlyProperty controller;
 
-		public IOekiFoekiController Controller
+		public IOekiFoekiControllerWithGetOnlyProperty Controller
 		{
 			get
 			{
@@ -255,16 +258,6 @@ namespace Test.CrossBase.CodeGeneration.TestData
 				controller = value;
 				SubscribeToController();
 			}
-		}
-		private void OnOekiDoekiHandler(object sender, Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs e)
-		{
-			var eventArgs = e;
-			eventArgs = GetCloneIfPossible(eventArgs);
-			UpDispatcher.BeginInvoke(() =>
-				{
-					var handler = OekiDoeki;
-					if (handler != null) handler(this, eventArgs);
-				});
 		}
 		private void OnInProgressHandler(object sender, Test.CrossBase.CodeGeneration.TestData.OekiFoekiEventArgs e)
 		{
@@ -290,94 +283,14 @@ namespace Test.CrossBase.CodeGeneration.TestData
 		{
 			if (controller == null)
 				return;
-			controller.OekiDoeki -= OnOekiDoekiHandler;
 			controller.InProgress -= OnInProgressHandler;
 			controller.InBuilding -= OnInBuildingHandler;
 		}		
 
 		private void SubscribeToController()
 		{
-			controller.OekiDoeki += OnOekiDoekiHandler;
 			controller.InProgress += OnInProgressHandler;
 			controller.InBuilding += OnInBuildingHandler;
-		}
-
-		public void DoThis()
-		{
-			DownDispatcher.BeginInvoke(() => 
-				{
-					UpDispatcher.BeginInvoke(() => InvokeDoThisStarted(EventArgs.Empty));
-					try
-					{
-						controller.DoThis();
-					}
-					finally
-					{
-						UpDispatcher.BeginInvoke(() => InvokeDoThisFinished(EventArgs.Empty));
-					}
-				});
-		}
-		public void DoThisInvoke()
-		{
-			Exception exception = null;
-			
-			DownDispatcher.Invoke(() => 
-				{
-					InvokeDoThisStarted(EventArgs.Empty);
-					try
-					{
-						controller.DoThis();
-					}
-					catch(Exception ex)
-					{
-						exception = ex;
-					}
-					finally
-					{
-						InvokeDoThisFinished(EventArgs.Empty);
-					}
-				});
-			if (exception != null)
-				throw exception;
-		}
-
-		public void DoThis(int times)
-		{
-			DownDispatcher.BeginInvoke(() => 
-				{
-					UpDispatcher.BeginInvoke(() => InvokeDoThisStarted(EventArgs.Empty));
-					try
-					{
-						controller.DoThis(times);
-					}
-					finally
-					{
-						UpDispatcher.BeginInvoke(() => InvokeDoThisFinished(EventArgs.Empty));
-					}
-				});
-		}
-		public void DoThisInvoke(int times)
-		{
-			Exception exception = null;
-			
-			DownDispatcher.Invoke(() => 
-				{
-					InvokeDoThisStarted(EventArgs.Empty);
-					try
-					{
-						controller.DoThis(times);
-					}
-					catch(Exception ex)
-					{
-						exception = ex;
-					}
-					finally
-					{
-						InvokeDoThisFinished(EventArgs.Empty);
-					}
-				});
-			if (exception != null)
-				throw exception;
 		}
 
 		public void CleanUp()

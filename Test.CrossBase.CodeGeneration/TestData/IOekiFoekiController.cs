@@ -26,4 +26,9 @@ namespace Test.CrossBase.CodeGeneration.TestData
         void DoThis();
         void DoThis(int times);
     }
+
+    public interface IOekiFoekiControllerWithGetOnlyProperty : IDoItAlso
+    {
+        ushort Age { get; }
+    }
 }

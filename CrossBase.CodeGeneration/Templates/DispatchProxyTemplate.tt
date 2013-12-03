@@ -102,11 +102,11 @@ namespace <#= ProxyNamespace #>
 
 				foreach (var prop in @interface.AllProperties)
 				{ #>
-		<#= prop.Type #> <#= prop.Name #>Invoke { get; set; } 
+		<#= prop.Type #> <#= prop.Name #>Invoke { get; <#+ if (prop.HasSetter) { #> set; <#+ } #> } 
 <#+
 					if (containsNotifyPropertyChanged)
 					{#>
-		<#= prop.Type #> <#= prop.Name #>BeginInvoke { get; set; } 
+		<#= prop.Type #> <#= prop.Name #>BeginInvoke { get; <#+ if (prop.HasSetter) { #> set; <#+ } #> } 
 <#+
 					}
 				}
@@ -154,7 +154,8 @@ namespace <#= ProxyNamespace #>
 				foreach (var prop in @interface.AllProperties)
 				{ 
 					if (containsNotifyPropertyChanged)
-					{#>
+					{
+#>
 		private <#= prop.Type #> <#= prop.GetDefaultPrivateFieldName() #>BeginInvoke;
 		public <#= prop.Type #> <#= prop.Name #>BeginInvoke 
 		{
@@ -162,6 +163,10 @@ namespace <#= ProxyNamespace #>
 			{
 				return <#= prop.GetDefaultPrivateFieldName() #>;
 			}
+<#+
+				if (prop.HasSetter)
+				{
+#>
 			set
 			{
 				value = GetCloneIfPossible(value);
@@ -173,6 +178,9 @@ namespace <#= ProxyNamespace #>
 				});
 
 			}
+<#+
+				}
+#>
 		}
 <#+
 				    }
@@ -202,6 +210,10 @@ namespace <#= ProxyNamespace #>
 					throw exception;
 				return value;
 			}
+<#+
+				if (prop.HasSetter)
+				{
+#>
 			set
 			{
 				Exception exception = null;
@@ -223,6 +235,9 @@ namespace <#= ProxyNamespace #>
 				if (exception != null)
 					throw exception;
 			}
+<#+
+				}
+#>
 		}
 <#+					}
 				}

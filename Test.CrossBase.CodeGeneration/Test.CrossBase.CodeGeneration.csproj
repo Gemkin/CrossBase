@@ -92,6 +92,10 @@
     <Compile Include="TestData\DispatchFoekiController.IOekiFoekiController.DispatchProxy.g.cs">
       <DependentUpon>DispatchFoekiController.cs</DependentUpon>
     </Compile>
+    <Compile Include="TestData\DispatchFoekiController.IOekiFoekiControllerWithGetProperty.DispatchProxy.g.cs">
+      <DependentUpon>DispatchFoekiController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TestData\DispatchFoekiControllerWithGetOnlyProperty.cs" />
     <Compile Include="TestData\IOekiFoekiController.cs" />
     <Compile Include="TestCalulatorController.cs" />
     <Compile Include="TestData\OekiData.cs" />
