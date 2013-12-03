@@ -12,13 +12,15 @@ Wies Hubbers
 #pragma warning disable 183
 
 using System;
+using CrossBase.StateMachine;
+using CrossBase.Dispatch;
+using CrossBase.Log;
 using Test.CrossBase.CodeGeneration;
 using CrossBase.CodeGeneration.Attributes;
-using CrossBase.StateMachine;
 
 namespace Test.CrossBase.CodeGeneration	
 {
-    public partial class SomeStateMachineStateBase: BaseState<SomeStateMachine, SomeStateMachineContext, SomeStateMachineStateEvent>
+    public partial class SomeStateMachineStateBase: BaseState<ISomeStateMachine, ISomeStateMachineContext, SomeStateMachineStateEvent>
     {
 	}
 }

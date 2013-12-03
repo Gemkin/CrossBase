@@ -20,12 +20,12 @@ using CrossBase.CodeGeneration.Attributes;
 
 namespace Test.CrossBase.CodeGeneration	
 {
-    public partial class SomeStateMachine: StateMachineBase< SomeStateMachineContext,  
+    public partial class SomeStateMachine: StateMachineBase< ISomeStateMachineContext,  
                                                                       SomeStateMachineTransitions, 
                                                                       SomeStateMachineStateChangedEventArgs, 
-                                                                      SomeStateMachineStateEvent>
+                                                                      SomeStateMachineStateEvent>, ISomeStateMachine
     {
-        public SomeStateMachine(ILogger log, IDispatcher dispatcher, SomeStateMachineContext context) : base(log, dispatcher, context)
+        public SomeStateMachine(ILogger log, IDispatcher dispatcher, ISomeStateMachineContext context) : base(log, dispatcher, context)
         {
         }
 

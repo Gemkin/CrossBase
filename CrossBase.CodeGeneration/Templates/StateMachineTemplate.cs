@@ -21,7 +21,7 @@ namespace CrossBase.CodeGeneration.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+    #line 1 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "11.0.0.0")]
     public partial class StateMachineTemplate : CrossBase.CodeGeneration.Templates.TemplateBase
     {
@@ -35,7 +35,7 @@ namespace CrossBase.CodeGeneration.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 9 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 9 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
     private const string attributeName = "StateMachine";
     private string initialState;
@@ -46,6 +46,7 @@ namespace CrossBase.CodeGeneration.Templates
     private List<string> events;
     private string specialString;
     private List<Spec> specials;
+    private List<string> namespaces;
 
     public static bool IsGraphvizInstalled()
     {
@@ -136,16 +137,27 @@ namespace CrossBase.CodeGeneration.Templates
 	        break;
 	    }
 
+	    namespaces = new List<string>
+	    {
+	        "System",
+	        "CrossBase.StateMachine",
+	        "CrossBase.Dispatch",
+	        "CrossBase.Log",
+	        @currentClass.Namespace.Name
+	    };
+
 	    GetTransistions();
 	    GetSpecials();
         GetStates();
         GetEvents();
 	    GenerateBaseState();
 	    GenerateStateClasses();
+        GenerateInterface();
 	    GenerateMachine();
 	    GenerateTransitions();
 	    GenerateEvents();
 	    GenerateContext();
+	    GenerateContextInterface();
 	    GenerateStateEventArgs();
 	    GenerateDotFromTransitions();
     }
@@ -245,56 +257,125 @@ namespace CrossBase.CodeGeneration.Templates
         return s.Split(new[] {c}, StringSplitOptions.RemoveEmptyEntries);
     }
 
-   
-    private void GenerateContext()
+    private void GenerateContextInterface()
     {
 		var fileName = currentClass.FileWithShortestName();
 		var projectItem = Parser.GetProjectItem(fileName);
-		var outputFileName = fileName.Replace(".cs", "Context.g.cs");
+		var outputFileName = fileName.Replace(".cs", ".Context.Interface.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 227 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 238 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 229 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 240 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 229 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
-this.Write("\t\r\n{\r\n    public partial class ");
+        #line 240 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\t\r\n{\r\n    public partial interface I");
 
         
         #line default
         #line hidden
         
-        #line 231 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 242 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 231 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 242 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Context: IStateContext\r\n    {\r\n\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 236 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 247 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+	}
+   
+    private void GenerateContext()
+    {
+		var fileName = currentClass.FileWithShortestName();
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", ".Context.g.cs");
+		
+		GenerateHeader();
+		GenerateUsings(@currentClass, namespaces);
+
+        
+        #line default
+        #line hidden
+        
+        #line 262 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\r\nnamespace ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 264 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 264 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\t\r\n{\r\n    public partial class ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 266 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 266 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("Context: I");
+
+        
+        #line default
+        #line hidden
+        
+        #line 266 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 266 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("Context\r\n    {\r\n\t}\r\n}\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 271 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -309,90 +390,90 @@ this.Write("Context: IStateContext\r\n    {\r\n\t}\r\n}\r\n\r\n");
 		var outputFileName = fileName.Replace(".cs", "StateBase.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 251 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 286 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 253 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 288 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 253 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 288 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public partial class ");
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
-this.Write("StateBase: BaseState<");
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("StateBase: BaseState<I");
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
-this.Write(", ");
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(", I");
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Context, ");
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 255 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 290 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent>\r\n    {\r\n\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 260 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 295 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -407,48 +488,206 @@ this.Write("StateEvent>\r\n    {\r\n\t}\r\n}\r\n\r\n");
 		var outputFileName = fileName.Replace(".cs", "StateChangedEventArgs.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 275 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 310 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 277 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 312 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 277 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 312 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public partial class ");
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 314 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 279 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 314 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateChangedEventArgs:StateChangedEventArgsBase\r\n    {\r\n\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 284 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 319 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+
+		GenerateFooter();
+		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
+		Delete(projectItem, outputFileName);
+		Save(projectItem, outputFileName);
+	}
+
+    private void GenerateInterface()
+    {
+		var fileName = currentClass.FileWithShortestName();
+		var projectItem = Parser.GetProjectItem(fileName);
+		var outputFileName = fileName.Replace(".cs", "Interface.g.cs");
+		
+		GenerateHeader();
+
+		GenerateUsings(@currentClass, namespaces);
+
+        
+        #line default
+        #line hidden
+        
+        #line 335 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\r\nnamespace ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 337 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 337 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\t\r\n{\r\n    public interface I");
+
+        
+        #line default
+        #line hidden
+        
+        #line 339 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 339 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(": IStateMachine<");
+
+        
+        #line default
+        #line hidden
+        
+        #line 339 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 339 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("StateEvent>\r\n    {\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 342 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+
+        foreach (var s in states)
+        {
+
+        
+        #line default
+        #line hidden
+        
+        #line 345 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("        event EventHandler<");
+
+        
+        #line default
+        #line hidden
+        
+        #line 346 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(s));
+
+        
+        #line default
+        #line hidden
+        
+        #line 346 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("EventArgs> ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 346 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(s));
+
+        
+        #line default
+        #line hidden
+        
+        #line 346 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("Leave;\r\n        event EventHandler<");
+
+        
+        #line default
+        #line hidden
+        
+        #line 347 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(s));
+
+        
+        #line default
+        #line hidden
+        
+        #line 347 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("EventArgs> ");
+
+        
+        #line default
+        #line hidden
+        
+        #line 347 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(s));
+
+        
+        #line default
+        #line hidden
+        
+        #line 347 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("Enter;\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 348 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+
+        }
+
+        
+        #line default
+        #line hidden
+        
+        #line 350 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\t}\r\n}\r\n\r\n");
+
+        
+        #line default
+        #line hidden
+        
+        #line 354 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -465,55 +704,55 @@ this.Write("StateChangedEventArgs:StateChangedEventArgsBase\r\n    {\r\n\t}\r\n}
 		
 		GenerateHeader();
 
-		GenerateUsings(@currentClass, new List<string> { "System", "CrossBase.StateMachine", "CrossBase.Dispatch", "CrossBase.Log", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 301 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 371 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 303 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 373 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 303 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 373 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public partial class ");
 
         
         #line default
         #line hidden
         
-        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 375 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
-this.Write(": StateMachineBase< ");
+        #line 375 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(": StateMachineBase< I");
 
         
         #line default
         #line hidden
         
-        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 375 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 305 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 375 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Context,  \r\n                                                                     " +
         " ");
 
@@ -521,14 +760,14 @@ this.Write("Context,  \r\n                                                      
         #line default
         #line hidden
         
-        #line 306 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 376 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 306 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 376 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Transitions, \r\n                                                                  " +
         "    ");
 
@@ -536,14 +775,14 @@ this.Write("Transitions, \r\n                                                   
         #line default
         #line hidden
         
-        #line 307 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 377 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 307 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 377 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateChangedEventArgs, \r\n                                                        " +
         "              ");
 
@@ -551,42 +790,56 @@ this.Write("StateChangedEventArgs, \r\n                                         
         #line default
         #line hidden
         
-        #line 308 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 378 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 308 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
-this.Write("StateEvent>\r\n    {\r\n        public ");
+        #line 378 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("StateEvent>, I");
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 378 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
-this.Write("(ILogger log, IDispatcher dispatcher, ");
+        #line 378 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("\r\n    {\r\n        public ");
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 380 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 310 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 380 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write("(ILogger log, IDispatcher dispatcher, I");
+
+        
+        #line default
+        #line hidden
+        
+        #line 380 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
+
+        
+        #line default
+        #line hidden
+        
+        #line 380 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Context context) : base(log, dispatcher, context)\r\n        {\r\n        }\r\n\r\n      " +
         "  protected override void OnEnteringNextState(");
 
@@ -594,21 +847,21 @@ this.Write("Context context) : base(log, dispatcher, context)\r\n        {\r\n  
         #line default
         #line hidden
         
-        #line 314 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 384 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 314 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 384 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateChangedEventArgs e)\r\n        {\r\n            base.OnEnteringNextState(e);\r\n");
 
         
         #line default
         #line hidden
         
-        #line 317 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 387 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         var isFirstRender = true;
         foreach (var s in states)
@@ -620,112 +873,112 @@ this.Write("StateChangedEventArgs e)\r\n        {\r\n            base.OnEntering
         #line default
         #line hidden
         
-        #line 323 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 393 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("            ");
 
         
         #line default
         #line hidden
         
-        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 394 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(ifstatement));
 
         
         #line default
         #line hidden
         
-        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 394 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("(e.PrevState is ");
 
         
         #line default
         #line hidden
         
-        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 394 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 324 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 394 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(")\r\n            {\r\n                On");
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Leave(new  ");
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs {  ");
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" = e.PrevState as  ");
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(", Event = (");
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 326 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 396 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent)e.StateEvent });\r\n            }\r\n                        \r\n");
 
         
         #line default
         #line hidden
         
-        #line 329 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 399 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -733,7 +986,7 @@ this.Write("StateEvent)e.StateEvent });\r\n            }\r\n                    
         #line default
         #line hidden
         
-        #line 332 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 402 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         isFirstRender = true;
         foreach (var s in states)
@@ -745,112 +998,112 @@ this.Write("StateEvent)e.StateEvent });\r\n            }\r\n                    
         #line default
         #line hidden
         
-        #line 338 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 408 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("            ");
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 409 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(ifstatement));
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 409 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("(e.NextState is ");
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 409 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 339 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 409 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(")\r\n            {\r\n                On");
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Enter(new  ");
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs {  ");
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" = e.NextState as  ");
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(", Event = (");
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 341 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 411 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent)e.StateEvent });\r\n            }\r\n                        \r\n");
 
         
         #line default
         #line hidden
         
-        #line 344 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 414 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -858,14 +1111,14 @@ this.Write("StateEvent)e.StateEvent });\r\n            }\r\n                    
         #line default
         #line hidden
         
-        #line 346 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 416 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("        }\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 349 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 419 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         foreach (var s in states)
         {
@@ -874,77 +1127,77 @@ this.Write("        }\r\n\r\n");
         #line default
         #line hidden
         
-        #line 352 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 422 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("        public event EventHandler<");
 
         
         #line default
         #line hidden
         
-        #line 353 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 423 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 353 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 423 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs> ");
 
         
         #line default
         #line hidden
         
-        #line 353 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 423 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 353 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 423 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Leave;\r\n        protected virtual void On");
 
         
         #line default
         #line hidden
         
-        #line 354 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 424 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 354 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 424 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Leave(");
 
         
         #line default
         #line hidden
         
-        #line 354 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 424 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 354 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 424 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs e)\r\n        {\r\n            var handler = ");
 
         
         #line default
         #line hidden
         
-        #line 356 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 426 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 356 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 426 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Leave;\r\n            if (handler != null) handler(this, e);\r\n        }\r\n        pu" +
         "blic event EventHandler<");
 
@@ -952,77 +1205,77 @@ this.Write("Leave;\r\n            if (handler != null) handler(this, e);\r\n    
         #line default
         #line hidden
         
-        #line 359 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 429 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 359 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 429 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs> ");
 
         
         #line default
         #line hidden
         
-        #line 359 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 429 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 359 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 429 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Enter;\r\n        protected virtual void On");
 
         
         #line default
         #line hidden
         
-        #line 360 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 430 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 360 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 430 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Enter(");
 
         
         #line default
         #line hidden
         
-        #line 360 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 430 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 360 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 430 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs e)\r\n        {\r\n            var handler = ");
 
         
         #line default
         #line hidden
         
-        #line 362 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 432 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s));
 
         
         #line default
         #line hidden
         
-        #line 362 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 432 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("Enter;\r\n            if (handler != null) handler(this, e);\r\n        }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 365 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 435 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -1030,14 +1283,14 @@ this.Write("Enter;\r\n            if (handler != null) handler(this, e);\r\n    
         #line default
         #line hidden
         
-        #line 367 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 437 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 371 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 441 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -1053,62 +1306,62 @@ this.Write("\t}\r\n}\r\n\r\n");
 		var outputFileName = fileName.Replace(".cs", "." + state + ".g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 387 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 457 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 389 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 459 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 389 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 459 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public partial class ");
 
         
         #line default
         #line hidden
         
-        #line 391 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 461 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(state));
 
         
         #line default
         #line hidden
         
-        #line 391 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 461 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" : ");
 
         
         #line default
         #line hidden
         
-        #line 391 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 461 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 391 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 461 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateBase\r\n    {\r\n\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 396 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 466 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -1129,84 +1382,84 @@ this.Write("StateBase\r\n    {\r\n\t}\r\n}\r\n\r\n");
         #line default
         #line hidden
         
-        #line 411 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 481 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 413 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 483 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 413 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 483 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public partial class ");
 
         
         #line default
         #line hidden
         
-        #line 415 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 485 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(state));
 
         
         #line default
         #line hidden
         
-        #line 415 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 485 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("EventArgs : EventArgs\r\n    {\r\n\t    public ");
 
         
         #line default
         #line hidden
         
-        #line 417 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 487 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(state));
 
         
         #line default
         #line hidden
         
-        #line 417 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 487 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" ");
 
         
         #line default
         #line hidden
         
-        #line 417 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 487 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(state));
 
         
         #line default
         #line hidden
         
-        #line 417 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 487 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" { get; set; }\r\n        public ");
 
         
         #line default
         #line hidden
         
-        #line 418 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 488 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 418 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 488 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent Event { get; set; }\r\n    }\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 422 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 492 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -1227,42 +1480,42 @@ this.Write("StateEvent Event { get; set; }\r\n    }\r\n}\r\n\r\n");
         #line default
         #line hidden
         
-        #line 437 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 507 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("digraph ");
 
         
         #line default
         #line hidden
         
-        #line 438 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 508 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(name));
 
         
         #line default
         #line hidden
         
-        #line 438 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 508 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" { graph [ dpi = 300 ]\r\n    ");
 
         
         #line default
         #line hidden
         
-        #line 439 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 509 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(initialState));
 
         
         #line default
         #line hidden
         
-        #line 439 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 509 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" [shape=box];\r\n    AnyState [shape=box] [style=dotted];\r\n");
 
         
         #line default
         #line hidden
         
-        #line 441 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 511 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         
         foreach (var t in transitions)
@@ -1274,56 +1527,56 @@ this.Write(" [shape=box];\r\n    AnyState [shape=box] [style=dotted];\r\n");
         #line default
         #line hidden
         
-        #line 447 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 517 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("    ");
 
         
         #line default
         #line hidden
         
-        #line 448 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 518 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(t.Current));
 
         
         #line default
         #line hidden
         
-        #line 448 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 518 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" -> ");
 
         
         #line default
         #line hidden
         
-        #line 448 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 518 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(t.Next));
 
         
         #line default
         #line hidden
         
-        #line 448 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 518 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" [label=");
 
         
         #line default
         #line hidden
         
-        #line 448 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 518 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(t.Event));
 
         
         #line default
         #line hidden
         
-        #line 448 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 518 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("];\r\n");
 
         
         #line default
         #line hidden
         
-        #line 449 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 519 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
             
         }
         
@@ -1336,42 +1589,42 @@ this.Write("];\r\n");
         #line default
         #line hidden
         
-        #line 456 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 526 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\n  AnyState -> ");
 
         
         #line default
         #line hidden
         
-        #line 458 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 528 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s.Next));
 
         
         #line default
         #line hidden
         
-        #line 458 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 528 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" [color=red] [label=");
 
         
         #line default
         #line hidden
         
-        #line 458 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 528 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s.Event));
 
         
         #line default
         #line hidden
         
-        #line 458 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 528 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("];\r\n");
 
         
         #line default
         #line hidden
         
-        #line 459 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 529 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
             
         }
 
@@ -1379,14 +1632,14 @@ this.Write("];\r\n");
         #line default
         #line hidden
         
-        #line 461 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 531 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\n\r\n\r\n}\r\n");
 
         
         #line default
         #line hidden
         
-        #line 466 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 536 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
 		Delete(projectItem, outputFileName);
@@ -1409,41 +1662,41 @@ this.Write("\r\n\r\n\r\n}\r\n");
 	    var outputFileName = fileName.Replace(".cs", ".Transitions.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 489 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 559 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 491 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 561 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 491 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 561 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public class ");
 
         
         #line default
         #line hidden
         
-        #line 493 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 563 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(name));
 
         
         #line default
         #line hidden
         
-        #line 493 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 563 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" : StateTransitionsDefinitionBase\r\n    {\r\n        public override StateTransistio" +
         "n[] Normal\r\n        {\r\n            get \r\n            {\r\n");
 
@@ -1451,7 +1704,7 @@ this.Write(" : StateTransitionsDefinitionBase\r\n    {\r\n        public overrid
         #line default
         #line hidden
         
-        #line 499 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 569 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         if (transitions.Count == 0)
         {
@@ -1460,14 +1713,14 @@ this.Write(" : StateTransitionsDefinitionBase\r\n    {\r\n        public overrid
         #line default
         #line hidden
         
-        #line 502 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 572 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("                return new StateTransistion[0];\r\n");
 
         
         #line default
         #line hidden
         
-        #line 504 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 574 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
             
         }
         else
@@ -1477,14 +1730,14 @@ this.Write("                return new StateTransistion[0];\r\n");
         #line default
         #line hidden
         
-        #line 508 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 578 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("             \r\n                return new [] \r\n                {\r\n");
 
         
         #line default
         #line hidden
         
-        #line 511 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 581 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
             foreach (var transition in transitions)
             {
@@ -1493,70 +1746,70 @@ this.Write("             \r\n                return new [] \r\n                {
         #line default
         #line hidden
         
-        #line 514 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 584 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("                    new StateTransistion{ Current = typeof(");
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(transition.Current));
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("), Event = ");
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent.");
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(transition.Event));
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(", Next = typeof(");
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(transition.Next));
 
         
         #line default
         #line hidden
         
-        #line 515 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 585 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(") },\r\n");
 
         
         #line default
         #line hidden
         
-        #line 516 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 586 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
             }
 
@@ -1564,14 +1817,14 @@ this.Write(") },\r\n");
         #line default
         #line hidden
         
-        #line 518 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 588 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\n                };\r\n");
 
         
         #line default
         #line hidden
         
-        #line 521 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 591 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -1579,7 +1832,7 @@ this.Write("\r\n                };\r\n");
         #line default
         #line hidden
         
-        #line 523 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 593 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("                 \r\n            }\r\n        }\r\n\r\n        public override StateTrans" +
         "istion[] Special\r\n        {\r\n            get \r\n            {\r\n");
 
@@ -1587,7 +1840,7 @@ this.Write("                 \r\n            }\r\n        }\r\n\r\n        publi
         #line default
         #line hidden
         
-        #line 531 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 601 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         if (specials.Count == 0)
         {
@@ -1596,14 +1849,14 @@ this.Write("                 \r\n            }\r\n        }\r\n\r\n        publi
         #line default
         #line hidden
         
-        #line 534 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 604 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("                return new StateTransistion[0];\r\n");
 
         
         #line default
         #line hidden
         
-        #line 536 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 606 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
             
         }
         else
@@ -1613,14 +1866,14 @@ this.Write("                return new StateTransistion[0];\r\n");
         #line default
         #line hidden
         
-        #line 540 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 610 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("             \r\n                return new [] \r\n                {\r\n");
 
         
         #line default
         #line hidden
         
-        #line 543 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 613 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
             foreach (var s in specials)
             {
@@ -1629,56 +1882,56 @@ this.Write("             \r\n                return new [] \r\n                {
         #line default
         #line hidden
         
-        #line 546 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 616 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("                    new StateTransistion{ Event = ");
 
         
         #line default
         #line hidden
         
-        #line 547 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 617 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 547 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 617 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent.");
 
         
         #line default
         #line hidden
         
-        #line 547 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 617 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s.Event));
 
         
         #line default
         #line hidden
         
-        #line 547 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 617 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(", Next = typeof(");
 
         
         #line default
         #line hidden
         
-        #line 547 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 617 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(s.Next));
 
         
         #line default
         #line hidden
         
-        #line 547 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 617 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(") },\r\n");
 
         
         #line default
         #line hidden
         
-        #line 548 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 618 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
             }
 
@@ -1686,14 +1939,14 @@ this.Write(") },\r\n");
         #line default
         #line hidden
         
-        #line 550 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 620 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\n                };\r\n");
 
         
         #line default
         #line hidden
         
-        #line 553 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 623 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -1701,7 +1954,7 @@ this.Write("\r\n                };\r\n");
         #line default
         #line hidden
         
-        #line 555 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 625 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("                 \r\n            }\r\n        }\r\n        \r\n        public override Ty" +
         "pe InitialStateType\r\n        {\r\n            get { return typeof(");
 
@@ -1709,21 +1962,21 @@ this.Write("                 \r\n            }\r\n        }\r\n        \r\n     
         #line default
         #line hidden
         
-        #line 561 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 631 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(initialState));
 
         
         #line default
         #line hidden
         
-        #line 561 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 631 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("); }\r\n        }\r\n\t}\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 566 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 636 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);
@@ -1739,48 +1992,48 @@ this.Write("); }\r\n        }\r\n\t}\r\n}\r\n\r\n");
 		var outputFileName = fileName.Replace(".cs", ".StateEvent.g.cs");
 		
 		GenerateHeader();
-		GenerateUsings(@currentClass, new List<string> { "System", @currentClass.Namespace.Name});
+		GenerateUsings(@currentClass, namespaces);
 
         
         #line default
         #line hidden
         
-        #line 582 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 652 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\nnamespace ");
 
         
         #line default
         #line hidden
         
-        #line 584 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 654 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Namespace.Name));
 
         
         #line default
         #line hidden
         
-        #line 584 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 654 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\t\r\n{\r\n    public class ");
 
         
         #line default
         #line hidden
         
-        #line 586 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 656 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 586 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 656 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent : StateEvent\r\n    {\r\n");
 
         
         #line default
         #line hidden
         
-        #line 588 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 658 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         foreach (var evnt in events)
         {
@@ -1789,42 +2042,42 @@ this.Write("StateEvent : StateEvent\r\n    {\r\n");
         #line default
         #line hidden
         
-        #line 591 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 661 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("        public static ");
 
         
         #line default
         #line hidden
         
-        #line 592 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 662 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 592 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 662 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent ");
 
         
         #line default
         #line hidden
         
-        #line 592 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 662 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt));
 
         
         #line default
         #line hidden
         
-        #line 592 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 662 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" { get;  private set; }\r\n");
 
         
         #line default
         #line hidden
         
-        #line 593 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 663 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -1832,28 +2085,28 @@ this.Write(" { get;  private set; }\r\n");
         #line default
         #line hidden
         
-        #line 595 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 665 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("        static ");
 
         
         #line default
         #line hidden
         
-        #line 596 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 666 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 596 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 666 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent()\r\n        {\r\n");
 
         
         #line default
         #line hidden
         
-        #line 598 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 668 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         foreach (var evnt in events)
         {
@@ -1862,56 +2115,56 @@ this.Write("StateEvent()\r\n        {\r\n");
         #line default
         #line hidden
         
-        #line 601 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 671 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("            ");
 
         
         #line default
         #line hidden
         
-        #line 602 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 672 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt));
 
         
         #line default
         #line hidden
         
-        #line 602 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 672 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(" = new ");
 
         
         #line default
         #line hidden
         
-        #line 602 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 672 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 602 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 672 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent(\"");
 
         
         #line default
         #line hidden
         
-        #line 602 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 672 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(evnt));
 
         
         #line default
         #line hidden
         
-        #line 602 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 672 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\");\r\n");
 
         
         #line default
         #line hidden
         
-        #line 603 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 673 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
         }
 
@@ -1919,28 +2172,28 @@ this.Write("\");\r\n");
         #line default
         #line hidden
         
-        #line 605 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 675 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("\r\n        }\r\n\r\n        private ");
 
         
         #line default
         #line hidden
         
-        #line 609 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 679 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@currentClass.Name));
 
         
         #line default
         #line hidden
         
-        #line 609 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 679 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 this.Write("StateEvent(string name) : base(name)\r\n        {\r\n        }\r\n    }\r\n\r\n}\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 616 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
+        #line 686 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\StateMachineTemplate.tt"
 
 		GenerateFooter();
 		debugOutput += string.Format("Generated {0}\r\n", outputFileName);

@@ -21,7 +21,7 @@ namespace CrossBase.CodeGeneration.Templates
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+    #line 1 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "11.0.0.0")]
     public partial class TemplateBase : TemplateBaseBase
     {
@@ -35,7 +35,7 @@ namespace CrossBase.CodeGeneration.Templates
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 9 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 9 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
     protected string debugOutput;
     public string Name { get; set; }
@@ -68,28 +68,28 @@ namespace CrossBase.CodeGeneration.Templates
         #line default
         #line hidden
         
-        #line 36 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 36 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write("------------------------------------------------------------\r\n");
 
         
         #line default
         #line hidden
         
-        #line 38 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 38 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(debugOutput));
 
         
         #line default
         #line hidden
         
-        #line 38 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 38 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write("\r\n------------------------------------------------------------\r\n\r\n");
 
         
         #line default
         #line hidden
         
-        #line 41 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 41 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 		
 	}
 
@@ -100,7 +100,7 @@ this.Write("\r\n------------------------------------------------------------\r\n
         #line default
         #line hidden
         
-        #line 46 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 46 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(@"/**************************************************************************
 AUTOMATIC GENERATED FILE! DO NOT CHANGE MANUALLY 		
 CrossBase.CodeGeneration
@@ -120,7 +120,7 @@ Wies Hubbers
         #line default
         #line hidden
         
-        #line 60 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 60 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
     }
 	protected void GenerateFooter()
@@ -129,7 +129,7 @@ Wies Hubbers
         #line default
         #line hidden
         
-        #line 63 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 63 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(@"// ReSharper restore PartialMethodWithSinglePart
 // ReSharper restore RedundantNameQualifier
 // ReSharper restore RedundantUsingDirective
@@ -143,7 +143,7 @@ this.Write(@"// ReSharper restore PartialMethodWithSinglePart
         #line default
         #line hidden
         
-        #line 71 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 71 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
     }
 
@@ -156,28 +156,28 @@ this.Write(@"// ReSharper restore PartialMethodWithSinglePart
         #line default
         #line hidden
         
-        #line 78 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 78 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write("using ");
 
         
         #line default
         #line hidden
         
-        #line 79 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 79 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@using));
 
         
         #line default
         #line hidden
         
-        #line 79 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 79 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(";\r\n");
 
         
         #line default
         #line hidden
         
-        #line 80 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 80 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
 		}
 
@@ -190,28 +190,28 @@ this.Write(";\r\n");
         #line default
         #line hidden
         
-        #line 87 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 87 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write("using ");
 
         
         #line default
         #line hidden
         
-        #line 88 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 88 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(this.ToStringHelper.ToStringWithCulture(@using));
 
         
         #line default
         #line hidden
         
-        #line 88 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 88 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 this.Write(";\r\n");
 
         
         #line default
         #line hidden
         
-        #line 89 "C:\projects\CrossBase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
+        #line 89 "E:\Development\Crossbase\CrossBase.CodeGeneration\Templates\TemplateBase.tt"
 
 		}
     }

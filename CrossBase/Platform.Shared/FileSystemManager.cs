@@ -71,6 +71,11 @@ namespace CrossBase.Platform.Shared
             return Directory.GetFiles(path, searchPattern);
         }
 
+        public string[] DirectoryRecursivelyGetSubdirectories(string path)
+        {
+            return Directory.GetDirectories(path, "*", SearchOption.AllDirectories);
+        }
+
         public string FileReadAllText(string file)
         {
             return File.ReadAllText(file);
