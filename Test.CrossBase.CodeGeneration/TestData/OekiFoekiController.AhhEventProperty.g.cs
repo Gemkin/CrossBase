@@ -19,7 +19,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 {
     public partial class OekiFoekiController
     {
-		//private string ahh in C:\projects\CrossBase\Test.CrossBase.CodeGeneration\TestData\OekiFoekiController.cs (NotifyPropertyAndEventProperty)
+		//private string ahh in E:\Development\Crossbase\Test.CrossBase.CodeGeneration\TestData\OekiFoekiController.cs (NotifyPropertyAndEventProperty)
         
 		public event EventHandler<OekiFoekiControllerAhhChangingEventArgs> AhhChanging;
 		private void InvokeAhhChanging(OekiFoekiControllerAhhChangingEventArgs e)

@@ -20,7 +20,7 @@ using CrossBase.CodeGeneration.Attributes;
 
 namespace Test.CrossBase.CodeGeneration	
 {
-    public partial class RunState : SomeStateMachineStateBase
+    public partial class SomeStateMachineContext: ISomeStateMachineContext
     {
 	}
 }

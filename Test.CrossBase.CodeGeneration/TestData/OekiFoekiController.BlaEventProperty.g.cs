@@ -19,7 +19,7 @@ namespace Test.CrossBase.CodeGeneration.TestData
 {
     public partial class OekiFoekiController
     {
-		//private string bla in C:\projects\CrossBase\Test.CrossBase.CodeGeneration\TestData\OekiFoekiController.cs (NotifyPropertyAndEventProperty)
+		//private string bla in E:\Development\Crossbase\Test.CrossBase.CodeGeneration\TestData\OekiFoekiController.cs (NotifyPropertyAndEventProperty)
         
 		public event EventHandler<OekiFoekiControllerBlaChangingEventArgs> BlaChanging;
 		private void InvokeBlaChanging(OekiFoekiControllerBlaChangingEventArgs e)

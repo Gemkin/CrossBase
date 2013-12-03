@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +34,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="nunit.framework">
-      <HintPath>..\Test.CrossBase\bin\Debug\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SomeStateMachine.Context.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SomeStateMachine.Context.Interface.g.cs">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Compile>
     <Compile Include="SomeStateMachine.cs" />
     <Compile Include="SomeStateMachine.g.cs">
       <DependentUpon>SomeStateMachine.cs</DependentUpon>
@@ -70,7 +78,7 @@
     <Compile Include="SomeStateMachine.WaitStateEventArgs.g.cs">
       <DependentUpon>SomeStateMachine.cs</DependentUpon>
     </Compile>
-    <Compile Include="SomeStateMachineContext.g.cs">
+    <Compile Include="SomeStateMachineInterface.g.cs">
       <DependentUpon>SomeStateMachine.cs</DependentUpon>
     </Compile>
     <Compile Include="SomeStateMachineStateBase.g.cs">
@@ -117,10 +125,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="SomeStateMachine.Transitions.g.dot">
-      <DependentUpon>SomeStateMachine.cs</DependentUpon>
-    </None>
-    <None Include="SomeStateMachine.Transitions.g.dot.svg">
       <DependentUpon>SomeStateMachine.cs</DependentUpon>
     </None>
   </ItemGroup>
@@ -128,8 +134,12 @@
     <Content Include="SomeStateMachine.Transitions.g.dot.png">
       <DependentUpon>SomeStateMachine.cs</DependentUpon>
     </Content>
+    <Content Include="SomeStateMachine.Transitions.g.dot.svg">
+      <DependentUpon>SomeStateMachine.cs</DependentUpon>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

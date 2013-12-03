@@ -20,8 +20,15 @@ using CrossBase.CodeGeneration.Attributes;
 
 namespace Test.CrossBase.CodeGeneration	
 {
-    public partial class RunState : SomeStateMachineStateBase
+    public interface ISomeStateMachine: IStateMachine<SomeStateMachineStateEvent>
     {
+
+        event EventHandler<IdleStateEventArgs> IdleStateLeave;
+        event EventHandler<IdleStateEventArgs> IdleStateEnter;
+        event EventHandler<WaitStateEventArgs> WaitStateLeave;
+        event EventHandler<WaitStateEventArgs> WaitStateEnter;
+        event EventHandler<RunStateEventArgs> RunStateLeave;
+        event EventHandler<RunStateEventArgs> RunStateEnter;
 	}
 }
 
